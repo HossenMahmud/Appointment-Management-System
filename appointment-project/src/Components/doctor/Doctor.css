@@ -1,0 +1,20 @@
+.patientCartItem {
+    transition: all linear .7s;
+}
+
+.patientCartItem:hover .patientName {
+    color: #20C0F3;
+}
+
+.css-y6rp3m-MuiButton-startIcon {
+    margin-right: 3px !important;
+    margin-left: 0px !important;
+}
+
+.docorCard {
+    transition: ease-in-out;
+}
+
+.docorCard:hover .doctorCardName {
+    color: #20C0F3;
+}
