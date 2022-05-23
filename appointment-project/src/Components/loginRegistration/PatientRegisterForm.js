@@ -30,8 +30,8 @@ const PatientRegisterForm = ({ data, setData, handleFormSubmit }) => {
                         <Box component="form" onSubmit={handleFormSubmit}>
                             <TextFieldMake
                                 type='text'
-                                name='name'
-                                label='Name'
+                                name='userName'
+                                label='User Name'
                                 fullWidth
                                 onChange={(e) =>
                                     setData({

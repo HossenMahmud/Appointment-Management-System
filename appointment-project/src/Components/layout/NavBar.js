@@ -1,30 +1,16 @@
-import { Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
+import { Box, Container, IconButton, Stack, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { NavbarRoot } from '../../styles/MetarialStyles';
-import { useState } from 'react';
-import profile from '../../assets/images/profile.jpg'
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
-
+import { ButtonMake, NavbarRoot } from '../../styles/MetarialStyles';
+// import profile from '../../assets/images/profile.jpg';
+import { Link } from "react-router-dom";
+import useAuth from '../../Hooks/useAuth'
 
 export const NavBar = ({ sidebartoggle }) => {
-    const [anchorElNav, setAnchorElNav] = useState(null);
-    const [anchorElUser, setAnchorElUser] = useState(null);
-
-
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
-
+    const user = useAuth();
+    const Logout = () => {
+        localStorage.clear();
+        window.location.reload();
+    }
     return (
         <>
             <NavbarRoot>
@@ -46,46 +32,28 @@ export const NavBar = ({ sidebartoggle }) => {
                         </Box>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            {pages.map((page) => (
-                                <Button
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    {page}
-                                </Button>
-                            ))}
+
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src={profile} />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
+                            {/* <IconButton sx={{ p: 0 }}>
+                                <Avatar alt="Remy Sharp" src={profile} />
+                            </IconButton> */}
+                            <Stack
+                                direction="row"
+                                justifyContent="center"
+                                alignItems="center"
+                                spacing={1}
                             >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
+                                <Typography sx={{ color: "black", fontSize: '16px' }}>{user[0]?.userName}</Typography>
+                                {
+                                    user[0] ? <ButtonMake variant='contained' onClick={Logout}>Logout</ButtonMake> : <Link to='/login' style={{ textDecoration: 'none', fontSize: '18px', color: '#f1f1f1', fontWeight: 'bold' }}>Login</Link>
+                                }
+
+                            </Stack>
                         </Box>
+
+
                     </Toolbar>
                 </Container>
 

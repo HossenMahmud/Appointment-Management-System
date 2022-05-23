@@ -1,42 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import LoginForm from '../../Components/loginRegistration/LoginForm';
 import { LayoutContiner } from '../../styles/MetarialStyles';
 import axios from "axios";
-import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
-    const [loginStatus, setLoginStatus] = useState("");
-    const [data, setData] = useState([])
-    axios.defaults.withCredentials = true;
+    const navigate = useNavigate();
+    const [data, setData] = useState([]);
+
+
+    const updateUser = (user) => {
+        localStorage.setItem("MyUser", JSON.stringify(user))
+    }
 
     const login = () => {
-        axios.post("http://localhost:5000/login", {
-            email: data.email,
-            password: data.password,
-        }).then((response) => {
-            if (response.data.message) {
-                setLoginStatus(response.data.message);
-            } else {
-                setLoginStatus(response.data[0]);
-            }
-        });
-    };
+        if (data.length !== 0) {
+            axios.post("http://localhost:5000/login", data)
+                .then(res => {
+                    if (res.data.message) {
+                        alert(res.data.message)
+                        updateUser(res.data.user)
+                        navigate('/')
+                        window.location.reload();
 
-    useEffect(() => {
-        axios.get("http://localhost:5000/login").then((response) => {
-            if (response.data.loggedIn === true) {
-                setLoginStatus(response.data.user[0]);
-            }
-        });
-    }, []);
+                    } else {
+                        alert(res.data.message)
+                        navigate('/login')
+                    }
+                })
+        }
+        else {
+            alert("Please Enter Email & Password")
+        }
+    }
 
 
 
     return (
         <LayoutContiner>
-            <h1>{loginStatus.email}</h1>
-            <h1>{loginStatus.name}</h1>
-            <h1>{loginStatus.role}</h1>
             <LoginForm login={login} data={data} setData={setData}></LoginForm>
         </LayoutContiner>
     );

@@ -3,7 +3,6 @@ import DoctorProfileForm from '../../Components/doctor/DoctorProfileForm';
 import { LayoutContiner } from '../../styles/MetarialStyles';
 import axios from "axios";
 
-
 const DoctorProfileSetting = () => {
     const [data, setData] = useState([]);
     const [image, setImage] = useState([]);
@@ -45,26 +44,15 @@ const DoctorProfileSetting = () => {
 
     }
 
+    const allData = { ...data, image: image, education: educationFeilds };
+
+
     const handleSubmit = () => {
-        const newData = {
-            ...data,
-            image: image,
-            education: educationFeilds
-        };
-
-        const formData = new FormData();
-        for (const key in newData) {
-            formData.append(key, newData[key]);
-        }
-
-        if (data !== null && data.File !== undefined) {
-            axios.post("http://localhost:5000/doctorProfile", formData).then((res) => {
-                if (res.status === 200) {
-                }
-            });
-        } else {
-            alert("Please Enter all data");
-        }
+        axios.post("http://localhost:5000/doctorProfile", allData).then((res) => {
+            if (res.status === 200) {
+                alert("Successfully Data Added")
+            }
+        });
     };
 
     return (

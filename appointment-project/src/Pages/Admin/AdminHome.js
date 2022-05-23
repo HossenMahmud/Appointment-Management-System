@@ -8,7 +8,7 @@ import { LayoutContiner } from '../../styles/MetarialStyles';
 
 
 
-const AdminHome = () => {
+const AdminHome = ({ updateUser }) => {
     return (
         <LayoutContiner>
             <HeadingCard></HeadingCard>

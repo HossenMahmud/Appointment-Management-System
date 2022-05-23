@@ -1,46 +1,20 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
-
-
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
 
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
+
+
 
 const app = express();
-
-
-app.use(express.json());
-app.use(
-    cors({
-        origin: ["http://localhost:3000"],
-        methods: ["GET", "POST"],
-        credentials: true,
-    })
-);
-
-app.use(bodyParser.json())
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(
-    session({
-        key: "userId",
-        secret: "subscribe",
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            expires: 60 * 60 * 24,
-        },
-    })
-);
-
-
-
 const port = process.env.PORT || 5000;
+
+// middleware
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.json())
+
+
 
 // MySQL
 const db = mysql.createConnection({
@@ -50,36 +24,14 @@ const db = mysql.createConnection({
     database: "doctors_appointment",
 });
 
-
-app.post("/adduser", (req, res) => {
-    const name = req.body.name;
-    const email = req.body.email;
-    const role = req.body.role;
-    const password = req.body.password;
-
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-        if (err) {
-            console.log(err);
-        }
-
-        db.query(
-            "INSERT INTO users (name,email,role,password) VALUES (?,?,?,?)",
-            [name, email, role, hash],
-            (err, result) => {
-                console.log(err);
-            }
-        )
-    })
-});
-
-
-app.get("/login", (req, res) => {
-    if (req.session.user) {
-        res.send({ loggedIn: true, user: req.session.user });
+db.connect((error) => {
+    if (error) {
+        console.log(error)
     } else {
-        res.send({ loggedIn: false });
+        console.log("MYSQL Connected......")
     }
-});
+})
+
 
 app.post("/login", (req, res) => {
     const email = req.body.email;
@@ -92,16 +44,12 @@ app.post("/login", (req, res) => {
             if (err) {
                 res.send({ err: err });
             }
-
             if (result.length > 0) {
-                bcrypt.compare(password, result[0].password, (error, response) => {
-                    if (response) {
-                        req.session.user = result;
-                        res.send(result);
-                    } else {
-                        res.send({ message: "Wrong username/password combination!" });
-                    }
-                });
+                if (password === result[0].password) {
+                    res.send({ message: "Login Successfull", user: result })
+                } else {
+                    res.send({ message: "Password didn't match" })
+                }
             } else {
                 res.send({ message: "User doesn't exist" });
             }
@@ -109,42 +57,78 @@ app.post("/login", (req, res) => {
     )
 });
 
-
-app.post("/doctorProfile", (req, res) => {
-    const data = req.body;
-
-    const keys = Object.keys(data);
-
-    const sqlquery = `INSERT INTO doctors (${keys.map(
-        (key) => key
-    )}) VALUES (${keys.map((key) => "?")})`;
-
-    const value = keys.map((key) => {
-        return data[key];
-    });
-
-    db.query(sqlquery, value, (err, result) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(result);
+app.post("/register", (req, res) => {
+    const { userName, email, password, role } = req.body
+    db.query(
+        "INSERT INTO users (userName, email, password, role) VALUES (?,?,?,?)",
+        [userName, email, password, role],
+        (err) => {
+            if (err) {
+                res.send(err)
+            }
+            else {
+                res.send({ message: 'Successfully Registered,Please Login Now.' })
+            }
         }
-    });
+    )
 });
 
 
 
 
+// app.post("/register", (req, res) => {
+//     const { name, email, password } = req.body
+//     User.findOne({ email: email }, (err, user) => {
+//         if (user) {
+//             res.send({ message: "User already registerd" })
+//         } else {
+//             const user = new User({
+//                 name,
+//                 email,
+//                 password
+//             })
+//             user.save(err => {
+//                 if (err) {
+//                     res.send(err)
+//                 } else {
+//                     res.send({ message: "Successfully Registered, Please login now." })
+//                 }
+//             })
+//         }
+//     })
+
+// })
 
 
 
 
+app.post("/doctorProfile", (req, res) => {
+    const userName = req.body.userName;
+    const email = req.body.email;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const phone = req.body.phone;
+    const address = req.body.address;
+    const gender = req.body.gender;
+    const birth = req.body.birth;
+    const biography = req.body.biography;
+    const clinicName = req.body.clinicName;
+    const clinicAddress = req.body.clinicAddress;
+    const specialization = req.body.specialization;
+    const education = req.body.education;
+    db.query(
+        "INSERT INTO doctors (userName, email, firstName, lastName, phone, address, gender, birth, biography, clinicName,clinicAddress,specialization,education ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [userName, email, firstName, lastName, phone, address, gender, birth, biography, clinicName, clinicAddress, specialization, education],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values Inserted");
+            }
+        }
+    );
 
-
-
-
-
-
+});
 
 
 

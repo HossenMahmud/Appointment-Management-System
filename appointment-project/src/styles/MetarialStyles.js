@@ -170,3 +170,39 @@ export const AddButton = styled(Button)(({ theme }) => ({
         color: '#fff',
     }
 }));
+
+
+export const FillterBox = styled(Box)(({ theme }) => ({
+    fontWeight: 'bold',
+    fontSize: '18px',
+    cursor: 'pointer',
+    textDecoration: 'none',
+    color: '#333',
+    padding: '15px 0px',
+    '&:hover': {
+        color: '#20C0F3',
+    }
+}));
+
+
+
+
+export const ButtonMake = styled(Button)(({ theme }) => ({
+    padding: "3px 15px",
+    borderRadius: '4px',
+    border: '2px solid #20C0F3',
+    color: '#20C0F3',
+    textTransform: 'capitalize',
+    fontWeight: 'bold',
+    transition: ' all 0.3s',
+    [theme.breakpoints.between('md', 'xl')]: {
+        marginBottom: '10px'
+    },
+    '&:hover': {
+        border: '2px solid #20C0F3',
+        background: '#20C0F3',
+        color: '#fff',
+    }
+}));
+
+

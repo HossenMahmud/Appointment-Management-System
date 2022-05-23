@@ -14,35 +14,50 @@ import DoctorHome from './Pages/Doctor/DoctorHome';
 import MyPatients from './Pages/Doctor/MyPatients';
 import Appointments from './Pages/Doctor/Appointments';
 import DoctorProfileSetting from './Pages/Doctor/DoctorProfileSetting';
+import PatientHome from './Pages/Patient/PatientHome';
+import PatientProfileSetting from './Pages/Patient/PatientProfileSetting';
+import AllDoctors from './Pages/Patient/AllDoctors';
+import DoctorDetails from './Pages/Patient/DoctorDetails';
+import AuthProvider from './Context/AuthProvider';
 
 
 function App() {
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Layout>
-          <Routes>
+        <AuthProvider>
+          <Layout>
+            <Routes>
 
-            {/* Admin all Routes */}
-            <Route path="/" element={<AdminHome />}></Route>
-            <Route path="/allappointments" element={<AllAppointments />}></Route>
-            <Route path="/doctors" element={<Doctors />}></Route>
-            <Route path="/patients" element={<Patients />}></Route>
+              {/* Admin all Routes */}
+              <Route path="/" element={<AdminHome />}></Route>
+              <Route path="/allappointments" element={<AllAppointments />}></Route>
+              <Route path="/doctors" element={<Doctors />}></Route>
+              <Route path="/patients" element={<Patients />}></Route>
 
-            {/* Auth all Routes */}
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/patientRegister" element={<PatientRegister />}></Route>
-            <Route path="/doctorRegister" element={<DoctorRegister />}></Route>
+              {/* Auth all Routes */}
+              <Route path="/login" element={<Login />}></Route>
+              <Route path="/patientRegister" element={<PatientRegister />}></Route>
+              <Route path="/doctorRegister" element={<DoctorRegister />}></Route>
 
 
-            {/* Doctor all Routes */}
-            <Route path="/doctorhome" element={<DoctorHome />}></Route>
-            <Route path="/mypatients" element={<MyPatients />}></Route>
-            <Route path="/appointments" element={<Appointments />}></Route>
-            <Route path="/doctorprofile" element={<DoctorProfileSetting />}></Route>
+              {/* Doctor all Routes */}
+              <Route path="/doctorhome" element={<DoctorHome />}></Route>
+              <Route path="/mypatients" element={<MyPatients />}></Route>
+              <Route path="/appointments" element={<Appointments />}></Route>
+              <Route path="/doctorprofile" element={<DoctorProfileSetting />}></Route>
 
-          </Routes>
-        </Layout>
+
+              {/* Patient all Routes */}
+              <Route path="/patienthome" element={<PatientHome />}></Route>
+              <Route path="/patientprofile" element={<PatientProfileSetting />}></Route>
+              <Route path="/alldoctors" element={<AllDoctors />}></Route>
+              <Route path="/doctordetails" element={<DoctorDetails />}></Route>
+
+            </Routes>
+          </Layout>
+        </AuthProvider>
       </Router>
     </ThemeProvider>
   );

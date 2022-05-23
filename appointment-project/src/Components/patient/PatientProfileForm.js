@@ -1,14 +1,12 @@
 import styled from '@emotion/styled';
-import { Button, Grid, Paper, Stack, Typography } from '@mui/material';
+import { Button, Grid, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-import { CancelButton, FormLayout, TextFieldMake, AddButton } from '../../styles/MetarialStyles';
-import doctorPhoto from '../../assets/images/DoctorImg.jpg';
+import { FormLayout, TextFieldMake } from '../../styles/MetarialStyles';
+import doctorPhoto from '../../assets/images/patient.jpg';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import CancelIcon from '@mui/icons-material/Cancel';
-import AddIcon from '@mui/icons-material/Add';
 
-const DoctorProfileForm = ({ data, setData, handleImageSet, preview, educationFeilds, handleEducation, addFields, removeFields, handleSubmit }) => {
+const PatientProfileForm = ({ data, setData, preview, handleImageSet }) => {
     const gender = [
         {
             value: "Male",
@@ -42,7 +40,7 @@ const DoctorProfileForm = ({ data, setData, handleImageSet, preview, educationFe
     }));
 
     return (
-        <Box component="form" onSubmit={handleSubmit} >
+        <Box>
             <FormLayout>
                 <Typography variant='h6' sx={{ color: '##272b41', fontSize: '14px', mb: 2 }}>General Info</Typography>
                 <Grid container spacing={2}>
@@ -76,40 +74,7 @@ const DoctorProfileForm = ({ data, setData, handleImageSet, preview, educationFe
                             </Box>
                         </Stack>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextFieldMake
-                            type='text'
-                            name='userName'
-                            label='UserName'
-                            fullWidth
-                            size="medium"
-                            InputProps={{ style: { fontSize: 14 } }}
-                            InputLabelProps={{ style: { fontSize: 14 } }}
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                        ></TextFieldMake>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextFieldMake
-                            type='email'
-                            name='email'
-                            label='Email'
-                            fullWidth
-                            size="medium"
-                            InputProps={{ style: { fontSize: 14 } }}
-                            InputLabelProps={{ style: { fontSize: 14 } }}
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                        ></TextFieldMake>
-                    </Grid>
+
                     <Grid item xs={12} sm={6}>
                         <TextFieldMake
                             type='text'
@@ -127,45 +92,12 @@ const DoctorProfileForm = ({ data, setData, handleImageSet, preview, educationFe
                             }
                         ></TextFieldMake>
                     </Grid>
+
                     <Grid item xs={12} sm={6}>
                         <TextFieldMake
                             type='text'
                             name='lastName'
                             label='Last Name'
-                            fullWidth
-                            size="medium"
-                            InputProps={{ style: { fontSize: 14 } }}
-                            InputLabelProps={{ style: { fontSize: 14 } }}
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                        ></TextFieldMake>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextFieldMake
-                            type='number'
-                            name='phone'
-                            label='Phone Number'
-                            fullWidth
-                            size="medium"
-                            InputProps={{ style: { fontSize: 14 } }}
-                            InputLabelProps={{ style: { fontSize: 14 } }}
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                        ></TextFieldMake>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextFieldMake
-                            type='text'
-                            name='address'
-                            label='Address'
                             fullWidth
                             size="medium"
                             InputProps={{ style: { fontSize: 14 } }}
@@ -205,11 +137,12 @@ const DoctorProfileForm = ({ data, setData, handleImageSet, preview, educationFe
                             ))}
                         </TextFieldMake>
                     </Grid>
+
                     <Grid item xs={12} sm={6}>
                         <TextFieldMake
                             type='date'
                             name='birth'
-                            label='Date Of Birth'
+                            label='Date of Birth'
                             fullWidth
                             focused
                             size="medium"
@@ -223,41 +156,14 @@ const DoctorProfileForm = ({ data, setData, handleImageSet, preview, educationFe
                             }
                         ></TextFieldMake>
                     </Grid>
-                </Grid>
-            </FormLayout>
-            <FormLayout sx={{ mt: 5 }}>
-                <Typography variant='h6' sx={{ color: '##272b41', fontSize: '14px' }}>About Me</Typography>
-                <Grid container>
-                    <Grid item xs={12} sm={12}>
-                        <TextFieldMake
-                            type='text'
-                            name='biography'
-                            label='Biography'
-                            fullWidth
-                            multiline
-                            rows={3}
-                            InputProps={{ style: { fontSize: 14 } }}
-                            InputLabelProps={{ style: { fontSize: 14 } }}
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                        ></TextFieldMake>
-                    </Grid>
-                </Grid>
-            </FormLayout>
-            <FormLayout sx={{ mt: 5 }}>
-                <Typography variant='h6' sx={{ color: '##272b41', fontSize: '14px' }}>Clinic Info</Typography>
-                <Grid container spacing={2}>
+
                     <Grid item xs={12} sm={6}>
                         <TextFieldMake
                             type='text'
-                            name='clinicName'
-                            label='Clinic Name'
+                            name='blood'
+                            label='Blood Group'
                             fullWidth
-                            size='medium'
+                            size="medium"
                             InputProps={{ style: { fontSize: 14 } }}
                             InputLabelProps={{ style: { fontSize: 14 } }}
                             onChange={(e) =>
@@ -268,13 +174,14 @@ const DoctorProfileForm = ({ data, setData, handleImageSet, preview, educationFe
                             }
                         ></TextFieldMake>
                     </Grid>
+
                     <Grid item xs={12} sm={6}>
                         <TextFieldMake
-                            type='text'
-                            name='clinicAddress'
-                            label='Clinic Address'
+                            type='email'
+                            name='email'
+                            label='Email'
                             fullWidth
-                            size='medium'
+                            size="medium"
                             InputProps={{ style: { fontSize: 14 } }}
                             InputLabelProps={{ style: { fontSize: 14 } }}
                             onChange={(e) =>
@@ -285,18 +192,33 @@ const DoctorProfileForm = ({ data, setData, handleImageSet, preview, educationFe
                             }
                         ></TextFieldMake>
                     </Grid>
-                </Grid>
-            </FormLayout>
-            <FormLayout sx={{ mt: 5 }}>
-                <Typography variant='h6' sx={{ color: '##272b41', fontSize: '14px' }}>Service</Typography>
-                <Grid container spacing={2}>
+
+                    <Grid item xs={12} sm={6}>
+                        <TextFieldMake
+                            type='number'
+                            name='number'
+                            label='Mobile'
+                            fullWidth
+                            size="medium"
+                            InputProps={{ style: { fontSize: 14 } }}
+                            InputLabelProps={{ style: { fontSize: 14 } }}
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                        ></TextFieldMake>
+                    </Grid>
+
+
                     <Grid item xs={12} sm={12}>
                         <TextFieldMake
                             type='text'
-                            name='specialization'
-                            label='Specialization'
+                            name='address'
+                            label='Address'
                             fullWidth
-                            size='medium'
+                            size="medium"
                             InputProps={{ style: { fontSize: 14 } }}
                             InputLabelProps={{ style: { fontSize: 14 } }}
                             onChange={(e) =>
@@ -307,79 +229,84 @@ const DoctorProfileForm = ({ data, setData, handleImageSet, preview, educationFe
                             }
                         ></TextFieldMake>
                     </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <TextFieldMake
+                            type='text'
+                            name='city'
+                            label='City'
+                            fullWidth
+                            size="medium"
+                            InputProps={{ style: { fontSize: 14 } }}
+                            InputLabelProps={{ style: { fontSize: 14 } }}
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                        ></TextFieldMake>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <TextFieldMake
+                            type='text'
+                            name='state'
+                            label='State'
+                            fullWidth
+                            size="medium"
+                            InputProps={{ style: { fontSize: 14 } }}
+                            InputLabelProps={{ style: { fontSize: 14 } }}
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                        ></TextFieldMake>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <TextFieldMake
+                            type='text'
+                            name='zip'
+                            label='Zip Code'
+                            fullWidth
+                            size="medium"
+                            InputProps={{ style: { fontSize: 14 } }}
+                            InputLabelProps={{ style: { fontSize: 14 } }}
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                        ></TextFieldMake>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <TextFieldMake
+                            type='text'
+                            name='country'
+                            label='Country'
+                            fullWidth
+                            size="medium"
+                            InputProps={{ style: { fontSize: 14 } }}
+                            InputLabelProps={{ style: { fontSize: 14 } }}
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                        ></TextFieldMake>
+                    </Grid>
+
                 </Grid>
             </FormLayout>
-            <FormLayout sx={{ mt: 5 }}>
-                <Typography variant='h6' sx={{ color: '##272b41', fontSize: '14px', mb: 2 }}>Education</Typography>
-                {
-                    educationFeilds.map((form, index) => {
-                        return (
-                            <Paper elevation={8} sx={{ p: 2, mb: 2 }}>
-                                <Grid key={index} container spacing={2}>
-                                    <Grid item xs={12} sm={4}>
-                                        <TextFieldMake
-                                            type='text'
-                                            name='degree'
-                                            label='Degree'
-                                            fullWidth
-                                            size='medium'
-                                            InputProps={{ style: { fontSize: 14 } }}
-                                            InputLabelProps={{ style: { fontSize: 14 } }}
-                                            onChange={(e) => handleEducation(e, index)}
-                                            value={form.degree}
-                                        ></TextFieldMake>
-                                    </Grid>
-                                    <Grid item xs={12} sm={4}>
-                                        <TextFieldMake
-                                            type='text'
-                                            name='institude'
-                                            label='Institude'
-                                            fullWidth
-                                            size='medium'
-                                            InputProps={{ style: { fontSize: 14 } }}
-                                            InputLabelProps={{ style: { fontSize: 14 } }}
-                                            onChange={(e) => handleEducation(e, index)}
-                                            value={form.institude}
-                                        ></TextFieldMake>
-                                    </Grid>
-                                    <Grid item xs={12} sm={4}>
-                                        <Stack
-                                            direction="row"
-                                            alignItems="center"
-                                            justifyContent="center"
-                                            spacing={1}
-                                        >
-                                            <TextFieldMake
-                                                type='text'
-                                                name='passingYear'
-                                                label='Passing Year'
-                                                fullWidth
-                                                size='medium'
-                                                InputProps={{ style: { fontSize: 14 } }}
-                                                InputLabelProps={{ style: { fontSize: 14 } }}
-                                                onChange={(e) => handleEducation(e, index)}
-                                                value={form.passingYear}
-                                            ></TextFieldMake>
-                                            <CancelButton sx={{ mt: 2 }} onClick={() => removeFields(index)} size='small' startIcon={<CancelIcon fontSize='small' />}>
-                                                Cancel
-                                            </CancelButton>
-                                        </Stack>
-                                    </Grid>
-
-                                </Grid>
-                            </Paper>
-
-                        )
-                    })
-                }
-                <AddButton onClick={addFields} size='small' startIcon={<AddIcon fontSize='small' />}>
-                    Add More
-                </AddButton>
-            </FormLayout>
-
             <Button variant="contained" size='medium' color="info" sx={{ mt: 3 }} type="submit">Save</Button>
-        </Box >
+        </Box>
     );
 };
 
-export default DoctorProfileForm;
+export default PatientProfileForm;
