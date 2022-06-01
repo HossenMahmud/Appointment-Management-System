@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import LoginForm from '../../Components/loginRegistration/LoginForm';
 import { LayoutContiner } from '../../styles/MetarialStyles';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const navigate = useNavigate();
+    // const location = useLocation();
     const [data, setData] = useState([]);
 
 
@@ -21,7 +21,8 @@ const Login = () => {
                     if (res.data.message) {
                         alert(res.data.message)
                         updateUser(res.data.user)
-                        navigate('/')
+                        // const destination = location?.state?.from || '/';
+                        navigate('/');
                         window.location.reload();
 
                     } else {

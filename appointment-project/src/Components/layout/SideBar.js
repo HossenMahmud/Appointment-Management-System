@@ -1,81 +1,24 @@
-import { Box, Drawer, Typography, useMediaQuery } from '@mui/material';
-import HouseIcon from '@mui/icons-material/House';
-import { NavItem } from './NavItem';
+import { Box, Button, Drawer, Typography, useMediaQuery } from '@mui/material';
 import { useStyle } from '../../styles/MetarialStyles';
-import SettingsIcon from '@mui/icons-material/Settings';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import PeopleIcon from '@mui/icons-material/People';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-
-const items = [
-    {
-        href: '/',
-        icon: (<HouseIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Dashboard'
-    },
-    {
-        href: '/allappointments',
-        icon: (<LocalHospitalIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Appointments'
-    },
-    {
-        href: '/doctors',
-        icon: (<AccountCircleIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Doctors'
-    },
-    {
-        href: '/patients',
-        icon: (<PeopleIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Patients'
-    },
-
-
-    {
-        href: '/doctorhome',
-        icon: (<HouseIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Doctor Home'
-    },
-    {
-        href: '/mypatients',
-        icon: (<PeopleIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'My Patients'
-    },
-    {
-        href: '/appointments',
-        icon: (<LocalHospitalIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Appointments'
-    },
-    {
-        href: '/doctorprofile',
-        icon: (<SettingsIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Profile Setting'
-    },
-
-    {
-        href: '/patienthome',
-        icon: (<HouseIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Patient Home'
-    },
-    {
-        href: '/patientprofile',
-        icon: (<SettingsIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Profile Setting'
-    },
-    {
-        href: '/alldoctors',
-        icon: (<AccountCircleIcon fontSize="small" sx={{ color: '#f1f1f1' }} />),
-        title: 'Doctors'
-    },
-
-];
+import { Link } from "react-router-dom";
+import useAuth from '../../Hooks/useAuth'
 
 export default function SideBar({ open, onClose }) {
+    const user = useAuth();
     const style = useStyle();
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
         defaultMatches: true,
         noSsr: false
     });
+
+    const MyStyle = {
+        textDecoration: 'none',
+        color: "#f1f1f1",
+        fontSize: '16px',
+        fontWeight: 'bold',
+    }
+
+
 
 
     const content = (
@@ -84,22 +27,78 @@ export default function SideBar({ open, onClose }) {
                 className={style.sidebar}
             >
                 <Box sx={{ width: '100%', textAlign: "center", py: 2.2 }}>
-                    <Typography variant='h5' sx={{ color: "#f1f1f1", fontweight: 'bold', letterSpacing: "4px" }}>Appointment</Typography>
+                    <Link to='/' style={MyStyle}>
+                        <Typography variant='h5' sx={{ color: "#f1f1f1", fontweight: 'bold', letterSpacing: "4px" }}>Appointment</Typography>
+                    </Link>
                 </Box>
 
                 <Box sx={{
                     flexGrow: 1,
                     mt: 2,
                 }}>
-                    {items.map((item) => (
-                        <NavItem
-                            key={item.title}
-                            icon={item.icon}
-                            href={item.href}
-                            title={item.title}
-                            onClose={onClose}
-                        />
-                    ))}
+                    <Link to='/Dashboard' style={MyStyle}>
+                        <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                            Dashboard
+                        </Button>
+                    </Link>
+                    {
+                        user[0]?.role === 'admin' && <>
+                            <Link to='allappointments' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    All Appointments
+                                </Button>
+                            </Link>
+                            <Link to='doctors' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    Doctors
+                                </Button>
+                            </Link>
+                            <Link to='patients' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    Patients
+                                </Button>
+                            </Link>
+                        </>
+                    }
+                    {
+                        user[0]?.role === 'doctor' && <>
+                            <Link to='doctorhome' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    Doctor Dashboard
+                                </Button>
+                            </Link>
+                            <Link to='mypatients' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    My patients
+                                </Button>
+                            </Link>
+                            <Link to='appointments' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    Appointments
+                                </Button>
+                            </Link>
+                            <Link to='doctorprofile' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    Profile Settings
+                                </Button>
+                            </Link>
+                        </>
+                    }
+                    {
+                        user[0]?.role === 'patient' && <>
+                            <Link to='patienthome' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    Patient Home
+                                </Button>
+                            </Link>
+                            <Link to='patientprofile' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    Profile Settings
+                                </Button>
+                            </Link>
+                        </>
+                    }
+
                 </Box>
             </Box>
         </>

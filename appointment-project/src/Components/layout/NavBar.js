@@ -2,13 +2,17 @@ import { Box, Container, IconButton, Stack, Toolbar, Typography } from '@mui/mat
 import MenuIcon from '@mui/icons-material/Menu';
 import { ButtonMake, NavbarRoot } from '../../styles/MetarialStyles';
 // import profile from '../../assets/images/profile.jpg';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from '../../Hooks/useAuth'
+import { useState } from 'react';
 
 export const NavBar = ({ sidebartoggle }) => {
     const user = useAuth();
+    const navigate = useNavigate();
+
     const Logout = () => {
         localStorage.clear();
+        navigate('/');
         window.location.reload();
     }
     return (

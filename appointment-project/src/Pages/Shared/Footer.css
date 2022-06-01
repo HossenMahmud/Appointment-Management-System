@@ -1,0 +1,43 @@
+.search-holder {
+    background-color: transparent;
+    margin: 20px 0px;
+
+}
+
+input:focus {
+    outline: none;
+}
+
+.search-holder input {
+    border: none;
+    background-color: "#f0f0f0";
+    padding: 10px;
+    color: #fff;
+    font-size: 16px;
+    width: 400px;
+
+}
+
+.sercribe-btn {
+    background-color: #3820c9;
+    color: #fff;
+    border: 1px solid #3820c9;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    padding: 9px 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+
+@media only screen and (max-width: 671px) {
+    .search-holder input {
+        width: 40%;
+    }
+
+    .sercribe-btn {
+        width: 30%;
+    }
+}
