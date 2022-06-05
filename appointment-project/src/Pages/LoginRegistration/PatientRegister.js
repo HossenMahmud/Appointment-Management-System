@@ -8,17 +8,16 @@ const PatientRegister = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const Data = { ...data, role: 'patient' }
-    const handleFormSubmit = (e) => {
-        if (Data !== null) {
-            axios.post("http://localhost:5000/register", Data).then(res => {
-                alert(res.data.message)
-                navigate('/login')
-            });
-        } else {
 
-        }
-        e.preventdefault()
+    const handleFormSubmit = e => {
+        axios.post("http://localhost:5000/register", Data).then(res => {
+            if (res.status === 200) {
+                navigate("/login");
+            }
+        });
+        e.preventDefault();
     }
+
 
     return (
         <LayoutContiner>

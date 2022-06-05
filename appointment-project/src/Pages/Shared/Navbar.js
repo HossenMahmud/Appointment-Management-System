@@ -15,7 +15,7 @@ import useAuth from '../../Hooks/useAuth';
 
 const Navbar = () => {
 
-    const user = useAuth();
+    const { user } = useAuth();
     const Logout = () => {
         localStorage.clear();
         window.location.reload();

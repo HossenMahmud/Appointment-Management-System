@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import useAuth from '../../Hooks/useAuth'
 
 export default function SideBar({ open, onClose }) {
-    const user = useAuth();
+    const { user } = useAuth();
     const style = useStyle();
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
         defaultMatches: true,
@@ -62,11 +62,6 @@ export default function SideBar({ open, onClose }) {
                     }
                     {
                         user[0]?.role === 'doctor' && <>
-                            <Link to='doctorhome' style={MyStyle}>
-                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
-                                    Doctor Dashboard
-                                </Button>
-                            </Link>
                             <Link to='mypatients' style={MyStyle}>
                                 <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
                                     My patients
@@ -86,11 +81,6 @@ export default function SideBar({ open, onClose }) {
                     }
                     {
                         user[0]?.role === 'patient' && <>
-                            <Link to='patienthome' style={MyStyle}>
-                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
-                                    Patient Home
-                                </Button>
-                            </Link>
                             <Link to='patientprofile' style={MyStyle}>
                                 <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
                                     Profile Settings

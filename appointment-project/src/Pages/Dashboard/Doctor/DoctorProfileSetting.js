@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
 import DoctorProfileForm from '../../../Components/Dashboard/doctor/DoctorProfileForm';
 import { LayoutContiner } from '../../../styles/MetarialStyles';
-import axios from "axios";
+import Axios from "axios";
+import useAuth from '../../../Hooks/useAuth';
 
 const DoctorProfileSetting = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
     const [image, setImage] = useState([]);
     const [preview, setPreview] = useState("");
+    const { user } = useAuth();
+    const userId = user[0]?.id;
 
     const [educationFeilds, setEducationFeilds] = useState([
         { degree: '', institude: '', passingYear: '' }
     ]);
 
+    const [clinicFeilds, setClinicFeilds] = useState([
+        { clinicName: '', clinicAddress: '' }
+    ]);
+
+
+
     const handleEducation = (e, index) => {
         let eduData = [...educationFeilds];
         eduData[index][e.target.name] = e.target.value;
         setEducationFeilds(eduData);
+    }
+    const handleClinic = (e, index) => {
+        let clinicData = [...clinicFeilds];
+        clinicData[index][e.target.name] = e.target.value;
+        setClinicFeilds(clinicData);
     }
 
     const addEducationFields = () => {
@@ -27,13 +41,25 @@ const DoctorProfileSetting = () => {
 
         setEducationFeilds([...educationFeilds, object])
     }
+    const addClinicFields = () => {
+        let object = {
+            clinicName: '',
+            clinicAddress: '',
+        }
 
-    const removeFields = (index) => {
+        setClinicFeilds([...clinicFeilds, object])
+    }
+
+    const removeEduFields = (index) => {
         let data = [...educationFeilds];
         data.splice(index, 1)
         setEducationFeilds(data)
     }
-
+    const removeClinicFields = (index) => {
+        let data = [...clinicFeilds];
+        data.splice(index, 1)
+        setClinicFeilds(data)
+    }
 
 
     const handleImageSet = (e) => {
@@ -44,16 +70,36 @@ const DoctorProfileSetting = () => {
 
     }
 
-    const allData = { ...data, image: image, education: educationFeilds };
 
+    const allData = { ...data, image: image, education: educationFeilds, clinic: clinicFeilds };
+    console.log(allData);
 
-    const handleSubmit = () => {
-        axios.post("http://localhost:5000/doctorProfile", allData).then((res) => {
-            if (res.status === 200) {
-                alert("Successfully Data Added")
-            }
-        });
+    const handleSubmit = e => {
+        const newData = {
+            ...data,
+            userId: userId,
+            education: JSON.stringify(educationFeilds),
+            clinic: JSON.stringify(clinicFeilds),
+            image: image,
+        };
+
+        const formData = new FormData();
+        for (const key in newData) {
+            formData.append(key, newData[key]);
+        }
+        if (newData !== null && newData.image !== undefined) {
+            Axios.post("http://localhost:5000/profile", formData).then((res) => {
+                if (res.status === 200) {
+                    alert("Successfully Data Added");
+                    e.target.reset();
+                }
+            });
+        } else {
+            alert("Please Enter all data");
+        }
+        e.preventDefault();
     };
+
 
     return (
         <LayoutContiner>
@@ -63,11 +109,19 @@ const DoctorProfileSetting = () => {
                 setData={setData}
                 preview={preview}
                 handleImageSet={handleImageSet}
+
                 educationFeilds={educationFeilds}
                 setEducationFeilds={setEducationFeilds}
                 handleEducation={handleEducation}
-                addFields={addEducationFields}
-                removeFields={removeFields}
+                addEduFields={addEducationFields}
+                removeEduFields={removeEduFields}
+
+                handleClinic={handleClinic}
+                removeClinicFields={removeClinicFields}
+                addClinincFields={addClinicFields}
+                clinicFeilds={clinicFeilds}
+                setClinicFeilds={setClinicFeilds}
+
             ></DoctorProfileForm>
         </LayoutContiner >
     );

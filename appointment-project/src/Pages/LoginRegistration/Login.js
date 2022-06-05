@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LoginForm from '../../Components/loginRegistration/LoginForm';
 import { LayoutContiner } from '../../styles/MetarialStyles';
 import axios from "axios";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Login = () => {
         localStorage.setItem("MyUser", JSON.stringify(user))
     }
 
-    const login = () => {
+    const login = e => {
         if (data.length !== 0) {
             axios.post("http://localhost:5000/login", data)
                 .then(res => {
@@ -26,7 +26,7 @@ const Login = () => {
                         window.location.reload();
 
                     } else {
-                        alert(res.data.message)
+                        alert(res.data.error)
                         navigate('/login')
                     }
                 })
@@ -34,6 +34,7 @@ const Login = () => {
         else {
             alert("Please Enter Email & Password")
         }
+        e.preventDefault();
     }
 
 
