@@ -20,6 +20,12 @@ import DoctorDetails from '../src/Pages/AllDoctors/DoctorDetails'
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import AdminRoute from './AdminRoute/AdminRoute';
 import DashboardHome from './Pages/Dashboard/DashboardHome';
+import AddPatientInfo from './Pages/Dashboard/Patient/AddPatientInfo';
+import UpdatePatientInfo from './Pages/Dashboard/Patient/UpdatePatientInfo';
+import AddDoctorInfo from './Pages/Dashboard/Doctor/AddDoctorInfo';
+import DoctorUpdateInfo from './Pages/Dashboard/Doctor/DoctorUpdateInfo';
+import AdminDoctorDetails from './Pages/Dashboard/Admin/AdminDoctorDetails';
+import AdminPatientDetails from './Pages/Dashboard/Admin/AdminPatientDetails';
 
 
 function App() {
@@ -41,29 +47,29 @@ function App() {
             <Route path="patientRegister" element={<PatientRegister />}></Route>
             <Route path="doctorRegister" element={<DoctorRegister />}></Route>
 
-
-            {/* Admin all Routes */}
+            {/* Dasboard all Routes Start */}
             <Route path="/Dashboard" element={<PrivateRoute><Layout /> </PrivateRoute>}>
-
               <Route index element={<DashboardHome />}></Route>
-
               {/* Admin all Routes */}
-              <Route path="allappointments" element={<AdminRoute><AllAppointments /></AdminRoute>}></Route>
-              <Route path="doctors" element={<AdminRoute><Doctors /></AdminRoute>}></Route>
-              <Route path="patients" element={<AdminRoute><Patients /></AdminRoute>}></Route>
-
+              <Route path="admin/allappointments" element={<AdminRoute><AllAppointments /></AdminRoute>}></Route>
+              <Route path="admin/doctors" element={<AdminRoute><Doctors /></AdminRoute>}></Route>
+              <Route path="admin/doctors/doctorDetails/:id" element={<AdminRoute><AdminDoctorDetails /></AdminRoute>}></Route>
+              <Route path="admin/patients" element={<AdminRoute><Patients /></AdminRoute>}></Route>
+              <Route path="admin/patients/patientDetails/:id" element={<AdminRoute><AdminPatientDetails /></AdminRoute>}></Route>
               {/* Doctor all Routes */}
               <Route path="mypatients" element={<MyPatients />}></Route>
               <Route path="appointments" element={<Appointments />}></Route>
               <Route path="doctorprofile" element={<DoctorProfileSetting />}></Route>
-
+              <Route path="doctorprofile/addDoctorInfo/:id" element={<AddDoctorInfo />}></Route>
+              <Route path="doctorprofile/updateDoctorInfo/:id" element={<DoctorUpdateInfo />}></Route>
               {/* Patient all Routes */}
               <Route path="patientprofile" element={<PatientProfileSetting />}></Route>
-
+              <Route path="patientprofile/addPatientInfo/:id" element={<AddPatientInfo />}></Route>
+              <Route path="patientprofile/updatePatientInfo/:id" element={<UpdatePatientInfo />}></Route>
             </Route>
+            {/* Dasboard all Routes End */}
 
           </Routes>
-
         </AuthProvider>
       </Router>
     </ThemeProvider>

@@ -7,6 +7,7 @@ import Doctor from './Doctor';
 import Reviews from './Reviews';
 
 const HomePage = () => {
+
     return (
         <div>
             <Navbar></Navbar>
@@ -17,6 +18,7 @@ const HomePage = () => {
             <Footer></Footer>
         </div>
     );
-};
+}
+
 
 export default HomePage;

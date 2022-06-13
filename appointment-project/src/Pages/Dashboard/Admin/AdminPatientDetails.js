@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { ButtonMake, LayoutContiner } from '../../../styles/MetarialStyles';
-import useAuth from '../../../Hooks/useAuth';
-import { Box } from '@mui/system';
-import { Grid, Paper, Typography } from '@mui/material';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { Box, Grid, Paper, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { LayoutContiner } from '../../../styles/MetarialStyles';
 
-const PatientProfileSetting = () => {
-    const { user } = useAuth()
-    const userId = user?.id;
-
-    const [patientInfo, setPatientInfo] = useState([]);
+const AdminPatientDetails = () => {
+    const { id } = useParams();
+    const [patients, setPatients] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/${userId}`)
+        fetch(`http://localhost:5000/singlePatient/${id}`)
             .then(res => res.json())
-            .then(data => setPatientInfo(data[0]))
-    }, [userId]);
-
+            .then(data => setPatients(data[0]))
+    }, [id]);
 
     const UserInfo = styled(Box)(({ theme }) => ({
         display: 'flex',
@@ -31,27 +26,14 @@ const PatientProfileSetting = () => {
         fontWeight: 'bold'
     }));
 
-
     return (
         <LayoutContiner>
-
             <Box>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={12} sx={{ my: 2 }}>
-                        <Box sx={{ display: 'flex', justifyContent: "space-between", borderBottom: "2px solid blue", pb: 1 }}>
-                            <Typography variant='h5' sx={{ textTransform: 'capitalize' }}>{user?.userName}</Typography>
-                            <Box>
-                                {
-                                    patientInfo ? <Link to={`updatePatientInfo/${patientInfo?.id}`} style={{ textDecoration: 'none' }}><ButtonMake>Update Info</ButtonMake></Link> : <Link to={`addPatientInfo/${userId}`} style={{ textDecoration: 'none' }}><ButtonMake>Add Info</ButtonMake></Link>
-                                }
-                            </Box>
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} sx={{ mx: 'auto' }}>
+                    <Grid item xs={12} sm={8} sx={{ mx: 'auto' }}>
                         <Paper elevation={16} sx={{ p: 2, textAlign: 'center' }}>
                             {
-                                patientInfo?.image ? <img src={patientInfo?.image} alt="" style={{ width: "200px", borderRadius: '10px' }} /> : <Box>Image Not Provided</Box>
+                                patients?.image ? <img src={patients?.image} alt="" style={{ width: "200px", borderRadius: '10px' }} /> : <Box>Image Not Provided</Box>
                             }
 
                         </Paper>
@@ -60,61 +42,56 @@ const PatientProfileSetting = () => {
                             <UserInfo sx={{ borderTop: '1px solid #f1f1f1' }}>
                                 <TextLevel variant='body' >First Name</TextLevel>
                                 <Typography sx={{ color: '#757575', ml: 2 }}>
-                                    {patientInfo ? patientInfo.firstName : "Not Provided"}
+                                    {patients ? patients.firstName : "Not Provided"}
                                 </Typography>
                             </UserInfo>
 
                             <UserInfo>
                                 <TextLevel variant='body' >Last Name</TextLevel>
                                 <Typography sx={{ color: '#757575', ml: 2 }}>
-                                    {patientInfo ? patientInfo.lastName : "Not Provided"}
+                                    {patients ? patients.lastName : "Not Provided"}
                                 </Typography>
-                            </UserInfo>
-
-                            <UserInfo>
-                                <TextLevel variant='body' >Email</TextLevel>
-                                <Typography sx={{ color: '#757575', ml: 2 }}> {user?.email}</Typography>
                             </UserInfo>
 
                             <UserInfo>
                                 <TextLevel variant='body' >Phone Number</TextLevel>
                                 <Typography sx={{ color: '#757575', ml: 2 }}>
-                                    {patientInfo ? patientInfo.phone : "Not Provided"}
+                                    {patients ? patients.phone : "Not Provided"}
                                 </Typography>
                             </UserInfo>
 
                             <UserInfo>
                                 <TextLevel variant='body'>Gender</TextLevel>
                                 <Typography sx={{ color: '#757575', ml: 2 }}>
-                                    {patientInfo ? patientInfo.gender : "Not Provided"}
+                                    {patients ? patients.gender : "Not Provided"}
                                 </Typography>
                             </UserInfo>
 
                             <UserInfo>
                                 <TextLevel variant='body'>Date Of Birth</TextLevel>
                                 <Typography sx={{ color: '#757575', ml: 2 }}>
-                                    {patientInfo ? patientInfo.birth : "Not Provided"}
+                                    {patients ? patients.birth : "Not Provided"}
                                 </Typography>
                             </UserInfo>
 
                             <UserInfo>
                                 <TextLevel variant='body' >Blood Group</TextLevel>
                                 <Typography sx={{ color: '#757575', ml: 2 }}>
-                                    {patientInfo ? patientInfo.blood : "Not Provided"}
+                                    {patients ? patients.blood : "Not Provided"}
                                 </Typography>
                             </UserInfo>
 
                             <UserInfo>
                                 <TextLevel variant='body'>City</TextLevel>
                                 <Typography sx={{ color: '#757575', ml: 2 }}>
-                                    {patientInfo ? patientInfo.city : "Not Provided"}
+                                    {patients ? patients.city : "Not Provided"}
                                 </Typography>
                             </UserInfo>
 
                             <UserInfo>
                                 <TextLevel variant='body'>Address</TextLevel>
                                 <Typography sx={{ color: '#757575', ml: 2 }}>
-                                    {patientInfo ? patientInfo.address : "Not Provided"}
+                                    {patients ? patients.address : "Not Provided"}
                                 </Typography>
                             </UserInfo>
 
@@ -126,4 +103,4 @@ const PatientProfileSetting = () => {
     );
 };
 
-export default PatientProfileSetting;
+export default AdminPatientDetails;

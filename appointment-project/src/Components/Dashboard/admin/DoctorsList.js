@@ -14,11 +14,11 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { Avatar, Button, TableHead, Typography } from "@mui/material";
-import Img from '../../../assets/images/profile.jpg';
+import { Avatar, Button, TableHead } from "@mui/material";
 import './Admin.css'
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
+import Axios from 'axios'
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -83,31 +83,7 @@ function TablePaginationActions(props) {
 }
 
 
-function createData(doctorName, speciality, join, earn) {
-    return { doctorName, speciality, join, earn };
-}
-
-const rows = [
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-    createData('Dr Rubby Prrrin', 'Urology', '22 Sept 2022', 5000),
-
-];
-
-
-export default function DoctorsList() {
+export default function DoctorsList({ doctors }) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -144,6 +120,31 @@ export default function DoctorsList() {
         setPage(0);
     };
 
+    const handleActive = (id, e) => {
+        const newData = {
+            status: 'Active',
+        }
+        Axios.put(`http://localhost:5000/doctorUpdate/${id}`, newData)
+            .then((res) => {
+                if (res.status === 200) {
+                    window.location.reload();
+                }
+            });
+        e.preventDefault();
+    };
+    const handleDeactive = (id, e) => {
+        const newData = {
+            status: 'Deactive',
+        }
+        Axios.put(`http://localhost:5000/doctorUpdate/${id}`, newData)
+            .then((res) => {
+                if (res.status === 200) {
+                    window.location.reload();
+                }
+            });
+        e.preventDefault();
+    };
+
     return (
         <TableContainer component={Paper}>
             <Table
@@ -158,29 +159,35 @@ export default function DoctorsList() {
                     <TableRow>
                         <StyledTableCell align="left">Doctor Name</StyledTableCell>
                         <StyledTableCell align="left">Speciality</StyledTableCell>
-                        <StyledTableCell align="left">Member Since</StyledTableCell>
-                        <StyledTableCell align="left">Earn</StyledTableCell>
+                        <StyledTableCell align="left">Phone Number</StyledTableCell>
+                        <StyledTableCell align="left">View</StyledTableCell>
                         <StyledTableCell align="left">Status</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {(rowsPerPage > 0
-                        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : rows
-                    ).map((row, index) => (
-                        <StyledTableRow key={index}>
+                        ? doctors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        : doctors
+                    ).map((doctor) => (
+                        <StyledTableRow key={doctor.id}>
                             <StyledTableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Avatar alt="Remy Sharp" src={Img} sx={{ mr: 1 }} />
-                                {row.doctorName}
+                                <Avatar alt="Remy Sharp" src={doctor.image} sx={{ mr: 1 }} />
+                                {doctor.firstName}   {doctor.lastName}
                             </StyledTableCell>
-                            <StyledTableCell align="left">{row.speciality}</StyledTableCell>
-
+                            <StyledTableCell align="left">{doctor.specialist}</StyledTableCell>
+                            <StyledTableCell align="left">{doctor.phone} </StyledTableCell>
                             <StyledTableCell align="left">
-                                <Typography variant='h6' sx={{ fontSize: '12px', fontWeight: 'normal', color: '#00D0F1' }}>  {row.join}</Typography>
+                                <Link to={`doctorDetails/${doctor.id}`} style={{ textDecoration: 'none' }}>
+                                    <Button variant="contained" size="small" color="info">Details</Button>
+                                </Link>
                             </StyledTableCell>
-                            <StyledTableCell align="left">${row.earn}</StyledTableCell>
                             <StyledTableCell align="left">
-                                <Button variant="contained" size="small" color="success">Active</Button>
+                                {
+                                    doctor.status === 'Active' && < Button onClick={() => handleDeactive(`${doctor.id}`)} variant="contained" size="small" color="success">Active</Button>
+                                }
+                                {
+                                    doctor.status === 'Deactive' && < Button onClick={() => handleActive(`${doctor.id}`)} variant="contained" size="small" color="warning">Deactive</Button>
+                                }
                             </StyledTableCell>
                         </StyledTableRow>
                     ))}
@@ -191,7 +198,7 @@ export default function DoctorsList() {
                             sx={{ border: "none", color: "black", background: "#ADE7F7" }}
                             rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                             colSpan={12}
-                            count={rows.length}
+                            count={doctors.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             SelectProps={{
@@ -207,6 +214,6 @@ export default function DoctorsList() {
                     </TableRow>
                 </TableFooter>
             </Table>
-        </TableContainer>
+        </TableContainer >
     );
 }

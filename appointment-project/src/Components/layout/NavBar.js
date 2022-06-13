@@ -6,13 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from '../../Hooks/useAuth'
 
 export const NavBar = ({ sidebartoggle }) => {
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
     const navigate = useNavigate();
 
     const Logout = () => {
         localStorage.clear();
+        setUser(false)
         navigate('/');
-        window.location.reload();
     }
     return (
         <>
@@ -48,9 +48,9 @@ export const NavBar = ({ sidebartoggle }) => {
                                 alignItems="center"
                                 spacing={1}
                             >
-                                <Typography sx={{ color: "black", fontSize: '16px' }}>{user[0]?.userName}</Typography>
+                                <Typography sx={{ color: "black", fontSize: '16px' }}>{user?.userName}</Typography>
                                 {
-                                    user[0] ? <ButtonMake variant='contained' onClick={Logout}>Logout</ButtonMake> : <Link to='/login' style={{ textDecoration: 'none', fontSize: '18px', color: '#f1f1f1', fontWeight: 'bold' }}>Login</Link>
+                                    user ? <ButtonMake variant='contained' onClick={Logout}>Logout</ButtonMake> : <Link to='/login' style={{ textDecoration: 'none', fontSize: '18px', color: '#f1f1f1', fontWeight: 'bold' }}>Login</Link>
                                 }
 
                             </Stack>

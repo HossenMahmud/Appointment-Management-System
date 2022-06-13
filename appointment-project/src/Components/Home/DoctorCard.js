@@ -4,7 +4,7 @@ import { Box } from '@mui/system';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import GradeIcon from '@mui/icons-material/Grade';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import WatchLaterIcon from '@mui/icons-material/WatchLater';
+// import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Link } from "react-router-dom";
 import { ButtonMake } from '../../styles/MetarialStyles';
@@ -90,12 +90,12 @@ const DoctorCard = ({ doctors }) => {
 
         <Slider {...settings}>
             {
-                doctors.map(doctor => (
+                doctors.slice(0, 5).map(doctor => (
                     <CardLayout >
                         <Box sx={{ p: 1 }}>
                             {/* Doctor Image */}
                             <Box className="img-container">
-                                <img style={{ display: 'block', transition: ' transform .4s', overflow: 'hidden', }} src={doctor.img} alt="" width="100%" />
+                                <img style={{ display: 'block', transition: ' transform .4s', overflow: 'hidden', }} src={doctor.image} alt="" width="100%" />
                             </Box>
 
                             {/* Doctor Info */}
@@ -106,12 +106,12 @@ const DoctorCard = ({ doctors }) => {
                                     alignItems="center"
                                     spacing={2}
                                 >
-                                    <DoctorName>{doctor.name}</DoctorName>
+                                    <DoctorName>{doctor.firstName} {doctor.lastName}</DoctorName>
                                     <CheckCircleIcon sx={{ fontSize: '18px', color: '#20C0F3' }} />
                                 </Stack>
 
                                 <Typography sx={{ fontSize: '12px', color: '#757575' }}>
-                                    {doctor.spaciality}
+                                    {doctor.specialist}
                                 </Typography>
 
                                 <Box sx={{ mt: 1 }}>
@@ -137,14 +137,14 @@ const DoctorCard = ({ doctors }) => {
                                         <Typography sx={{ fontSize: '12px', color: '#757575' }}>{doctor.address}</Typography>
                                     </Stack>
 
-                                    <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
+                                    {/* <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
                                         <WatchLaterIcon sx={{ fontSize: '12px', color: '#757575' }} />
                                         <Typography sx={{ fontSize: '12px', color: '#757575' }}>{doctor.time}</Typography>
-                                    </Stack>
+                                    </Stack> */}
 
                                     <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
                                         <MonetizationOnIcon sx={{ fontSize: '12px', color: '#757575' }} />
-                                        <Typography sx={{ fontSize: '12px', color: '#757575' }}>{doctor.rate}</Typography>
+                                        <Typography sx={{ fontSize: '12px', color: '#757575' }}>300-400</Typography>
                                     </Stack>
                                 </Box>
 

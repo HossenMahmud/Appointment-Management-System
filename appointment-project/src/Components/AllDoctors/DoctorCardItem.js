@@ -2,27 +2,21 @@ import styled from '@emotion/styled';
 import { Grid, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-import doctorImg from '../../assets/images/dorctorImg.jpg';
 import './DoctorCartItem.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import GradeIcon from '@mui/icons-material/Grade';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import WatchLaterIcon from '@mui/icons-material/WatchLater';
+// import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Link } from "react-router-dom";
 import { ButtonMake } from '../../styles/MetarialStyles';
 
-
-
-const DoctorCardItem = () => {
+const DoctorCardItem = ({ doctor }) => {
     const CardLayout = styled(Box)(({ theme }) => ({
         backgroundColor: "#fff",
         border: '1px solid #f0f0f0',
         borderRadius: '4px',
         padding: '15px',
-        // '&:hover': {
-        //     borderColor: "#20C0F3"
-        // }
     }));
 
     const DoctorName = styled(Typography)(({ theme }) => ({
@@ -35,16 +29,12 @@ const DoctorCardItem = () => {
         }
     }));
 
-
-
-
-
     return (
         <Grid item xs={12} sm={6} md={3} >
             <CardLayout>
                 {/* Doctor Image */}
                 <Box className="img-container">
-                    <img style={{ display: 'block', transition: ' transform .4s', overflow: 'hidden', }} src={doctorImg} alt="" width="100%" />
+                    <img style={{ display: 'block', transition: ' transform .4s', overflow: 'hidden', }} src={doctor.image} alt="" width="100%" />
                 </Box>
 
                 {/* Doctor Info */}
@@ -56,12 +46,12 @@ const DoctorCardItem = () => {
                         alignItems="center"
                         spacing={2}
                     >
-                        <DoctorName>Dr. Linda Tobin</DoctorName>
+                        <DoctorName>{doctor.firstName}{doctor.lastName}</DoctorName>
                         <CheckCircleIcon sx={{ fontSize: '18px', color: '#20C0F3' }} />
                     </Stack>
 
                     <Typography sx={{ fontSize: '12px', color: '#757575' }}>
-                        MBBS, MD - Ophthalmology, DNB - Ophthalmology
+                        {doctor.specialist}
                     </Typography>
 
                     <Box sx={{ mt: 1 }}>
@@ -84,13 +74,13 @@ const DoctorCardItem = () => {
                     <Box sx={{ my: 1 }}>
                         <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
                             <LocationOnIcon sx={{ fontSize: '12px', color: '#757575' }} />
-                            <Typography sx={{ fontSize: '12px', color: '#757575' }}>Dhaka,Bangladesh</Typography>
+                            <Typography sx={{ fontSize: '12px', color: '#757575' }}>{doctor.address}</Typography>
                         </Stack>
 
-                        <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
+                        {/* <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
                             <WatchLaterIcon sx={{ fontSize: '12px', color: '#757575' }} />
                             <Typography sx={{ fontSize: '12px', color: '#757575' }}>Available on Fri 24 May</Typography>
-                        </Stack>
+                        </Stack> */}
 
                         <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
                             <MonetizationOnIcon sx={{ fontSize: '12px', color: '#757575' }} />

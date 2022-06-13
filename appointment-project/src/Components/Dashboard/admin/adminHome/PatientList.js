@@ -8,20 +8,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Avatar, Box, Typography } from '@mui/material';
 import { TableBox, TableHeading } from '../../../../styles/MetarialStyles';
-import Img from '../../../../assets/images/profile.jpg'
 import './doctorTable.css';
-function createData(name, phone, lastVisit, paid) {
-    return { name, phone, lastVisit, paid };
-}
-const rows = [
-    createData('Rubby Prrrin', '01786520485', '17 Nev 2019', 100),
-    createData('Darren Eider', '01786520485', '17 Nev 2019', 100),
-    createData('Dobina', '01786520485', '17 Nev 2019', 100),
-    createData('shathu', '01786520485', '17 Nev 2019', 100),
-    createData('Sofik Raj', '01786520485', '17 Nev 2019', 100),
-];
 
-const PatientList = () => {
+const PatientList = ({ patients }) => {
     return (
         <TableBox>
             <Box sx={{ borderBottom: "1px solid #eaeaea", py: 1 }}>
@@ -38,18 +27,18 @@ const PatientList = () => {
                         </TableHeading>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {patients.map((patient) => (
                             <TableRow
-                                key={row.name}
+                                key={patient.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <Avatar alt="Remy Sharp" src={Img} sx={{ mr: 1 }} />
-                                    {row.name}
+                                    <Avatar alt="Remy Sharp" src={patient.image} sx={{ mr: 1 }} />
+                                    {patient.firstName}{patient.lastName}
                                 </TableCell>
-                                <TableCell align="left">{row.phone}</TableCell>
-                                <TableCell align="left">${row.lastVisit}</TableCell>
-                                <TableCell align="left">${row.paid}</TableCell>
+                                <TableCell align="left">{patient.phone}</TableCell>
+                                <TableCell align="left">$</TableCell>
+                                <TableCell align="left">$</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

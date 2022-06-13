@@ -6,7 +6,7 @@ const AdminRoute = ({ children, ...rest }) => {
     const { user } = useAuth();
     let location = useLocation();
 
-    if (user[0]?.email && user[0]?.role === 'admin') {
+    if (user?.email && user?.role === 'admin') {
         return children;
     }
     else {

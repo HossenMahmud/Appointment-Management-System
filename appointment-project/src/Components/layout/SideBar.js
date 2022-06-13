@@ -42,18 +42,18 @@ export default function SideBar({ open, onClose }) {
                         </Button>
                     </Link>
                     {
-                        user[0]?.role === 'admin' && <>
-                            <Link to='allappointments' style={MyStyle}>
+                        user.role === 'admin' && <>
+                            <Link to='admin/allappointments' style={MyStyle}>
                                 <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
                                     All Appointments
                                 </Button>
                             </Link>
-                            <Link to='doctors' style={MyStyle}>
+                            <Link to='admin/doctors' style={MyStyle}>
                                 <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
                                     Doctors
                                 </Button>
                             </Link>
-                            <Link to='patients' style={MyStyle}>
+                            <Link to='admin/patients' style={MyStyle}>
                                 <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
                                     Patients
                                 </Button>
@@ -61,7 +61,7 @@ export default function SideBar({ open, onClose }) {
                         </>
                     }
                     {
-                        user[0]?.role === 'doctor' && <>
+                        user.role === 'doctor' && <>
                             <Link to='mypatients' style={MyStyle}>
                                 <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
                                     My patients
@@ -80,7 +80,7 @@ export default function SideBar({ open, onClose }) {
                         </>
                     }
                     {
-                        user[0]?.role === 'patient' && <>
+                        user.role === 'patient' && <>
                             <Link to='patientprofile' style={MyStyle}>
                                 <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
                                     Profile Settings

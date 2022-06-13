@@ -22,7 +22,7 @@ const PrivateRoute = ({ children, ...rest }) => {
         )
     }
 
-    if (user[0]?.email) {
+    if (user?.email) {
         return children;
     }
     else {

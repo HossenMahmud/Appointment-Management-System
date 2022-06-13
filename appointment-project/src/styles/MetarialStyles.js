@@ -184,9 +184,6 @@ export const FillterBox = styled(Box)(({ theme }) => ({
     }
 }));
 
-
-
-
 export const ButtonMake = styled(Button)(({ theme }) => ({
     padding: "3px 15px",
     borderRadius: '4px',

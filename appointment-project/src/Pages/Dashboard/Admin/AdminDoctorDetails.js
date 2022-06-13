@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { AddButton, ButtonMake, LayoutContiner } from '../../../styles/MetarialStyles';
-import useAuth from '../../../Hooks/useAuth';
-import { Grid, Paper, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
-import DoctorEducation from '../../../Components/Dashboard/doctor/DoctorEducation';
+import { Box, Grid, Paper, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import DoctorClinic from '../../../Components/Dashboard/doctor/DoctorClinic';
-
-
-const UserInfo = styled(Box)(({ theme }) => ({
+import DoctorEducation from '../../../Components/Dashboard/doctor/DoctorEducation';
+import { AddButton, LayoutContiner } from '../../../styles/MetarialStyles';
+const DoctorBox = styled(Box)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -22,127 +18,114 @@ const TextLevel = styled(Typography)(({ theme }) => ({
     fontSize: '14px',
 }));
 
-const DoctorProfileSetting = () => {
-
-    const { user } = useAuth()
-    const userId = user?.id;
-    const [doctorInfo, setDoctorInfo] = useState(null);
-
+const AdminDoctorDetails = () => {
+    const { id } = useParams()
+    const [doctor, setDoctor] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/doctor/${userId}`)
+        fetch(`http://localhost:5000/singleDoctor/${id}`)
             .then(res => res.json())
-            .then(data => setDoctorInfo(data[0]));
-    }, [userId]);
+            .then(data => setDoctor(data[0]));
+    }, [id]);
 
 
     let edu = [];
     let clinic = [];
-    if (doctorInfo == null) {
+    if (doctor == null) {
         edu = [];
         clinic = [];
     } else {
-        edu = JSON.parse(doctorInfo?.education);
-        clinic = JSON.parse(doctorInfo?.clinic);
+        edu = JSON.parse(doctor?.education);
+        clinic = JSON.parse(doctor?.clinic);
     }
 
     return (
         <LayoutContiner>
             <Box>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={12} sx={{ my: 2 }}>
-                        <Box sx={{ display: 'flex', justifyContent: "space-between", borderBottom: "2px solid blue", pb: 1 }}>
-                            <Typography variant='h5' sx={{ textTransform: 'capitalize' }}>{user?.userName}</Typography>
-                            <Box>
-                                {
-                                    doctorInfo ? <Link to={`updateDoctorInfo/${doctorInfo?.id}`} style={{ textDecoration: 'none' }}><ButtonMake>Update Info</ButtonMake></Link> : <Link to={`addDoctorInfo/${userId}`} style={{ textDecoration: 'none' }}><ButtonMake>Add Info</ButtonMake></Link>
-                                }
-                            </Box>
-                        </Box>
-                    </Grid>
                     <Grid item xs={12} sm={10} sx={{ mx: 'auto' }}>
                         <Paper elevation={16} sx={{ p: 2 }}>
                             <Grid container spacing={4}>
                                 <Grid item xs={12} sm={4}>
                                     <Box sx={{ textAlign: 'left', }}>
                                         {
-                                            doctorInfo?.image ? <img src={doctorInfo?.image} alt="" style={{ width: "100%", borderLeft: '6px solid #20C0F3', borderRadius: '10px' }} /> : <Box>Image Not Provided</Box>
+                                            doctor?.image ? <img src={doctor?.image} alt="" style={{ width: "100%", borderLeft: '6px solid #20C0F3', borderRadius: '10px' }} /> : <Box>Image Not Provided</Box>
                                         }
                                     </Box>
                                 </Grid>
                                 <Grid item xs={12} sm={8}>
                                     <Box>
-                                        <UserInfo sx={{ borderTop: '1px solid #f1f1f1' }}>
+                                        <DoctorBox sx={{ borderTop: '1px solid #f1f1f1' }}>
                                             <TextLevel variant='body' >First Name</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                                {doctorInfo ? doctorInfo.firstName : "Not Provided"}
+                                                {doctor ? doctor.firstName : "Not Provided"}
                                             </Typography>
-                                        </UserInfo>
+                                        </DoctorBox>
 
-                                        <UserInfo>
+                                        <DoctorBox>
                                             <TextLevel variant='body' >Last Name</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                                {doctorInfo ? doctorInfo.lastName : "Not Provided"}
+                                                {doctor ? doctor.lastName : "Not Provided"}
                                             </Typography>
-                                        </UserInfo>
+                                        </DoctorBox>
 
-                                        <UserInfo>
+                                        {/* <doctor>
                                             <TextLevel variant='body' >Email</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}> {user?.email}</Typography>
-                                        </UserInfo>
+                                        </doctor> */}
 
-                                        <UserInfo>
+                                        <DoctorBox>
                                             <TextLevel variant='body' >Phone Number</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                                {doctorInfo ? doctorInfo.phone : "Not Provided"}
+                                                {doctor ? doctor.phone : "Not Provided"}
                                             </Typography>
-                                        </UserInfo>
+                                        </DoctorBox>
 
-                                        <UserInfo>
+                                        <DoctorBox>
                                             <TextLevel variant='body'>Gender</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                                {doctorInfo ? doctorInfo.gender : "Not Provided"}
+                                                {doctor ? doctor.gender : "Not Provided"}
                                             </Typography>
-                                        </UserInfo>
+                                        </DoctorBox>
 
-                                        <UserInfo>
+                                        <DoctorBox>
                                             <TextLevel variant='body'>Date Of Birth</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                                {doctorInfo ? doctorInfo.birth : "Not Provided"}
+                                                {doctor ? doctor.birth : "Not Provided"}
                                             </Typography>
-                                        </UserInfo>
+                                        </DoctorBox>
 
-                                        <UserInfo>
+                                        <DoctorBox>
                                             <TextLevel variant='body' >Blood Group</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                                {doctorInfo ? doctorInfo.blood : "Not Provided"}
+                                                {doctor ? doctor.blood : "Not Provided"}
                                             </Typography>
-                                        </UserInfo>
+                                        </DoctorBox>
 
-                                        <UserInfo>
+                                        <DoctorBox>
                                             <TextLevel variant='body'>City</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                                {doctorInfo ? doctorInfo.city : "Not Provided"}
+                                                {doctor ? doctor.city : "Not Provided"}
                                             </Typography>
-                                        </UserInfo>
+                                        </DoctorBox>
 
-                                        <UserInfo>
+                                        <DoctorBox>
                                             <TextLevel variant='body'>Address</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                                {doctorInfo ? doctorInfo.address : "Not Provided"}
+                                                {doctor ? doctor.address : "Not Provided"}
                                             </Typography>
-                                        </UserInfo>
+                                        </DoctorBox>
 
-                                        <UserInfo>
+                                        <DoctorBox>
                                             <TextLevel variant='body'>Specialized</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                                {doctorInfo ? doctorInfo.specialist : "Not Provided"}
+                                                {doctor ? doctor.specialist : "Not Provided"}
                                             </Typography>
-                                        </UserInfo>
+                                        </DoctorBox>
 
-                                        <UserInfo>
+                                        <DoctorBox>
                                             <TextLevel variant='body'>Status</TextLevel>
-                                            <AddButton sx={{ color: 'yellow' }}>  {doctorInfo ? doctorInfo.status : "Pending"}</AddButton>
-                                        </UserInfo>
+                                            <AddButton sx={{ color: 'yellow' }}>  {doctor ? doctor.status : "Pending"}</AddButton>
+                                        </DoctorBox>
 
                                     </Box>
                                 </Grid>
@@ -153,7 +136,7 @@ const DoctorProfileSetting = () => {
                             <Typography variant='h6' sx={{ color: '#757575', fontSize: '16px', mb: 2, fontWeight: 'bold' }}>About Me</Typography>
                             <Box>
                                 <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
-                                    {doctorInfo ? doctorInfo.biography : "Not Provided"}
+                                    {doctor ? doctor.biography : "Not Provided"}
                                 </Typography>
                             </Box>
                         </Paper>
@@ -197,8 +180,8 @@ const DoctorProfileSetting = () => {
                     </Grid>
                 </Grid>
             </Box>
-        </LayoutContiner >
+        </LayoutContiner>
     );
 };
 
-export default DoctorProfileSetting;
+export default AdminDoctorDetails;

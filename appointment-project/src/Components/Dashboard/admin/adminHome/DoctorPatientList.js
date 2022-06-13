@@ -3,14 +3,14 @@ import React from 'react';
 import DoctorList from './DoctorList';
 import PatientList from './PatientList';
 
-const DoctorPatientList = () => {
+const DoctorPatientList = ({ doctors, patients }) => {
     return (
         <Grid container spacing={2} sx={{ mt: 5 }}>
             <Grid item xs={12} sm={6}>
-                <DoctorList></DoctorList>
+                <DoctorList doctors={doctors}></DoctorList>
             </Grid>
             <Grid item xs={12} sm={6}>
-                <PatientList></PatientList>
+                <PatientList patients={patients}></PatientList>
             </Grid>
         </Grid>
     );

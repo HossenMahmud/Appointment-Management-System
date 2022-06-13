@@ -10,15 +10,16 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import logo from '../../assets/images/Logo1.png';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from '../../Hooks/useAuth';
 
 const Navbar = () => {
-
-    const { user } = useAuth();
+    const navigation = useNavigate();
+    const { user, setUser } = useAuth();
     const Logout = () => {
         localStorage.clear();
-        window.location.reload();
+        setUser(false);
+        navigation("/");
     }
 
 
@@ -101,7 +102,7 @@ const Navbar = () => {
                                 </MenuItem>
                             </Link>
                             {
-                                user[0] && <Link to="/Dashboard" style={{ textDecoration: 'none' }}>
+                                user && <Link to="/Dashboard" style={{ textDecoration: 'none' }}>
                                     <MenuItem >
                                         <Typography textAlign="center">Dashboard</Typography>
                                     </MenuItem>
@@ -109,7 +110,7 @@ const Navbar = () => {
                             }
 
                             {
-                                user[0] ?
+                                user ?
                                     <MenuItem onClick={Logout}>
                                         <Typography textAlign="center">Logout</Typography>
                                     </MenuItem> : <Link to="/login" style={{ textDecoration: 'none' }}>
@@ -160,14 +161,14 @@ const Navbar = () => {
                         </Link>
 
                         {
-                            user[0] && <Link to="/Dashboard" style={{ textDecoration: 'none' }}>
+                            user && <Link to="/Dashboard" style={{ textDecoration: 'none' }}>
                                 <Button sx={{ my: 2, color: '#fff', display: 'block' }} >
                                     Dashboard
                                 </Button>
                             </Link>
                         }
                         {
-                            user[0] ? <Button sx={{ my: 2, color: '#fff', display: 'block' }} onClick={Logout}>
+                            user ? <Button sx={{ my: 2, color: '#fff', display: 'block' }} onClick={Logout}>
                                 Logout
                             </Button> : <Link to="/login" style={{ textDecoration: 'none' }}>
                                 <Button sx={{ my: 2, color: '#fff', display: 'block' }} >

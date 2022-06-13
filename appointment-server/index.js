@@ -4,9 +4,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
-const { KeyObject } = require("crypto");
-const { json } = require("express/lib/response");
-
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -17,12 +14,10 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 
-
-// const UPLOADS_FOLDER = "./uploads/";
+// Use Multer For Image And File Uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "public/images");
-        // cb(null, UPLOADS_FOLDER);
     },
     filename: (req, file, cb) => {
         const fileExt = path.extname(file.originalname);
@@ -38,16 +33,13 @@ const storage = multer.diskStorage({
         cb(null, fileName + fileExt);
     },
 });
-
 const upload = multer({
     storage: storage,
 });
-
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 
-
-// MySQL
+// MySQL DataBase Connection
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
@@ -55,6 +47,7 @@ const db = mysql.createConnection({
     database: "doctors_appointment",
 });
 
+// Check DataBase Connection 
 db.connect((error) => {
     if (error) {
         console.log(error)
@@ -63,31 +56,21 @@ db.connect((error) => {
     }
 })
 
-
-app.post("/login", (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-
+// Login Doctor || Patient || Admin
+app.get("/login/:email", (req, res) => {
+    const email = req.params.email;
     db.query(
-        "SELECT * FROM users WHERE email = ?;",
-        email,
+        `SELECT * FROM users WHERE email = '${email}'`,
         (err, result) => {
             if (err) {
-                res.send({ err: err });
-            }
-            if (result.length > 0) {
-                if (password === result[0].password) {
-                    res.send({ message: "Login Successfull", user: result })
-                } else {
-                    res.send({ error: "Password didn't match" })
-                }
             } else {
-                res.send({ message: "User doesn't exist" });
+                res.json(result);
             }
         }
-    )
+    );
 });
 
+// Register With Doctor || Patient
 app.post("/register", (req, res) => {
     const userName = req.body.userName;
     const email = req.body.email;
@@ -105,8 +88,8 @@ app.post("/register", (req, res) => {
     )
 });
 
-
-app.post("/profile", upload.single("image"), (req, res) => {
+//  Insert Login Doctor More Information
+app.post("/addDoctorInfo", upload.single("image"), (req, res) => {
     const userId = req.body.userId;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -121,10 +104,10 @@ app.post("/profile", upload.single("image"), (req, res) => {
     const education = req.body.education;
     const biography = req.body.biography;
     const image = `http://localhost:5000/images/${req.file.filename}`;
-
+    const status = req.body.status;
     db.query(
-        "INSERT INTO profiles (userId, firstName, lastName, phone, gender, blood, birth, city, address, specialist, clinic, education, biography,image ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        [userId, firstName, lastName, phone, gender, blood, birth, city, address, specialist, clinic, education, biography, image],
+        "INSERT INTO doctors (userId, firstName, lastName, phone, gender, blood, birth, city, address, specialist, clinic, education, biography,image,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [userId, firstName, lastName, phone, gender, blood, birth, city, address, specialist, clinic, education, biography, image, status],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -136,6 +119,147 @@ app.post("/profile", upload.single("image"), (req, res) => {
 
 });
 
+
+//  Insert Login Patients More Information
+app.post("/addPatientInfo", upload.single("image"), (req, res) => {
+    const userId = req.body.userId;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const phone = req.body.phone;
+    const gender = req.body.gender;
+    const blood = req.body.blood;
+    const birth = req.body.birth;
+    const city = req.body.city;
+    const address = req.body.address;
+    const image = `http://localhost:5000/images/${req.file.filename}`;
+    db.query(
+        "INSERT INTO patients (userId, firstName, lastName, phone, gender, blood, birth, city, address, image) VALUES (?,?,?,?,?,?,?,?,?,?)",
+        [userId, firstName, lastName, phone, gender, blood, birth, city, address, image],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values Inserted");
+            }
+        }
+    );
+
+});
+
+// Get Login Patient To Another Table
+app.get('/patient/:userId', (req, res) => {
+    const userId = req.params.userId;
+    db.query('SELECT * FROM patients WHERE userId = ?', userId, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+
+// Get Login Doctor To Another Table
+app.get('/doctor/:userId', (req, res) => {
+    const userId = req.params.userId;
+    db.query('SELECT * FROM doctors WHERE userId = ?', userId, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+
+// Get User By id
+app.get('/singlePatient/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('SELECT * FROM patients WHERE id = ?', id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+// Get User By id
+app.get('/singleDoctor/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('SELECT * FROM doctors WHERE id = ?', id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+// Update Patient  Profile
+app.put("/patientUpdate/:id", (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const keys = Object.keys(data);
+    const sqlquery = `UPDATE patients SET ${keys.map(
+        (key) => key + " = ?"
+    )} WHERE id = ${id}`;
+
+    const value = keys.map((key) => {
+        return data[key];
+    });
+
+    db.query(sqlquery, value, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+// Update Doctor  Profile
+app.put("/doctorUpdate/:id", (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const keys = Object.keys(data);
+    const sqlquery = `UPDATE doctors SET ${keys.map(
+        (key) => key + " = ?"
+    )} WHERE id = ${id}`;
+
+    const value = keys.map((key) => {
+        return data[key];
+    });
+
+    db.query(sqlquery, value, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+
+// Get All Doctor List
+app.get("/allDoctors", (req, res) => {
+    db.query(
+        `SELECT * FROM doctors`,
+        (err, result) => {
+            if (err) {
+            } else {
+                res.json(result);
+            }
+        }
+    );
+})
+// Get All Doctor List
+app.get("/allPatients", (req, res) => {
+    db.query(
+        `SELECT * FROM patients`,
+        (err, result) => {
+            if (err) {
+            } else {
+                res.json(result);
+            }
+        }
+    );
+})
 
 
 app.get('/', (req, res) => {

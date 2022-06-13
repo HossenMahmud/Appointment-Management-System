@@ -3,45 +3,42 @@ import LoginForm from '../../Components/loginRegistration/LoginForm';
 import { LayoutContiner } from '../../styles/MetarialStyles';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../Hooks/useAuth';
 
 const Login = () => {
     const navigate = useNavigate();
-    // const location = useLocation();
     const [data, setData] = useState([]);
+    const { setUser } = useAuth();
 
-
-    const updateUser = (user) => {
-        localStorage.setItem("MyUser", JSON.stringify(user))
+    const saveUser = (user) => {
+        localStorage.setItem("MyUser", JSON.stringify(user));
     }
 
-    const login = e => {
-        if (data.length !== 0) {
-            axios.post("http://localhost:5000/login", data)
-                .then(res => {
-                    if (res.data.message) {
-                        alert(res.data.message)
-                        updateUser(res.data.user)
-                        // const destination = location?.state?.from || '/';
-                        navigate('/');
-                        window.location.reload();
-
-                    } else {
-                        alert(res.data.error)
-                        navigate('/login')
-                    }
-                })
-        }
-        else {
-            alert("Please Enter Email & Password")
-        }
+    const handleLogin = e => {
+        const email = data.email;
+        const password = data.password;
+        axios.get(`http://localhost:5000/login/${email}`).then((res) => {
+            const user = res.data[0];
+            if (user) {
+                if (user.password === password) {
+                    saveUser(user);
+                    setUser(user);
+                    e.target.reset();
+                    navigate('/');
+                }
+                else {
+                    alert("Password Doesn't Match")
+                }
+            } else {
+                alert("User Doesn't Exist");
+            }
+        });
         e.preventDefault();
-    }
-
-
+    };
 
     return (
         <LayoutContiner>
-            <LoginForm login={login} data={data} setData={setData}></LoginForm>
+            <LoginForm login={handleLogin} data={data} setData={setData}></LoginForm>
         </LayoutContiner>
     );
 };

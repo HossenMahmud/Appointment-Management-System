@@ -8,23 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Avatar, Box, Typography } from '@mui/material';
 import { TableBox, TableHeading } from '../../../../styles/MetarialStyles';
-import Img from '../../../../assets/images/profile.jpg'
 import './doctorTable.css';
 import StarRateIcon from '@mui/icons-material/StarRate';
 
-function createData(name, speciality, earned) {
-    return { name, speciality, earned };
-}
-
-const rows = [
-    createData('Dr Rubby Prrrin', 'Dental', 3524),
-    createData('Dr Darren Eider', 'Cardiology', 7829),
-    createData('Dr Robina', 'Urology', 4544),
-    createData('Dr shathu', 'Orthopaedics', 5527),
-    createData('Dr Sofik Raj', 'Medicine', 10027),
-];
-
-const DoctorList = () => {
+const DoctorList = ({ doctors }) => {
     return (
         <TableBox>
             <Box sx={{ borderBottom: "1px solid #eaeaea", py: 1 }}>
@@ -41,17 +28,17 @@ const DoctorList = () => {
                         </TableHeading>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {doctors.slice(0, 5).map((doctor) => (
                             <TableRow
-                                key={row.name}
+                                key={doctor.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <Avatar alt="Remy Sharp" src={Img} sx={{ mr: 1 }} />
-                                    {row.name}
+                                    <Avatar alt="Remy Sharp" src={doctor.image} sx={{ mr: 1 }} />
+                                    {doctor.firstName}  {doctor.lastName}
                                 </TableCell>
-                                <TableCell align="left">{row.speciality}</TableCell>
-                                <TableCell align="left">${row.earned}</TableCell>
+                                <TableCell align="left">{doctor.specialist}</TableCell>
+                                <TableCell align="left">$</TableCell>
                                 <TableCell align="left">
                                     <StarRateIcon sx={{ color: '#ffbc34', fontSize: '12px' }} />
                                     <StarRateIcon sx={{ color: '#ffbc34', fontSize: '12px' }} />

@@ -1,19 +1,18 @@
 import React from 'react';
-import { LayoutContiner } from '../../styles/MetarialStyles';
-import DoctorDetailsTop from '../../Components/AllDoctors/DoctorDetails/DoctorDetailsTop'
-import DoctorDetailsInfo from '../../Components/AllDoctors/DoctorDetails/DoctorAboutInfo';
-
-
+import Navbar from '../Shared/Navbar';
+import Footer from '../Shared/Footer';
+import { Container } from '@mui/material';
+import DoctorDetailsInfor from '../../Components/AllDoctors/DoctorDetails/DoctorDetailsInfo'
 
 const DoctorDetails = () => {
-
     return (
-
-        <LayoutContiner>
-            <DoctorDetailsTop></DoctorDetailsTop>
-            <DoctorDetailsInfo />
-        </LayoutContiner >
-
+        <>
+            <Navbar></Navbar>
+            <Container maxWidth="lg" sx={{ py: 6 }}>
+                <DoctorDetailsInfor></DoctorDetailsInfor>
+            </Container>
+            <Footer></Footer>
+        </>
     );
 };
 

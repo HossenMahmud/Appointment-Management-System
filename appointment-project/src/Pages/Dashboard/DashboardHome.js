@@ -9,17 +9,17 @@ const DashboardHome = () => {
     return (
         <div>
             {
-                user[0].role === 'admin' && <>
+                user.role === 'admin' && <>
                     <AdminHome></AdminHome>
                 </>
             }
             {
-                user[0].role === 'doctor' && <>
+                user.role === 'doctor' && <>
                     <DoctorHome></DoctorHome>
                 </>
             }
             {
-                user[0].role === 'patient' && <>
+                user.role === 'patient' && <>
                     <PatientHome></PatientHome>
                 </>
             }

@@ -14,10 +14,10 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { Avatar, TableHead } from "@mui/material";
-import Img from '../../../assets/images/profile.jpg';
+import { Avatar, Button, TableHead } from "@mui/material";
 import './Admin.css'
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 
 function TablePaginationActions(props) {
@@ -82,29 +82,7 @@ function TablePaginationActions(props) {
     );
 }
 
-
-function createData(patientId, patientName, age, address, phone, paid) {
-    return { patientId, patientName, age, address, phone, paid };
-}
-
-const rows = [
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-
-
-];
-
-
-export default function PatientsList() {
+export default function PatientsList({ patients }) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -153,30 +131,35 @@ export default function PatientsList() {
             >
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell align="left">Patient Id</StyledTableCell>
                         <StyledTableCell align="left">Patient Name</StyledTableCell>
-                        <StyledTableCell align="left">Age</StyledTableCell>
-                        <StyledTableCell align="left">Address</StyledTableCell>
+                        <StyledTableCell align="left">Gender</StyledTableCell>
                         <StyledTableCell align="left">Phone</StyledTableCell>
-                        <StyledTableCell align="left">Paid</StyledTableCell>
+                        <StyledTableCell align="left">Blood Group</StyledTableCell>
+                        <StyledTableCell align="left">City</StyledTableCell>
+                        <StyledTableCell align="left">View</StyledTableCell>
+
+
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {(rowsPerPage > 0
-                        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : rows
-                    ).map((row, index) => (
+                        ? patients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        : patients
+                    ).map((patient, index) => (
                         <StyledTableRow key={index}>
-                            <StyledTableCell align="left">{row.patientId}</StyledTableCell>
                             <StyledTableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Avatar alt="Remy Sharp" src={Img} sx={{ mr: 1 }} />
-                                {row.patientName}
+                                <Avatar alt="Remy Sharp" src={patient.image} sx={{ mr: 1 }} />
+                                {patient.firstName}{patient.lastName}
                             </StyledTableCell>
-                            <StyledTableCell align="left">{row.age}</StyledTableCell>
-                            <StyledTableCell align="left">{row.address}</StyledTableCell>
-                            <StyledTableCell align="left">{row.phone}</StyledTableCell>
-                            <StyledTableCell align="left">${row.paid}</StyledTableCell>
-
+                            <StyledTableCell align="left">{patient.gender}</StyledTableCell>
+                            <StyledTableCell align="left">{patient.phone}</StyledTableCell>
+                            <StyledTableCell align="left">{patient.blood}</StyledTableCell>
+                            <StyledTableCell align="left">{patient.city}</StyledTableCell>
+                            <StyledTableCell align="left">
+                                <Link to={`patientDetails/${patient.id}`} style={{ textDecoration: 'none' }}>
+                                    <Button variant="contained" size="small" color="info">Details</Button>
+                                </Link>
+                            </StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>
@@ -186,7 +169,7 @@ export default function PatientsList() {
                             sx={{ border: "none", color: "black", background: "#ADE7F7" }}
                             rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                             colSpan={12}
-                            count={rows.length}
+                            count={patients.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             SelectProps={{

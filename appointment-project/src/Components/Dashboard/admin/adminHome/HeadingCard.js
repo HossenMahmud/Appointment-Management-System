@@ -5,7 +5,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Grid, Stack, Typography } from '@mui/material';
 
-const HeadingCard = () => {
+const HeadingCard = ({ doctors, patients }) => {
     return (
         <Grid container spacing={2}>
             {/* Cart Item */}
@@ -27,7 +27,7 @@ const HeadingCard = () => {
                         <Box sx={{ width: 60, height: 60, border: "3px solid #00D0F1", borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <GroupAddIcon sx={{ color: "#00D0F1", fontSize: '20px' }} />
                         </Box>
-                        <Typography variant='h5'>175</Typography>
+                        <Typography variant='h5'>{doctors.length}</Typography>
                     </Stack>
                     <Typography sx={{ mb: 1, color: "#757575" }}>Doctors</Typography>
                     <Box sx={{ width: '100%', height: "7px", backgroundColor: "#e9ecef", borderRadius: "5px" }}>
@@ -55,7 +55,7 @@ const HeadingCard = () => {
                         <Box sx={{ width: 60, height: 60, border: "3px solid #7bb13c", borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <PeopleAltIcon sx={{ color: "#7bb13c", fontSize: '20px' }} />
                         </Box>
-                        <Typography variant='h5'>420</Typography>
+                        <Typography variant='h5'>{patients.length}</Typography>
                     </Stack>
                     <Typography sx={{ mb: 1, color: "#757575" }}>Patient</Typography>
                     <Box sx={{ width: '100%', height: "7px", backgroundColor: "#e9ecef", borderRadius: "5px" }}>

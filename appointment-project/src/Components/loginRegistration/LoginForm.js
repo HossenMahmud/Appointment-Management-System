@@ -16,7 +16,7 @@ const LoginForm = ({ data, setData, login }) => {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-                <Box>
+                <Box component="form" onSubmit={login}>
                     <FormLayout>
                         <Typography variant='h6'>Login</Typography>
                         <Box>
@@ -45,7 +45,7 @@ const LoginForm = ({ data, setData, login }) => {
                                     })
                                 }
                             ></TextFieldMake>
-                            <LogRegiButton variant="contained" fullWidth onClick={login}> Login </LogRegiButton>
+                            <LogRegiButton variant="contained" fullWidth type="submit"> Login </LogRegiButton>
                         </Box>
                         <Box sx={{ textAlign: 'center', fontSize: '13px' }}>
                             <Typography variant='body'>Don’t have an account?   <Link to="/patientRegister" style={{ textDecoration: 'none', color: "#20C0F3" }}> Register</Link></Typography>
