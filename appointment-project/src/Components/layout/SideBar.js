@@ -77,6 +77,11 @@ export default function SideBar({ open, onClose }) {
                                     Profile Settings
                                 </Button>
                             </Link>
+                            <Link to='scheduleTime' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    Schedule Time
+                                </Button>
+                            </Link>
                         </>
                     }
                     {

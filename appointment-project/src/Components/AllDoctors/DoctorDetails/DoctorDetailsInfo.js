@@ -1,7 +1,6 @@
 import { Grid, Paper, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-import doctorImage from '../../../assets/images/dorctorImg.jpg';
 import GradeIcon from '@mui/icons-material/Grade';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmailIcon from '@mui/icons-material/Email';
@@ -12,53 +11,34 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { ButtonMake } from '../../../styles/MetarialStyles';
-import DoctorInfoItem from './DoctorInfoItem';
+import DoctorEducation from '../../Dashboard/doctor/DoctorEducation';
+import DoctorClinic from '../../Dashboard/doctor/DoctorClinic';
 
 
-const DoctorDetailsTop = () => {
-    const educations = [
-        {
-            id: 1,
-            label2: 'American Dental Medical University',
-            label3: 'BDS',
-            label1: '1998 - 2003',
-        },
-        {
-            id: 2,
-            label2: 'American Dental Medical University',
-            label3: 'MDS',
-            label1: '2003 - 2005',
-        }
-    ]
+const DoctorDetailsInfo = ({ doctor, doc }) => {
+    let edu = [];
+    let clinic = [];
+    if (doctor == null) {
+        edu = [];
+        clinic = [];
+    } else {
+        edu = JSON.parse(doctor?.education);
+        clinic = JSON.parse(doctor?.clinic);
+    }
 
-    const experiences = [
-        {
-            id: 1,
-            label2: 'Glowing Smiles Family Dental Clinic',
-            label1: 'Dhaka',
-            label3: '2010 - Present (5 Years)',
-        },
-        {
-            id: 1,
-            label2: 'Comfort Care Dental Clinic',
-            label1: 'Dhaka',
-            label3: '2007 - 2010 (3 Years)',
-        },
-    ]
     return (
         <>
             <Paper elevation={16} sx={{ p: 2, my: 2 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={4}>
-                        <Box>
-                            <img src={doctorImage} width="100%" alt="" />
+                        <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
+                            <img src={doctor.image} width="60%" alt="" />
                         </Box>
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <Box>
-                            <Typography sx={{ fontWeight: 'bold', fontSize: '18px' }}>Dr. Darren Elder</Typography>
-                            <Typography sx={{ fontSize: '14px', color: '#757575', my: 1 }}>BDS, MDS - Oral & Maxillofacial Surgery</Typography>
-                            <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>Dentist</Typography>
+                            <Typography sx={{ fontWeight: 'bold', fontSize: '18px' }}>{doctor.firstName} {doctor.lastName}</Typography>
+                            <Typography sx={{ fontWeight: 'bold', fontSize: '14px' }}>{doctor.specialist}</Typography>
 
                             <Box sx={{ mt: 1 }}>
                                 <Stack
@@ -80,17 +60,17 @@ const DoctorDetailsTop = () => {
                             <Box sx={{ mt: 1 }}>
                                 <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
                                     <LocationOnIcon sx={{ fontSize: '14px' }} />
-                                    <Typography variant='body' sx={{ fontSize: '14px' }}>Dhaka,Bangladesh</Typography>
+                                    <Typography variant='body' sx={{ fontSize: '14px' }}>{doctor.address}</Typography>
                                 </Stack>
 
                                 <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
                                     <EmailIcon variant='body' sx={{ fontSize: '14px' }} />
-                                    <Typography variant='body' sx={{ fontSize: '14px' }}>doctor@gmail.com</Typography>
+                                    <Typography variant='body' sx={{ fontSize: '14px' }}>{doc.email}</Typography>
                                 </Stack>
 
                                 <Stack direction="row" justifyContent="left" alignItems="center" spacing={1} >
                                     <PhoneIcon sx={{ fontSize: '14px' }} />
-                                    <Typography variant='body' sx={{ fontSize: '14px' }}>+8801786502485</Typography>
+                                    <Typography variant='body' sx={{ fontSize: '14px' }}>{doctor.phone}</Typography>
                                 </Stack>
                             </Box>
 
@@ -124,7 +104,7 @@ const DoctorDetailsTop = () => {
                         <Paper elevation={16} sx={{ mb: 3, p: 2 }}>
                             <Typography variant='h6'>About Me</Typography>
                             <Typography variant='body' sx={{ fontSize: '14px' }}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                {doctor.biography}
                             </Typography>
                         </Paper>
                     </Grid>
@@ -132,22 +112,32 @@ const DoctorDetailsTop = () => {
                         <Paper elevation={16} sx={{ p: 2 }}>
                             <Grid container spacing={3} >
                                 <Grid item xs={12} sm={6}>
-                                    <Box>
-                                        <Typography variant='h6'>Education</Typography>
-
-                                        {
-                                            educations.map(education => <DoctorInfoItem id={education.id} data={education}></DoctorInfoItem>)
-                                        }
-
-                                    </Box>
+                                    <Paper elevation={16} sx={{ p: 2, }}>
+                                        <Typography variant='h6' sx={{ color: '#757575', fontSize: '16px', mb: 2, fontWeight: 'bold' }}>Education</Typography>
+                                        <Box>
+                                            {
+                                                edu?.map((education) => <DoctorEducation
+                                                    key={education.id}
+                                                    education={education}
+                                                >
+                                                </DoctorEducation>)
+                                            }
+                                        </Box>
+                                    </Paper>
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    <Box>
-                                        <Typography variant='h6'>Work & Experience</Typography>
-                                        {
-                                            experiences.map(experience => <DoctorInfoItem id={experience.id} data={experience}></DoctorInfoItem>)
-                                        }
-                                    </Box>
+                                    <Paper elevation={16} sx={{ p: 2, my: 3 }}>
+                                        <Typography variant='h6' sx={{ color: '#757575', fontSize: '16px', mb: 2, fontWeight: 'bold' }}>Clinic Info</Typography>
+                                        <Box>
+                                            {
+                                                clinic?.map((clinic) => <DoctorClinic
+                                                    key={clinic.id}
+                                                    clinic={clinic}
+                                                >
+                                                </DoctorClinic>)
+                                            }
+                                        </Box>
+                                    </Paper>
                                 </Grid>
                             </Grid>
                         </Paper>
@@ -158,4 +148,4 @@ const DoctorDetailsTop = () => {
     );
 };
 
-export default DoctorDetailsTop;
+export default DoctorDetailsInfo;

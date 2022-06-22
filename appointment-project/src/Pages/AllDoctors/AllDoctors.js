@@ -7,18 +7,23 @@ import SubHeader from '../Shared/SubHeader';
 import axios from 'axios';
 
 const AllDoctors = () => {
-    const [doctors, setDoctors] = useState([]);
+    const [doctors, setDoctors] = useState(null);
     useEffect(() => {
         axios.get('http://localhost:5000/allDoctors').then((res) => {
             setDoctors(res.data);
         });
     }, []);
+
+
+
     return (
         <>
             <Navbar></Navbar>
             <SubHeader></SubHeader>
             <Container maxWidth="lg" sx={{ py: 6 }}>
-                <AllDoctorsCard doctors={doctors}></AllDoctorsCard>
+                {
+                    (doctors !== null) && <AllDoctorsCard doctors={doctors}></AllDoctorsCard>
+                }
             </Container>
             <Footer></Footer>
         </>

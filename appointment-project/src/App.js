@@ -26,12 +26,16 @@ import AddDoctorInfo from './Pages/Dashboard/Doctor/AddDoctorInfo';
 import DoctorUpdateInfo from './Pages/Dashboard/Doctor/DoctorUpdateInfo';
 import AdminDoctorDetails from './Pages/Dashboard/Admin/AdminDoctorDetails';
 import AdminPatientDetails from './Pages/Dashboard/Admin/AdminPatientDetails';
-
+import ScheduleTime from './Pages/Dashboard/Doctor/ScheduleTime';
+import AddSchedule from './Components/Dashboard/doctor/DoctorSchedule/AddSchedule';
+import ScrollToTop from "react-scroll-to-top";
+import UpdateSchedule from './Components/Dashboard/doctor/DoctorSchedule/UpdateSchedule';
 
 function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ScrollToTop smooth color='white' style={{ backgroundColor: '#122546' }} />
       <Router>
         <AuthProvider>
 
@@ -40,7 +44,8 @@ function App() {
             {/* Home page all Routes */}
             <Route path="/" element={<HomePage />}></Route>
             <Route path="alldoctors" element={<AllDoctors />}></Route>
-            <Route path="doctordetails" element={<DoctorDetails />}></Route>
+            <Route path="doctordetails/:id" element={<DoctorDetails />}></Route>
+            <Route path="alldoctors/doctordetails/:id" element={<DoctorDetails />}></Route>
 
             {/* Auth all Routes */}
             <Route path="login" element={<Login />}></Route>
@@ -62,6 +67,9 @@ function App() {
               <Route path="doctorprofile" element={<DoctorProfileSetting />}></Route>
               <Route path="doctorprofile/addDoctorInfo/:id" element={<AddDoctorInfo />}></Route>
               <Route path="doctorprofile/updateDoctorInfo/:id" element={<DoctorUpdateInfo />}></Route>
+              <Route path="scheduleTime" element={<ScheduleTime />}></Route>
+              <Route path="scheduleTime/addSchedule" element={<AddSchedule />}></Route>
+              <Route path="scheduleTime/updateSchedule/:id" element={<UpdateSchedule />}></Route>
               {/* Patient all Routes */}
               <Route path="patientprofile" element={<PatientProfileSetting />}></Route>
               <Route path="patientprofile/addPatientInfo/:id" element={<AddPatientInfo />}></Route>

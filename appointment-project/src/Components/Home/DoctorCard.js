@@ -149,12 +149,11 @@ const DoctorCard = ({ doctors }) => {
                                 </Box>
 
                                 <Box>
-                                    <Link to='/doctordetails' style={{ textDecoration: 'none' }}>
+                                    <Link to={`doctordetails/${doctor.id}`} style={{ textDecoration: 'none' }}>
                                         <ButtonMake sx={{ mr: 1, mb: 1 }}>View Profile</ButtonMake>
                                     </Link>
                                     <ButtonMake sx={{ mb: 1 }}>Book Now</ButtonMake>
                                 </Box>
-
                             </Box>
                         </Box>
                     </CardLayout>

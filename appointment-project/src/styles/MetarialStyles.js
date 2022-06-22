@@ -159,7 +159,7 @@ export const CancelButton = styled(Button)(({ theme }) => ({
 
 export const AddButton = styled(Button)(({ theme }) => ({
     backgroundColor: "#20C0F3",
-    borderColor: '##20C0F3',
+    borderColor: '#20C0F3',
     textTransform: 'capitalize',
     color: '#fff',
     padding: '0px 3px',

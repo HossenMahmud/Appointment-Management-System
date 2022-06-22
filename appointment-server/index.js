@@ -262,6 +262,83 @@ app.get("/allPatients", (req, res) => {
 })
 
 
+// Get Doctor Schedule Time
+app.get("/schedule/:doctorId", (req, res) => {
+    const doctorId = req.params.doctorId;
+    db.query('SELECT * FROM schedules WHERE doctorId = ?', doctorId, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+//  Add Schedule
+app.post("/addSchedule", (req, res) => {
+    const doctorId = req.body.doctorId;
+    const hospitalName = req.body.hospitalName;
+    const location = req.body.location;
+    const dateTime = req.body.dateTime;
+    db.query(
+        "INSERT INTO schedules (doctorId, hospitalName, location, dateTime) VALUES (?,?,?,?)",
+        [doctorId, hospitalName, location, dateTime],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values Inserted");
+            }
+        }
+    );
+
+});
+// Delete Schedule
+app.delete("/deleteSchedule/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("DELETE FROM schedules WHERE id = ?", id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
+// Get Schedule By id
+app.get('/singleSchedule/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('SELECT * FROM schedules WHERE id = ?', id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+
+// Update schedule
+app.put("/updateSchedule/:id", (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const keys = Object.keys(data);
+    const sqlquery = `UPDATE schedules SET ${keys.map(
+        (key) => key + " = ?"
+    )} WHERE id = ${id}`;
+
+    const value = keys.map((key) => {
+        return data[key];
+    });
+
+    db.query(sqlquery, value, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+
+
 app.get('/', (req, res) => {
     res.send('Appointment Server Running');
 });

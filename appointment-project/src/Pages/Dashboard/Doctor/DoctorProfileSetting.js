@@ -27,7 +27,6 @@ const DoctorProfileSetting = () => {
     const { user } = useAuth()
     const userId = user?.id;
     const [doctorInfo, setDoctorInfo] = useState(null);
-
     useEffect(() => {
         fetch(`http://localhost:5000/doctor/${userId}`)
             .then(res => res.json())

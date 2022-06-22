@@ -3,8 +3,6 @@ import axios from "axios";
 import DoctorRegisterForm from '../../Components/loginRegistration/DoctorRegisterForm';
 import { LayoutContiner } from '../../styles/MetarialStyles';
 import { useNavigate } from "react-router-dom";
-import 'react-toastify/dist/ReactToastify.css';
-
 const DoctorRegister = () => {
 
     const navigate = useNavigate();
