@@ -152,7 +152,9 @@ const DoctorCard = ({ doctors }) => {
                                     <Link to={`doctordetails/${doctor.id}`} style={{ textDecoration: 'none' }}>
                                         <ButtonMake sx={{ mr: 1, mb: 1 }}>View Profile</ButtonMake>
                                     </Link>
-                                    <ButtonMake sx={{ mb: 1 }}>Book Now</ButtonMake>
+                                    <Link to={`/bookNow/${doctor.id}`} style={{ textDecoration: 'none' }}>
+                                        <ButtonMake sx={{ mb: 1 }}>Book Now</ButtonMake>
+                                    </Link>
                                 </Box>
                             </Box>
                         </Box>

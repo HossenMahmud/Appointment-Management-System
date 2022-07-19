@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import LoginForm from '../../Components/loginRegistration/LoginForm';
 import { LayoutContiner } from '../../styles/MetarialStyles';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 
 const Login = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const { setUser } = useAuth();
+    let location = useLocation();
+    const redirect_url = location?.state?.from?.pathname || "/"
 
     const saveUser = (user) => {
         localStorage.setItem("MyUser", JSON.stringify(user));
@@ -24,7 +26,7 @@ const Login = () => {
                     saveUser(user);
                     setUser(user);
                     e.target.reset();
-                    navigate('/');
+                    navigate(redirect_url);
                 }
                 else {
                     alert("Password Doesn't Match")

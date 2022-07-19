@@ -6,14 +6,16 @@ import subHeaderImg from '../../assets/images/DoctorBanner.jpg';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { Link } from "react-router-dom";
 
-const SubHeader = () => {
+const SubHeader = ({ from, fromLink, to }) => {
     const SubHeaderBg = styled(Box)(({ theme }) => ({
         backgroundImage: ` url(${subHeaderImg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        padding: '80px',
+        padding: '30px',
         backgroundColor: 'rgba(10, 24, 81, 0.75)',
+        marginTop: '1px',
+        borderRadius: '10px',
 
         '&::before': {
             content: '""',
@@ -27,29 +29,29 @@ const SubHeader = () => {
     }));
 
     return (
-        <SubHeaderBg>
-            <Container maxWidth="lg">
+        <Container maxWidth="lg">
+            <SubHeaderBg>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant='h4' sx={{ color: '#fff', mb: 3 }}>Our Doctors</Typography>
+                            {/* <Typography variant='h5' sx={{ color: '#fff', mb: 3 }}>{title}</Typography> */}
                             <Stack
                                 direction="row"
                                 justifyContent="center"
                                 alignItems="center"
                                 spacing={2}
                             >
-                                <Link to='/' style={{ textDecoration: 'none' }}>
-                                    <Typography sx={{ color: '#f1f1f1' }}>Home</Typography>
+                                <Link to={`${fromLink}`} style={{ textDecoration: 'none' }}>
+                                    <Typography sx={{ color: '#f1f1f1' }}>{from}</Typography>
                                 </Link>
                                 <ArrowRightAltIcon sx={{ color: '#f1f1f1' }} />
-                                <Typography sx={{ color: '#f1f1f1' }}>Doctors</Typography>
+                                <Typography sx={{ color: '#f1f1f1' }}>{to}</Typography>
                             </Stack>
                         </Box>
                     </Grid>
                 </Grid>
-            </Container>
-        </SubHeaderBg>
+            </SubHeaderBg>
+        </Container>
     );
 };
 

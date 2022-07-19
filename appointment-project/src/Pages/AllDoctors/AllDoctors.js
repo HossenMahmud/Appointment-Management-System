@@ -19,7 +19,7 @@ const AllDoctors = () => {
     return (
         <>
             <Navbar></Navbar>
-            <SubHeader></SubHeader>
+            <SubHeader from='Home' fromLink='/' to='doctors'></SubHeader>
             <Container maxWidth="lg" sx={{ py: 6 }}>
                 {
                     (doctors !== null) && <AllDoctorsCard doctors={doctors}></AllDoctorsCard>

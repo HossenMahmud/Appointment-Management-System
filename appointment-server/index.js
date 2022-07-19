@@ -14,7 +14,9 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 
-// Use Multer For Image And File Uploads
+/*------------------------------------------------------------------------------
+       Use Multer For Image And File Uploads
+--------------------------------------------------------------------------------*/
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "public/images");
@@ -39,6 +41,9 @@ const upload = multer({
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 
+/*------------------------------------------------------------------------------
+         DataBase Connection With MYSQL    START
+--------------------------------------------------------------------------------*/
 // MySQL DataBase Connection
 const db = mysql.createConnection({
     user: "root",
@@ -55,6 +60,15 @@ db.connect((error) => {
         console.log("MYSQL Connected......")
     }
 })
+
+/*------------------------------------------------------------------------------
+         DataBase Connection With MYSQL    End
+--------------------------------------------------------------------------------*/
+
+
+/*------------------------------------------------------------------------------------------------------
+         Login Registration All  API Start  (Patient and Doctor API)   START
+--------------------------------------------------------------------------------------------------------*/
 
 // Login Doctor || Patient || Admin
 app.get("/login/:email", (req, res) => {
@@ -87,7 +101,6 @@ app.post("/register", (req, res) => {
         }
     )
 });
-
 //  Insert Login Doctor More Information
 app.post("/addDoctorInfo", upload.single("image"), (req, res) => {
     const userId = req.body.userId;
@@ -118,8 +131,6 @@ app.post("/addDoctorInfo", upload.single("image"), (req, res) => {
     );
 
 });
-
-
 //  Insert Login Patients More Information
 app.post("/addPatientInfo", upload.single("image"), (req, res) => {
     const userId = req.body.userId;
@@ -170,7 +181,7 @@ app.get('/doctor/:userId', (req, res) => {
     })
 });
 
-// Get User By id
+// Get Patient By User id
 app.get('/singlePatient/:id', (req, res) => {
     const id = req.params.id;
     db.query('SELECT * FROM patients WHERE id = ?', id, (err, result) => {
@@ -181,7 +192,7 @@ app.get('/singlePatient/:id', (req, res) => {
         }
     })
 });
-// Get User By id
+// Get Doctor By UserID
 app.get('/singleDoctor/:id', (req, res) => {
     const id = req.params.id;
     db.query('SELECT * FROM doctors WHERE id = ?', id, (err, result) => {
@@ -235,6 +246,13 @@ app.put("/doctorUpdate/:id", (req, res) => {
     });
 });
 
+/*------------------------------------------------------------------------------------------------
+     Login Registration All  API Start  (Patient and Doctor API)   END
+------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------
+    Total Patient and Doctor Count API Start
+-----------------------------------------------------------------------------*/
 
 // Get All Doctor List
 app.get("/allDoctors", (req, res) => {
@@ -260,8 +278,14 @@ app.get("/allPatients", (req, res) => {
         }
     );
 })
+/*----------------------------------------------------------------------------
+    Total Patient and Doctor Count API  End
+-----------------------------------------------------------------------------*/
 
 
+/*-----------------------------------------------------------------------------
+                         All  Schedule API Start
+-----------------------------------------------------------------------------*/
 // Get Doctor Schedule Time
 app.get("/schedule/:doctorId", (req, res) => {
     const doctorId = req.params.doctorId;
@@ -273,6 +297,7 @@ app.get("/schedule/:doctorId", (req, res) => {
         }
     })
 })
+
 //  Add Schedule
 app.post("/addSchedule", (req, res) => {
     const doctorId = req.body.doctorId;
@@ -303,6 +328,9 @@ app.delete("/deleteSchedule/:id", (req, res) => {
         }
     });
 });
+
+
+
 // Get Schedule By id
 app.get('/singleSchedule/:id', (req, res) => {
     const id = req.params.id;
@@ -336,6 +364,72 @@ app.put("/updateSchedule/:id", (req, res) => {
         }
     });
 });
+
+// Get Schedule By Doctor Id
+app.get('/doctorSchedule/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('SELECT * FROM schedules WHERE doctorId = ?', id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+/*-----------------------------------------------------------------------------
+                         All  Schedule API End
+-----------------------------------------------------------------------------*/
+
+
+
+/*-----------------------------------------------------------------------------
+                         All  Appointment Booking  API Start
+-----------------------------------------------------------------------------*/
+//  AppointMent
+app.post("/appointment", (req, res) => {
+    const doctorId = req.body.doctorId;
+    const doctorName = req.body.doctorName;
+    const specialist = req.body.specialist;
+    const doctorImg = req.body.doctorImg;
+    const patientId = req.body.patientId;
+    const patientName = req.body.patientName;
+    const patientAge = req.body.patientAge;
+    const patientPhone = req.body.patientPhone;
+    const patientEmail = req.body.patientEmail;
+    const hospitalName = req.body.hospitalName;
+    const location = req.body.location;
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+    const apptDate = req.body.apptDate;
+    const bookingDate = req.body.bookingDate
+    const status = req.body.status;
+    db.query(
+        "INSERT INTO appointments (doctorId,doctorName,specialist,doctorImg,patientId, patientName, patientAge, patientPhone, patientEmail,hospitalName, location, startTime, endTime, apptDate,bookingDate, status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [doctorId, doctorName, specialist, doctorImg, patientId, patientName, patientAge, patientPhone, patientEmail, hospitalName, location, startTime, endTime, apptDate, bookingDate, status],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values Inserted");
+            }
+        }
+    );
+});
+
+app.get("/patientAppointment/:id", (req, res) => {
+    const id = req.params.id;
+    db.query('SELECT * FROM appointments WHERE patientId = ?', id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+/*-----------------------------------------------------------------------------
+                         All  Appointment Booking  API End
+-----------------------------------------------------------------------------*/
 
 
 

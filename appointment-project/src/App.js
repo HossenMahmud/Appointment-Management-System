@@ -30,6 +30,8 @@ import ScheduleTime from './Pages/Dashboard/Doctor/ScheduleTime';
 import AddSchedule from './Components/Dashboard/doctor/DoctorSchedule/AddSchedule';
 import ScrollToTop from "react-scroll-to-top";
 import UpdateSchedule from './Components/Dashboard/doctor/DoctorSchedule/UpdateSchedule';
+import BookNow from './Pages/BookNow/BookNow';
+import AppointmentDownloadPage from './Components/Dashboard/patient/PatientHome/AppointmentDownloadPage';
 
 function App() {
 
@@ -46,7 +48,7 @@ function App() {
             <Route path="alldoctors" element={<AllDoctors />}></Route>
             <Route path="doctordetails/:id" element={<DoctorDetails />}></Route>
             <Route path="alldoctors/doctordetails/:id" element={<DoctorDetails />}></Route>
-
+            <Route path="bookNow/:id" element={<PrivateRoute> <BookNow /> </PrivateRoute>}></Route>
             {/* Auth all Routes */}
             <Route path="login" element={<Login />}></Route>
             <Route path="patientRegister" element={<PatientRegister />}></Route>
@@ -74,6 +76,7 @@ function App() {
               <Route path="patientprofile" element={<PatientProfileSetting />}></Route>
               <Route path="patientprofile/addPatientInfo/:id" element={<AddPatientInfo />}></Route>
               <Route path="patientprofile/updatePatientInfo/:id" element={<UpdatePatientInfo />}></Route>
+              <Route path="AppointmentDownload/:id" element={<AppointmentDownloadPage />}></Route>
             </Route>
             {/* Dasboard all Routes End */}
 

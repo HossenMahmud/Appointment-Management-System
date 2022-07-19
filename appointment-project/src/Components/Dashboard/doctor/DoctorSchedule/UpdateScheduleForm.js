@@ -128,6 +128,7 @@ const UpdateScheduleForm = ({ schedule }) => {
                                                         name='startTime'
                                                         label='Start Time'
                                                         fullWidth
+                                                        focused
                                                         size='medium'
                                                         InputProps={{ style: { fontSize: 14 } }}
                                                         InputLabelProps={{ style: { fontSize: 14 } }}
@@ -147,6 +148,7 @@ const UpdateScheduleForm = ({ schedule }) => {
                                                             name='endTime'
                                                             label='End Time'
                                                             fullWidth
+                                                            focused
                                                             size='medium'
                                                             InputProps={{ style: { fontSize: 14 } }}
                                                             InputLabelProps={{ style: { fontSize: 14 } }}

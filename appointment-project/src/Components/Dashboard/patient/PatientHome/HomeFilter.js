@@ -1,6 +1,8 @@
 import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import useAuth from '../../../../Hooks/useAuth';
 import { FillterBox } from '../../../../styles/MetarialStyles';
 import MyAppointment from './MyAppointment';
 import MyPrescription from './MyPrescription';
@@ -8,6 +10,13 @@ import MyPrescription from './MyPrescription';
 
 const HomeFilter = () => {
     const [appoint, setAppoint] = useState('true');
+    const { user } = useAuth();
+    const [apptData, setApptData] = useState(null)
+    useEffect(() => {
+        axios.get(`http://localhost:5000/patientAppointment/${user?.id}`).then((res) => {
+            setApptData(res.data);
+        });
+    }, [user?.id]);
 
     return (
         <Box sx={{ mt: 5 }}>
@@ -25,7 +34,7 @@ const HomeFilter = () => {
             </Grid>
 
             {
-                appoint ? <MyAppointment /> : <MyPrescription />
+                appoint ? (apptData !== null) && < MyAppointment apptData={apptData} /> : <MyPrescription />
             }
 
         </Box >

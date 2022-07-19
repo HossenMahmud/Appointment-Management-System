@@ -6,6 +6,7 @@ import DoctorDetailsInfo from '../../Components/AllDoctors/DoctorDetails/DoctorD
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import useAuth from '../../Hooks/useAuth';
+import SubHeader from '../Shared/SubHeader';
 
 const DoctorDetails = () => {
     const { user } = useAuth();
@@ -20,6 +21,7 @@ const DoctorDetails = () => {
     return (
         <>
             <Navbar></Navbar>
+            <SubHeader from='Doctors' fromLink='/alldoctors' to='Doctor Details'></SubHeader>
             <Container maxWidth="lg" sx={{ py: 6 }}>
                 {
                     (doctor.length !== 0) && <DoctorDetailsInfo doctor={doctor} doc={user}></DoctorDetailsInfo>

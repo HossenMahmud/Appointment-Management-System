@@ -39,6 +39,80 @@ const week = [
         label: "Friday",
     },
 ];
+
+const Time = [
+    {
+        value: "8.00 AM",
+        label: "8.00 AM",
+    },
+    {
+        value: "9.00 AM",
+        label: "9.00 AM",
+    },
+    {
+        value: "10.00 AM",
+        label: "10.00 AM",
+    },
+    {
+        value: "11.00 AM",
+        label: "11.00 AM",
+    },
+    {
+        value: "12.00 PM",
+        label: "12.00 PM",
+    },
+    {
+        value: "1.00 PM",
+        label: "1.00 PM",
+    },
+    {
+        value: "2.00 PM",
+        label: "2.00 PM",
+    },
+    {
+        value: "3.00 PM",
+        label: "3.00 PM",
+    },
+    {
+        value: "4.00 PM",
+        label: "4.00 PM",
+    },
+    {
+        value: "5.00 PM",
+        label: "5.00 PM",
+    },
+    {
+        value: "6.00 PM",
+        label: "6.00 PM",
+    },
+    {
+        value: "7.00 PM",
+        label: "7.00 PM",
+    },
+    {
+        value: "8.00 PM",
+        label: "8.00 PM",
+    },
+    {
+        value: "9.00 PM",
+        label: "9.00 PM",
+    },
+    {
+        value: "10.00 PM",
+        label: "10.00 PM",
+    },
+    {
+        value: "11.00 PM",
+        label: "11.00 PM",
+    },
+    {
+        value: "12.00 AM",
+        label: "12.00 AM",
+    },
+]
+
+
+
 const AddSchedule = () => {
     const { user } = useAuth()
     const userId = user?.id;
@@ -96,7 +170,6 @@ const AddSchedule = () => {
         });
         e.preventDefault();
     };
-
 
     return (
         <LayoutContiner>
@@ -168,20 +241,29 @@ const AddSchedule = () => {
                                                     ))}
                                                 </TextFieldMake>
                                             </Grid>
-
                                             <Grid item xs={12} sm={4}>
                                                 <TextFieldMake
-                                                    type='text'
-                                                    name='startTime'
-                                                    label='Start Time'
                                                     fullWidth
-                                                    size='medium'
+                                                    label="Start Time"
+                                                    variant="outlined"
+                                                    name="startTime"
+                                                    focused
+                                                    size="medium"
                                                     InputProps={{ style: { fontSize: 14 } }}
                                                     InputLabelProps={{ style: { fontSize: 14 } }}
                                                     onChange={(e) => handleDate(e, index)}
-                                                    value={form.startTime}
-                                                ></TextFieldMake>
+                                                    required
+                                                    select
+                                                    SelectProps={{ native: true }}
+                                                >
+                                                    {Time.map((option) => (
+                                                        <option key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </option>
+                                                    ))}
+                                                </TextFieldMake>
                                             </Grid>
+
                                             <Grid item xs={12} sm={4}>
                                                 <Stack
                                                     direction="row"
@@ -190,16 +272,25 @@ const AddSchedule = () => {
                                                     spacing={1}
                                                 >
                                                     <TextFieldMake
-                                                        type='text'
-                                                        name='endTime'
-                                                        label='End Time'
                                                         fullWidth
-                                                        size='medium'
+                                                        label="End Time"
+                                                        variant="outlined"
+                                                        name="endTime"
+                                                        focused
+                                                        size="medium"
                                                         InputProps={{ style: { fontSize: 14 } }}
                                                         InputLabelProps={{ style: { fontSize: 14 } }}
                                                         onChange={(e) => handleDate(e, index)}
-                                                        value={form.endTime}
-                                                    ></TextFieldMake>
+                                                        required
+                                                        select
+                                                        SelectProps={{ native: true }}
+                                                    >
+                                                        {Time.map((option) => (
+                                                            <option key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </option>
+                                                        ))}
+                                                    </TextFieldMake>
                                                     <CancelButton sx={{ mt: 2 }} onClick={() => removeDateFields(index)} size='small' startIcon={<CancelIcon fontSize='small' />}>
                                                         Cancel
                                                     </CancelButton>

@@ -1,0 +1,56 @@
+.img-container {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.img-container img {
+    vertical-align: top;
+    max-width: 100%;
+    transition: all 0.3s;
+    border-radius: 4px;
+
+}
+
+.img-container:hover img {
+    transform: scale(1.1);
+
+}
+
+.search-box input[type=text] {
+    width: 50%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: transparent;
+    background-image: url('../../assets/icon/s.png');
+    background-position: 15px 15px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    color: #fff;
+}
+
+.search-box input[type=text]:focus {
+    width: 100%;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #ccc;
+    opacity: 1;
+    /* Firefox */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #ccc;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #ccc;
+}

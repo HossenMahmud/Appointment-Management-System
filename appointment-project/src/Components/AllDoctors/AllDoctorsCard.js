@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Button, ButtonGroup, Grid, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
-import './DoctorCartItem.css';
+import './AlldoctorsCard.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import GradeIcon from '@mui/icons-material/Grade';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -42,6 +42,17 @@ const AllDoctorsCard = ({ doctors }) => {
         setDoctorItem(filteredData)
     }
 
+    const handleSearchFilter = e => {
+        const searchword = e.target.value;
+
+        if (searchword === '') {
+            setDoctorItem(doctors);
+            return;
+        }
+        const newFilter = doctorItem?.filter((value) => value.firstName.toLowerCase().includes(searchword.toLowerCase()));
+        setDoctorItem(newFilter);
+    }
+
 
     return (
         <Grid container spacing={2}>
@@ -70,6 +81,9 @@ const AllDoctorsCard = ({ doctors }) => {
                 </Box>
             </Grid>
             <Grid item xs={12} sm={9} >
+                <Box className='search-box' sx={{ mb: 3, backgroundColor: '#183153', p: 2, borderRadius: '10px', textAlign: 'center' }}>
+                    <input type="text" name="search" placeholder="Search doctor name..." onChange={handleSearchFilter} />
+                </Box>
                 <Box>
                     <Grid container spacing={2}>
                         {
@@ -131,7 +145,9 @@ const AllDoctorsCard = ({ doctors }) => {
                                                 <Link to={`doctordetails/${doctor?.id}`} style={{ textDecoration: 'none' }}>
                                                     <ButtonMake sx={{ mr: 1 }}>View Profile</ButtonMake>
                                                 </Link>
-                                                <ButtonMake >Book Now</ButtonMake>
+                                                <Link to={`/bookNow/${doctor.id}`} style={{ textDecoration: 'none' }}>
+                                                    <ButtonMake sx={{ mb: 1 }}>Book Now</ButtonMake>
+                                                </Link>
                                             </Box>
 
                                         </Box>
