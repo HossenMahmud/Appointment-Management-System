@@ -4,7 +4,7 @@ import patientIcon from '../../../../assets/images/patientIcon.png';
 import patientIcon2 from '../../../../assets/images/patientIcon2.png';
 import appointmentIcon from '../../../../assets/images/appointmentIcon.png';
 import DorctorCardItem from './DorctorCardItem';
-const DoctorCard = () => {
+const DoctorCard = ({ doctor }) => {
 
     const totalPatient = {
         name: 'Total Patient',

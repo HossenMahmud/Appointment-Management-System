@@ -76,9 +76,11 @@ function App() {
               <Route path="patientprofile" element={<PatientProfileSetting />}></Route>
               <Route path="patientprofile/addPatientInfo/:id" element={<AddPatientInfo />}></Route>
               <Route path="patientprofile/updatePatientInfo/:id" element={<UpdatePatientInfo />}></Route>
-              <Route path="AppointmentDownload/:id" element={<AppointmentDownloadPage />}></Route>
+
             </Route>
             {/* Dasboard all Routes End */}
+
+            <Route path="AppointmentDownload/:id" element={<AppointmentDownloadPage />}></Route>
 
           </Routes>
         </AuthProvider>

@@ -427,6 +427,71 @@ app.get("/patientAppointment/:id", (req, res) => {
     })
 })
 
+app.get('/singleAppointment/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('SELECT * FROM appointments WHERE id = ?', id, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    })
+});
+
+app.get("/doctorAppointment/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = `SELECT * FROM appointments WHERE doctorId = ${id} `;
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+// Doctor Accept or cancle patient appointment
+app.put("/acceptAppointment/:id", (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const keys = Object.keys(data);
+    const sqlquery = `UPDATE appointments SET ${keys.map(
+        (key) => key + " = ?"
+    )} WHERE id = ${id}`;
+
+    const value = keys.map((key) => {
+        return data[key];
+    });
+
+    db.query(sqlquery, value, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/doctorTodayPatient/:id", (req, res) => {
+    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const d = new Date();
+    let MonthName = month[d.getMonth()];
+    let year = d.getFullYear();
+    let dayNumber = d.getDate();
+    let Today = `${dayNumber} ${MonthName} ${year}`
+    const id = req.params.id;
+    const sql = `SELECT * FROM appointments WHERE doctorId = ${id} AND apptDate= "${Today}" AND status = "Accepted" `;
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+
+
 /*-----------------------------------------------------------------------------
                          All  Appointment Booking  API End
 -----------------------------------------------------------------------------*/

@@ -83,7 +83,7 @@ function TablePaginationActions(props) {
 }
 
 
-export default function DoctorsList({ doctors }) {
+export default function DoctorsList({ doctors, condition, setCondition }) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -127,7 +127,7 @@ export default function DoctorsList({ doctors }) {
         Axios.put(`http://localhost:5000/doctorUpdate/${id}`, newData)
             .then((res) => {
                 if (res.status === 200) {
-                    window.location.reload();
+                    setCondition(!condition);
                 }
             });
         e.preventDefault();
@@ -139,7 +139,7 @@ export default function DoctorsList({ doctors }) {
         Axios.put(`http://localhost:5000/doctorUpdate/${id}`, newData)
             .then((res) => {
                 if (res.status === 200) {
-                    window.location.reload();
+                    setCondition(!condition);
                 }
             });
         e.preventDefault();

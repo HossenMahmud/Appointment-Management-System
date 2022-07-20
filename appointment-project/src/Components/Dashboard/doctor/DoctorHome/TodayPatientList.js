@@ -14,8 +14,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { Avatar, TableHead } from "@mui/material";
-import Img from '../../../../assets/images/profile.jpg';
+import { Button, TableHead, Typography } from "@mui/material";
 import { useState } from "react";
 import '../Doctor.css';
 
@@ -82,29 +81,7 @@ function TablePaginationActions(props) {
     );
 }
 
-
-function createData(patientId, patientName, age, address, phone, paid) {
-    return { patientId, patientName, age, address, phone, paid };
-}
-
-const rows = [
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-    createData('PID101', 'Hossen Mahmud', '26', 'Mohammadpur,Dhaka-1207', '01786502485', 150),
-
-
-];
-
-
-export default function TodayPatientList() {
+export default function TodayPatientList({ apptData }) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -156,27 +133,28 @@ export default function TodayPatientList() {
                         <StyledTableCell align="left">Patient Id</StyledTableCell>
                         <StyledTableCell align="left">Patient Name</StyledTableCell>
                         <StyledTableCell align="left">Age</StyledTableCell>
-                        <StyledTableCell align="left">Address</StyledTableCell>
                         <StyledTableCell align="left">Phone</StyledTableCell>
-                        <StyledTableCell align="left">Paid</StyledTableCell>
+                        <StyledTableCell align="left">Appt Date</StyledTableCell>
+                        <StyledTableCell align="left">Booking Date</StyledTableCell>
+                        <StyledTableCell align="left">Action</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {(rowsPerPage > 0
-                        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : rows
-                    ).map((row, index) => (
+                        ? apptData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        : apptData
+                    ).map((data, index) => (
                         <StyledTableRow key={index}>
-                            <StyledTableCell align="left">{row.patientId}</StyledTableCell>
-                            <StyledTableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Avatar alt="Remy Sharp" src={Img} sx={{ mr: 1 }} />
-                                {row.patientName}
+                            <StyledTableCell align="left">{data.patientId}</StyledTableCell>
+                            <StyledTableCell align="left">{data.patientName}</StyledTableCell>
+                            <StyledTableCell align="left">{data.patientAge}</StyledTableCell>
+                            <StyledTableCell align="left">{data.patientPhone}</StyledTableCell>
+                            <StyledTableCell align="left">
+                                {data.apptDate}
+                                <Typography>{data?.startTime} - {data?.endTime}</Typography>
                             </StyledTableCell>
-                            <StyledTableCell align="left">{row.age}</StyledTableCell>
-                            <StyledTableCell align="left">{row.address}</StyledTableCell>
-                            <StyledTableCell align="left">{row.phone}</StyledTableCell>
-                            <StyledTableCell align="left">${row.paid}</StyledTableCell>
-
+                            <StyledTableCell align="left">{data.bookingDate}</StyledTableCell>
+                            <Button color='info'>View</Button>
                         </StyledTableRow>
                     ))}
                 </TableBody>
@@ -186,7 +164,7 @@ export default function TodayPatientList() {
                             sx={{ border: "none", color: "black", background: "#ccc" }}
                             rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                             colSpan={12}
-                            count={rows.length}
+                            count={apptData.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             SelectProps={{

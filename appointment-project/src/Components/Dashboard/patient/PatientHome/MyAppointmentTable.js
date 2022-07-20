@@ -3,9 +3,8 @@ import styled from '@emotion/styled';
 import { Avatar, Button, Grid, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DownloadIcon from '@mui/icons-material/Download';
 import { Link } from 'react-router-dom';
-
+import PrintIcon from '@mui/icons-material/Print';
 
 const style = {
     position: 'absolute',
@@ -60,7 +59,6 @@ const PrintButton = styled(Button)(({ theme }) => ({
 }));
 
 const MyAppointmentTable = ({ apptData }) => {
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -93,9 +91,9 @@ const MyAppointmentTable = ({ apptData }) => {
                     <ViewButton onClick={handleOpen} sx={{ mr: 1, }} size='small' startIcon={<VisibilityIcon />}>
                         View
                     </ViewButton>
-                    <Link to={`AppointmentDownload/:${apptData?.id}`} style={{ textDecoration: 'none' }}>
-                        <PrintButton size='small' startIcon={<DownloadIcon />}>
-                            Download
+                    <Link to={`/AppointmentDownload/${apptData?.id}`} style={{ textDecoration: 'none' }}>
+                        <PrintButton size='small' startIcon={<PrintIcon />}>
+                            Print
                         </PrintButton>
                     </Link>
                 </TableCell>
@@ -107,7 +105,6 @@ const MyAppointmentTable = ({ apptData }) => {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
-
             >
                 <Box sx={style}>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
