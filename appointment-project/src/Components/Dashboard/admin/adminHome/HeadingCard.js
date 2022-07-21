@@ -5,7 +5,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Grid, Stack, Typography } from '@mui/material';
 
-const HeadingCard = ({ doctors, patients }) => {
+const HeadingCard = ({ doctors, patients, allAppointment }) => {
     return (
         <Grid container spacing={2}>
             {/* Cart Item */}
@@ -84,7 +84,7 @@ const HeadingCard = ({ doctors, patients }) => {
                         <Box sx={{ width: 60, height: 60, border: "3px solid #e84646", borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <PeopleAltIcon sx={{ color: "#e84646", fontSize: '20px' }} />
                         </Box>
-                        <Typography variant='h5'>120</Typography>
+                        <Typography variant='h5'>{allAppointment?.length}</Typography>
                     </Stack>
                     <Typography sx={{ mb: 1, color: "#757575" }}>Appointment</Typography>
                     <Box sx={{ width: '100%', height: "7px", backgroundColor: "#e9ecef", borderRadius: "5px" }}>

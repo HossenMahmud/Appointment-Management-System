@@ -9,6 +9,9 @@ import { Grid } from '@mui/material';
 import { TextFieldMake } from '../../styles/MetarialStyles';
 import useAuth from '../../Hooks/useAuth';
 import styled from '@emotion/styled';
+import Tooltip from '@mui/material/Tooltip';
+
+
 
 const style = {
     position: 'absolute',
@@ -41,6 +44,21 @@ const AppointmentBtn = styled(Button)(({ theme }) => ({
         color: '#fff',
     }
 }));
+const DesableBtn = styled(Button)(({ theme }) => ({
+    margin: '10px 0',
+    backgroundColor: "#757575",
+    borderColor: '#757575',
+    textTransform: 'capitalize',
+    color: '#fff',
+    padding: '5px 8px',
+    marginRight: '5px',
+    '&:hover': {
+        backgroundColor: 'green',
+        borderColor: 'green',
+        boxShadow: 'none',
+        color: '#fff',
+    }
+}));
 
 const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, location, MonthName, year, dayName, dayNumber }) => {
     const { user } = useAuth();
@@ -48,6 +66,9 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const d = new Date();
+    let todayDateNumber = d.getDate();
 
 
     const handleSubmit = e => {
@@ -84,7 +105,15 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
 
     return (
         <div>
-            <AppointmentBtn onClick={handleOpen} color='info'> {day} {MonthName} {year}</AppointmentBtn>
+            {
+                (todayDateNumber <= day) && <AppointmentBtn onClick={handleOpen} color='info'> {day} {MonthName} {year}</AppointmentBtn>
+            }
+            {
+                (todayDateNumber > day) && <Tooltip title="Appointment Time Out" arrow sx={{ color: 'yellow' }}>
+                    <DesableBtn>{day} {MonthName} {year}</DesableBtn>
+                </Tooltip>
+            }
+
             <Modal
                 open={open}
                 onClose={handleClose}

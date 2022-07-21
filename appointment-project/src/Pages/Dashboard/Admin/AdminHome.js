@@ -20,17 +20,27 @@ const AdminHome = ({ updateUser }) => {
         });
     }, []);
 
+    const [allAppointment, setAllAppointment] = useState([]);
+    useEffect(() => {
+        Axios.get('http://localhost:5000/allApointment').then((res) => {
+            setAllAppointment(res.data);
+        });
+    }, []);
+
     return (
         <LayoutContiner>
             {
-                (doctors.length !== 0 && patients.length !== 0) && <HeadingCard doctors={doctors} patients={patients}></HeadingCard>
+                (doctors.length !== 0 && patients.length !== 0) && <HeadingCard doctors={doctors} patients={patients} allAppointment={allAppointment}></HeadingCard>
             }
             <ChartSection></ChartSection>
             {
                 (doctors.length !== 0 && patients.length !== 0) && <DoctorPatientList doctors={doctors} patients={patients}></DoctorPatientList>
             }
 
-            <AppointmentList></AppointmentList>
+            {
+                (allAppointment.length !== 0) && <AppointmentList allAppointment={allAppointment}></AppointmentList>
+            }
+
         </LayoutContiner >
     );
 };

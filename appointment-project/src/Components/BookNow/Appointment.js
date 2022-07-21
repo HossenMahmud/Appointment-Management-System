@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import AppointmentButton from './AppointmentButton';
 
 const Appointment = ({ doctorId, dayName, hospitalName, startTime, endTime, location }) => {
+
     const [doctor, setDoctor] = useState([]);
     useEffect(() => {
         fetch(`http://localhost:5000/singleDoctor/${doctorId}`)

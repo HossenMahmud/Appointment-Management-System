@@ -14,7 +14,7 @@ import StarRateIcon from '@mui/icons-material/StarRate';
 const DoctorList = ({ doctors }) => {
     return (
         <TableBox>
-            <Box sx={{ borderBottom: "1px solid #eaeaea", py: 1 }}>
+            <Box sx={{ borderBottom: "1px solid #eaeaea", py: 1, backgroundColor: '#D4FACD', textAlign: 'center' }}>
                 <Typography variant='h6' sx={{ ml: 2 }}>Doctors List</Typography>
             </Box>
             <TableContainer component={Paper} sx={{ borderRadius: 'none' }}>

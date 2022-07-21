@@ -15,9 +15,9 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { Avatar, TableHead, Typography } from "@mui/material";
-import Img from '../../../assets/images/profile.jpg';
+import { TableHead } from "@mui/material";
 import './Admin.css'
+import AppointmentListRow from "./AppointmentListRow";
 
 
 function TablePaginationActions(props) {
@@ -83,27 +83,8 @@ function TablePaginationActions(props) {
 }
 
 
-function createData(doctorName, speciality, patientName, date, time, ammount) {
-    return { doctorName, speciality, patientName, date, time, ammount };
-}
 
-const rows = [
-    createData('Dr Rubby Prrrin', 'Urology', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Dental', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Cardiology', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-];
-
-export default function AppointmentsList() {
+export default function AppointmentsList({ allAppointment }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -120,15 +101,6 @@ export default function AppointmentsList() {
         },
     }));
 
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-        "&:nth-of-type(odd)": {
-            backgroundColor: theme.palette.action.hover,
-        },
-        // hide last border
-        "&:last-child td, &:last-child th": {
-            border: 0,
-        },
-    }));
 
 
     const handleChangePage = (event, newPage) => {
@@ -153,35 +125,18 @@ export default function AppointmentsList() {
                 <TableHead>
                     <TableRow>
                         <StyledTableCell align="left">Doctor Name</StyledTableCell>
-                        <StyledTableCell align="left">Speciality</StyledTableCell>
                         <StyledTableCell align="left">Patient Name</StyledTableCell>
-                        <StyledTableCell align="left">Appoint Time</StyledTableCell>
-                        <StyledTableCell align="left">Ammount</StyledTableCell>
+                        <StyledTableCell align="left">Appt Date</StyledTableCell>
+                        <StyledTableCell align="left">Booking Date</StyledTableCell>
+                        <StyledTableCell align="left">Status</StyledTableCell>
+                        <StyledTableCell align="left">Action</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {(rowsPerPage > 0
-                        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : rows
-                    ).map((row, index) => (
-                        <StyledTableRow key={index}>
-                            <StyledTableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Avatar alt="Remy Sharp" src={Img} sx={{ mr: 1 }} />
-                                {row.doctorName}
-                            </StyledTableCell>
-                            <StyledTableCell align="left">{row.speciality}</StyledTableCell>
-                            <StyledTableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Avatar alt="Remy Sharp" src={Img} sx={{ mr: 1 }} />
-                                {row.patientName}
-                            </StyledTableCell>
-                            <StyledTableCell align="left">
-                                {row.date}
-                                <Typography variant='h6' sx={{ fontSize: '12px', fontWeight: 'normal', color: '#00D0F1' }}>  {row.time}</Typography>
-                            </StyledTableCell>
-                            <StyledTableCell align="left">{row.ammount}</StyledTableCell>
-
-                        </StyledTableRow>
-                    ))}
+                        ? allAppointment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        : allAppointment
+                    ).map((data, index) => <AppointmentListRow key={index} data={data} index={index}></AppointmentListRow>)}
                 </TableBody>
                 <TableFooter>
                     <TableRow>
@@ -189,7 +144,7 @@ export default function AppointmentsList() {
                             sx={{ border: "none", color: "#black", background: "#ADE7F7" }}
                             rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                             colSpan={12}
-                            count={rows.length}
+                            count={allAppointment.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             SelectProps={{

@@ -7,7 +7,7 @@ import { LayoutContiner } from '../../../styles/MetarialStyles';
 const DoctorHome = () => {
     const { user } = useAuth();
     const userId = user?.id
-    const [doctor, setDoctor] = useState([]);
+    const [doctor, setDoctor] = useState(null);
     useEffect(() => {
         axios.get(`http://localhost:5000/doctor/${userId}`).then((res) => {
             setDoctor(res.data[0]);
@@ -15,8 +15,13 @@ const DoctorHome = () => {
     }, [userId]);
     return (
         <LayoutContiner>
-            <DoctorCard doctor={doctor}></DoctorCard>
-            <TodayPatient doctor={doctor}></TodayPatient>
+            {
+                (doctor !== null) && <DoctorCard doctor={doctor}></DoctorCard>
+            }
+            {
+                (doctor !== null) && <TodayPatient doctor={doctor}></TodayPatient>
+            }
+
         </LayoutContiner >
     );
 };

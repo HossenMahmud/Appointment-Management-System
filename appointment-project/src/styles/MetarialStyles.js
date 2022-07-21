@@ -203,3 +203,45 @@ export const ButtonMake = styled(Button)(({ theme }) => ({
 }));
 
 
+export const StatusBtnAccept = styled(Button)(({ theme }) => ({
+    backgroundColor: "blue",
+    borderColor: 'blue',
+    textTransform: 'capitalize',
+    color: '#fff',
+    padding: '0px 3px',
+    '&:hover': {
+        backgroundColor: '#52CBF3',
+        borderColor: '#52CBF3',
+        boxShadow: 'none',
+        color: '#fff',
+    }
+}));
+
+export const StatusBtnPendding = styled(Button)(({ theme }) => ({
+    backgroundColor: "red",
+    borderColor: 'red',
+    textTransform: 'capitalize',
+    color: '#fff',
+    padding: '0px 3px',
+    '&:hover': {
+        backgroundColor: '#52CBF3',
+        borderColor: '#52CBF3',
+        boxShadow: 'none',
+        color: '#fff',
+    }
+}));
+export const StatusBtnCancel = styled(Button)(({ theme }) => ({
+    backgroundColor: "yellow",
+    borderColor: 'yellow',
+    textTransform: 'capitalize',
+    color: '#fff',
+    padding: '0px 3px',
+    '&:hover': {
+        backgroundColor: '#52CBF3',
+        borderColor: '#52CBF3',
+        boxShadow: 'none',
+        color: '#fff',
+    }
+}));
+
+

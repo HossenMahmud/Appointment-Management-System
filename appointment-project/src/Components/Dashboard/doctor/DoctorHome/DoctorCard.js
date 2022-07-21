@@ -1,14 +1,29 @@
 import { Grid } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import patientIcon from '../../../../assets/images/patientIcon.png';
 import patientIcon2 from '../../../../assets/images/patientIcon2.png';
 import appointmentIcon from '../../../../assets/images/appointmentIcon.png';
 import DorctorCardItem from './DorctorCardItem';
+import axios from 'axios';
 const DoctorCard = ({ doctor }) => {
+    const id = doctor?.id;
+    const [todayPatientData, setTodayPatientData] = useState([]);
+    const [apptRequest, setApptRequest] = useState([]);
+    useEffect(() => {
+        axios.get(`http://localhost:5000/doctorTodayPatient/${id}`).then((res) => {
+            setTodayPatientData(res.data);
+        });
+
+        axios.get(`http://localhost:5000/doctorApptRequest/${id}`).then((res) => {
+            setApptRequest(res.data);
+        });
+
+    }, [id]);
+
 
     const totalPatient = {
         name: 'Total Patient',
-        patient: 786,
+        patient: 175,
         date: 'Till Today',
         img: `${patientIcon}`,
         backgroundcolor: '#d4facd',
@@ -17,21 +32,23 @@ const DoctorCard = ({ doctor }) => {
 
     const todayPatient = {
         name: 'Today Patient',
-        patient: 36,
-        date: '26 April 2022',
+        patient: `${todayPatientData?.length}`,
+        date: `${todayPatientData[0]?.apptDate}`,
         img: `${patientIcon2}`,
         backgroundcolor: '#F5E8AE',
         Circlecolor: '#ffbc34'
     }
 
     const appointments = {
-        name: 'Appointments',
-        patient: 21,
-        date: '5 May 2022',
+        name: 'Appointments Request',
+        patient: `${apptRequest?.length}`,
+        date: 'Pendding',
         img: `${appointmentIcon}`,
         backgroundcolor: '#fad4d4',
         Circlecolor: '#e84646'
     }
+
+
     return (
         <Grid container spacing={2}>
             {/* Cart Item */}

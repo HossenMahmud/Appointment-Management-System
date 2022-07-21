@@ -420,7 +420,6 @@ app.get("/patientAppointment/:id", (req, res) => {
     const id = req.params.id;
     db.query('SELECT * FROM appointments WHERE patientId = ?', id, (err, result) => {
         if (err) {
-            console.log(err);
         } else {
             res.send(result);
         }
@@ -431,7 +430,6 @@ app.get('/singleAppointment/:id', (req, res) => {
     const id = req.params.id;
     db.query('SELECT * FROM appointments WHERE id = ?', id, (err, result) => {
         if (err) {
-            console.log(err)
         } else {
             res.send(result)
         }
@@ -443,7 +441,6 @@ app.get("/doctorAppointment/:id", (req, res) => {
     const sql = `SELECT * FROM appointments WHERE doctorId = ${id} `;
     db.query(sql, (err, result) => {
         if (err) {
-            console.log(err);
         } else {
             res.send(result);
         }
@@ -481,6 +478,29 @@ app.get("/doctorTodayPatient/:id", (req, res) => {
     let Today = `${dayNumber} ${MonthName} ${year}`
     const id = req.params.id;
     const sql = `SELECT * FROM appointments WHERE doctorId = ${id} AND apptDate= "${Today}" AND status = "Accepted" `;
+    db.query(sql, (err, result) => {
+        if (err) {
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+app.get("/doctorApptRequest/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = `SELECT * FROM appointments WHERE doctorId = ${id} AND status = "pendding" `;
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+app.get("/allApointment", (req, res) => {
+    const id = req.params.id;
+    const sql = `SELECT * FROM appointments ORDER BY id DESC`;
     db.query(sql, (err, result) => {
         if (err) {
             console.log(err);

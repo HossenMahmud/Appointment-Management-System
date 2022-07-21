@@ -13,7 +13,7 @@ import './doctorTable.css';
 const PatientList = ({ patients }) => {
     return (
         <TableBox>
-            <Box sx={{ borderBottom: "1px solid #eaeaea", py: 1 }}>
+            <Box sx={{ borderBottom: "1px solid #eaeaea", py: 1, backgroundColor: '#D4FACD', textAlign: 'center' }}>
                 <Typography variant='h6' sx={{ ml: 2 }}>Patient List</Typography>
             </Box>
             <TableContainer component={Paper} sx={{ borderRadius: 'none' }}>
@@ -27,9 +27,9 @@ const PatientList = ({ patients }) => {
                         </TableHeading>
                     </TableHead>
                     <TableBody>
-                        {patients.map((patient) => (
+                        {patients.slice(0, 5).map((patient) => (
                             <TableRow
-                                key={patient.name}
+                                key={patient.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>

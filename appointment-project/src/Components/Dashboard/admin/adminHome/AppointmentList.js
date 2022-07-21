@@ -6,60 +6,87 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Avatar, Box, Typography } from '@mui/material';
+import { Avatar, Box, Button, Typography } from '@mui/material';
 import { TableBox, TableHeading } from '../../../../styles/MetarialStyles';
-import Img from '../../../../assets/images/profile.jpg'
 import './doctorTable.css';
+import styled from '@emotion/styled';
 
-function createData(doctorName, speciality, patientName, date, time, ammount) {
-    return { doctorName, speciality, patientName, date, time, ammount };
-}
+const StatusBtnPendding = styled(Button)(({ theme }) => ({
+    backgroundColor: "red",
+    borderColor: 'red',
+    textTransform: 'capitalize',
+    color: '#fff',
+    padding: '0px 3px',
+    '&:hover': {
+        backgroundColor: '#52CBF3',
+        borderColor: '#52CBF3',
+        boxShadow: 'none',
+        color: '#fff',
+    }
+}));
 
-const rows = [
-    createData('Dr Rubby Prrrin', 'Urology', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Dental', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Cardiology', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-    createData('Dr Rubby Prrrin', 'Orthopaedics', 'Rabin Malik', '22 Sept 2022', '11:00 AM - 11:15 AM', 50),
-];
+const StatusBtnAccept = styled(Button)(({ theme }) => ({
+    backgroundColor: "blue",
+    borderColor: 'blue',
+    textTransform: 'capitalize',
+    color: '#fff',
+    padding: '0px 3px',
+    '&:hover': {
+        backgroundColor: '#52CBF3',
+        borderColor: '#52CBF3',
+        boxShadow: 'none',
+        color: '#fff',
+    }
+}));
 
-
-const AppointmentList = () => {
+const AppointmentList = ({ allAppointment }) => {
     return (
         <TableBox sx={{ mt: 5 }}>
-            <Box sx={{ borderBottom: "1px solid #eaeaea", py: 1 }}>
+            <Box sx={{ borderBottom: "1px solid #eaeaea", py: 1, backgroundColor: '#D4FACD', textAlign: 'center' }}>
                 <Typography variant='h6' sx={{ ml: 2 }}>Appointment List</Typography>
             </Box>
             <TableContainer component={Paper} sx={{ borderRadius: 'none' }}>
                 <Table aria-label="simple table">
-                    <TableHead>
+                    <TableHead >
                         <TableHeading>
                             <TableCell>Doctor Name</TableCell>
                             <TableCell align="left">Speciality</TableCell>
                             <TableCell align="left">Patient Name</TableCell>
-                            <TableCell align="left">Appointment Time</TableCell>
-                            <TableCell align="left">Ammount</TableCell>
+                            <TableCell align="left">Appt Date</TableCell>
+                            <TableCell align="left">Booking Date</TableCell>
+                            <TableCell align="left">status</TableCell>
                         </TableHeading>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {allAppointment.slice(0, 5).map((apptData) => (
                             <TableRow
-                                key={row.name}
+                                key={apptData.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <Avatar alt="Remy Sharp" src={Img} sx={{ mr: 1 }} />
-                                    {row.doctorName}
+                                    <Avatar alt="Remy Sharp" src={apptData.doctorImg} sx={{ mr: 1 }} />
+                                    {apptData.doctorName}
                                 </TableCell>
-                                <TableCell align="left">{row.speciality}</TableCell>
+                                <TableCell align="left">{apptData.specialist}</TableCell>
                                 <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <Avatar alt="Remy Sharp" src={Img} sx={{ mr: 1 }} />
-                                    {row.patientName}
+                                    {apptData.patientName}
                                 </TableCell>
                                 <TableCell align="left">
-                                    {row.date}
-                                    <Typography variant='h6' sx={{ fontSize: '12px', fontWeight: 'normal', color: '#00D0F1' }}>  {row.time}</Typography>
+                                    {apptData.apptDate}
+                                    <Typography variant='h6' sx={{ fontSize: '12px', fontWeight: 'normal', color: '#00D0F1' }}>
+                                        {apptData.startTime} -  {apptData.endTime}
+                                    </Typography>
                                 </TableCell>
-                                <TableCell align="left">${row.ammount}</TableCell>
+                                <TableCell>{apptData.bookingDate}</TableCell>
+                                <TableCell align="left">
+                                    {
+                                        (apptData.status === 'pendding' || apptData.status === 'Cancel') && <StatusBtnPendding> {apptData.status}</StatusBtnPendding>
+                                    }
+                                    {
+                                        (apptData.status === 'Accepted') && <StatusBtnAccept> {apptData.status}</StatusBtnAccept>
+                                    }
+
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -14,9 +14,10 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { Button, TableHead, Typography } from "@mui/material";
+import { TableHead } from "@mui/material";
 import { useState } from "react";
 import '../Doctor.css';
+import TodayPatientListRow from "./TodayPatientListRow";
 
 
 function TablePaginationActions(props) {
@@ -98,17 +99,6 @@ export default function TodayPatientList({ apptData }) {
         },
     }));
 
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-        "&:nth-of-type(odd)": {
-            backgroundColor: theme.palette.action.hover,
-        },
-        // hide last border
-        "&:last-child td, &:last-child th": {
-            border: 0,
-        },
-    }));
-
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -118,68 +108,61 @@ export default function TodayPatientList({ apptData }) {
         setPage(0);
     };
 
+
+
+
     return (
-        <TableContainer component={Paper}>
-            <Table
-                sx={{
-                    minWidth: 500,
-                    background: "#fff",
-                    color: "#3333",
-                }}
-                aria-label="custom pagination table"
-            >
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell align="left">Patient Id</StyledTableCell>
-                        <StyledTableCell align="left">Patient Name</StyledTableCell>
-                        <StyledTableCell align="left">Age</StyledTableCell>
-                        <StyledTableCell align="left">Phone</StyledTableCell>
-                        <StyledTableCell align="left">Appt Date</StyledTableCell>
-                        <StyledTableCell align="left">Booking Date</StyledTableCell>
-                        <StyledTableCell align="left">Action</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {(rowsPerPage > 0
-                        ? apptData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : apptData
-                    ).map((data, index) => (
-                        <StyledTableRow key={index}>
-                            <StyledTableCell align="left">{data.patientId}</StyledTableCell>
-                            <StyledTableCell align="left">{data.patientName}</StyledTableCell>
-                            <StyledTableCell align="left">{data.patientAge}</StyledTableCell>
-                            <StyledTableCell align="left">{data.patientPhone}</StyledTableCell>
-                            <StyledTableCell align="left">
-                                {data.apptDate}
-                                <Typography>{data?.startTime} - {data?.endTime}</Typography>
-                            </StyledTableCell>
-                            <StyledTableCell align="left">{data.bookingDate}</StyledTableCell>
-                            <Button color='info'>View</Button>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TablePagination
-                            sx={{ border: "none", color: "black", background: "#ccc" }}
-                            rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                            colSpan={12}
-                            count={apptData.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            SelectProps={{
-                                inputProps: {
-                                    "aria-label": "rows per page",
-                                },
-                                native: true,
-                            }}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                            ActionsComponent={TablePaginationActions}
-                        />
-                    </TableRow>
-                </TableFooter>
-            </Table>
-        </TableContainer>
+        <>
+            <TableContainer component={Paper}>
+                <Table
+                    sx={{
+                        minWidth: 500,
+                        background: "#fff",
+                        color: "#3333",
+                    }}
+                    aria-label="custom pagination table"
+                >
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell align="left">Patient Id</StyledTableCell>
+                            <StyledTableCell align="left">Patient Name</StyledTableCell>
+                            <StyledTableCell align="left">Age</StyledTableCell>
+                            <StyledTableCell align="left">Phone</StyledTableCell>
+                            <StyledTableCell align="left">Appt Date</StyledTableCell>
+                            <StyledTableCell align="left">Booking Date</StyledTableCell>
+                            <StyledTableCell align="left">Action</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {(rowsPerPage > 0
+                            ? apptData?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            : apptData
+                        ).map((data, index) => <TodayPatientListRow key={index} data={data} index={index}></TodayPatientListRow>)}
+                    </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                sx={{ border: "none", color: "black", background: "#ccc" }}
+                                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                                colSpan={12}
+                                count={apptData.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                SelectProps={{
+                                    inputProps: {
+                                        "aria-label": "rows per page",
+                                    },
+                                    native: true,
+                                }}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                            />
+                        </TableRow>
+                    </TableFooter>
+                </Table>
+            </TableContainer>
+
+        </>
     );
 }
