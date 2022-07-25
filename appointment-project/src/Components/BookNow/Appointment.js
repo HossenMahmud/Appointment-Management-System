@@ -1,15 +1,26 @@
 import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AppointmentButton from './AppointmentButton';
+import useAuth from '../../Hooks/useAuth'
 
 const Appointment = ({ doctorId, dayName, hospitalName, startTime, endTime, location }) => {
-
+    const { user } = useAuth();
     const [doctor, setDoctor] = useState([]);
     useEffect(() => {
         fetch(`http://localhost:5000/singleDoctor/${doctorId}`)
             .then(res => res.json())
             .then(data => setDoctor(data[0]))
     }, [doctorId]);
+
+    const patientId = user?.id;
+    const [patient, setPatient] = useState(null);
+    useEffect(() => {
+        fetch(`http://localhost:5000/patient/${patientId}`)
+            .then(res => res.json())
+            .then(data => setPatient(data[0]))
+    }, [patientId]);
+
+
 
     let weekName = dayName
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -68,7 +79,7 @@ const Appointment = ({ doctorId, dayName, hospitalName, startTime, endTime, loca
             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
 
                 {
-                    weekName?.map((day, i) => <AppointmentButton key={i} day={day} doctor={doctor} dayName={dayName} hospitalName={hospitalName} startTime={startTime} endTime={endTime} location={location} MonthName={MonthName} year={year} dayNumber={dayNumber}></AppointmentButton>)
+                    weekName?.map((day, i) => <AppointmentButton key={i} day={day} doctor={doctor} dayName={dayName} hospitalName={hospitalName} startTime={startTime} endTime={endTime} location={location} MonthName={MonthName} year={year} dayNumber={dayNumber} patient={patient}></AppointmentButton>)
                 }
             </Box>
 

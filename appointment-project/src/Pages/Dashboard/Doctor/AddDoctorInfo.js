@@ -4,11 +4,13 @@ import Axios from 'axios';
 import DoctorProfileForm from '../../../Components/Dashboard/doctor/DoctorProfileForm'
 import useAuth from '../../../Hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const AddDoctorInfo = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const userId = user?.id;
+    const email = user?.email;
     const [data, setData] = useState(null);
     const [image, setImage] = useState([]);
     const [preview, setPreview] = useState("");
@@ -80,6 +82,7 @@ const AddDoctorInfo = () => {
             image: image,
             status: 'Deactive',
             role: 'doctor',
+            email: email,
         };
 
         const formData = new FormData();
@@ -89,13 +92,26 @@ const AddDoctorInfo = () => {
         if (newData !== null && newData.image !== undefined) {
             Axios.post("http://localhost:5000/addDoctorInfo", formData).then((res) => {
                 if (res.status === 200) {
-                    alert("Successfully Data Added");
-                    // e.target.reset();
                     navigate('/Dashboard/doctorprofile');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Ok',
+                        text: 'Successfully Profile Created',
+                        timer: 1500,
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                    })
                 }
             });
         } else {
-            alert("Please Enter all data");
+            Swal.fire({
+                icon: 'error',
+                title: 'Data Missing',
+                text: 'Please Enter all data',
+                timer: 1500,
+                showCancelButton: false,
+                showConfirmButton: false,
+            })
         }
         e.preventDefault();
     };

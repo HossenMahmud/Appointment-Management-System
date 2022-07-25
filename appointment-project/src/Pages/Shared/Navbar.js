@@ -102,13 +102,18 @@ const Navbar = () => {
                                 </MenuItem>
                             </Link>
                             {
-                                user && <Link to="/Dashboard" style={{ textDecoration: 'none' }}>
-                                    <MenuItem >
-                                        <Typography textAlign="center">Dashboard</Typography>
-                                    </MenuItem>
-                                </Link>
-                            }
+                                (user) && <Link to="/Dashboard" style={{ textDecoration: 'none' }}>
+                                    {
+                                        (user?.role === 'admin') ? <MenuItem >
+                                            <Typography textAlign="center">Dashboard</Typography>
+                                        </MenuItem> : <MenuItem >
+                                            <Typography textAlign="center">Profile</Typography>
+                                        </MenuItem>
+                                    }
 
+                                </Link>
+
+                            }
                             {
                                 user ?
                                     <MenuItem onClick={Logout}>
@@ -145,28 +150,30 @@ const Navbar = () => {
                     </Typography>
 
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', }, justifyContent: "right" }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', }, justifyContent: "right", alignItems: 'center' }}>
                         <Link to="/" style={{ textDecoration: 'none' }}>
                             <Button sx={{ my: 2, color: '#fff', display: 'block' }} >
                                 Home
                             </Button>
                         </Link>
-                        {/* <Button sx={{ my: 2, color: '#fff', display: 'block' }} >
-                            About Us
-                        </Button> */}
+
                         <Link to="/alldoctors" style={{ textDecoration: 'none' }}>
                             <Button sx={{ my: 2, color: '#fff', display: 'block' }} >
                                 Doctors
                             </Button>
                         </Link>
+                        <Link to="/Dashboard" style={{ textDecoration: 'none' }}>
+                            {
+                                (user) &&
+                                <Button sx={{ my: 2, color: '#fff', display: 'block' }}>
+                                    {
+                                        (user?.role === 'admin') ? " Dashboard" : "Profile"
+                                    }
 
-                        {
-                            user && <Link to="/Dashboard" style={{ textDecoration: 'none' }}>
-                                <Button sx={{ my: 2, color: '#fff', display: 'block' }} >
-                                    Dashboard
                                 </Button>
-                            </Link>
-                        }
+
+                            }
+                        </Link>
                         {
                             user ? <Button sx={{ my: 2, color: '#fff', display: 'block' }} onClick={Logout}>
                                 Logout
@@ -181,7 +188,7 @@ const Navbar = () => {
 
                 </Toolbar>
             </Container>
-        </AppBar>
+        </AppBar >
     );
 };
 export default Navbar;

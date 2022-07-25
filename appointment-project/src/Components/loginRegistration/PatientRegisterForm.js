@@ -7,23 +7,24 @@ import loginImg from '../../assets/images/loginImg.png';
 
 const PatientRegisterForm = ({ data, setData, handleFormSubmit }) => {
     return (
-        <Grid container spacing={3} alignItems="center">
+        <Grid container spacing={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: { xs: 7, sm: 18 } }}>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
                 <div>
                     <img src={loginImg} alt="" style={{ width: "100%" }} />
                 </div>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
                 <Box>
                     <FormLayout>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Typography variant='h6'>Patient Register</Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'blue', textAlign: 'center', px: 1, py: 2, borderRadius: '5px' }}>
+
+                            <Typography sx={{ color: '#f0f0f0' }}>Patient Register</Typography>
 
                             <Link
                                 to="/doctorRegister"
-                                style={{ textDecoration: 'none', color: "#20C0F3" }}
+                                style={{ textDecoration: 'none', color: "yellow" }}
                             >Are you a Doctor?</Link>
 
                         </Box>
@@ -32,6 +33,7 @@ const PatientRegisterForm = ({ data, setData, handleFormSubmit }) => {
                                 type='text'
                                 name='userName'
                                 label='User Name'
+                                size='small'
                                 fullWidth
                                 onChange={(e) =>
                                     setData({
@@ -45,6 +47,7 @@ const PatientRegisterForm = ({ data, setData, handleFormSubmit }) => {
                                 type='email'
                                 name='email'
                                 label='Email'
+                                size='small'
                                 fullWidth
                                 onChange={(e) =>
                                     setData({
@@ -58,6 +61,7 @@ const PatientRegisterForm = ({ data, setData, handleFormSubmit }) => {
                                 type='password'
                                 name='password'
                                 label='Create Password'
+                                size='small'
                                 fullWidth
                                 onChange={(e) =>
                                     setData({

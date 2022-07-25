@@ -2,8 +2,10 @@ import { Box, Button, Drawer, Typography, useMediaQuery } from '@mui/material';
 import { useStyle } from '../../styles/MetarialStyles';
 import { Link } from "react-router-dom";
 import useAuth from '../../Hooks/useAuth'
+import { useEffect, useState } from 'react';
 
 export default function SideBar({ open, onClose }) {
+    const [doctor, setDoctor] = useState(null);
     const { user } = useAuth();
     const style = useStyle();
     const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
@@ -17,6 +19,16 @@ export default function SideBar({ open, onClose }) {
         fontSize: '16px',
         fontWeight: 'bold',
     }
+
+    const doctorId = user?.id;
+    useEffect(() => {
+        fetch(`http://localhost:5000/doctor/${doctorId}`)
+            .then(res => res.json())
+            .then(data => setDoctor(data[0]))
+    }, [doctorId]);
+
+
+
 
 
 
@@ -58,30 +70,41 @@ export default function SideBar({ open, onClose }) {
                                     Patients
                                 </Button>
                             </Link>
+                            <Link to='makeAdmin' style={MyStyle}>
+                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                    Make Admin
+                                </Button>
+                            </Link>
                         </>
                     }
                     {
                         user.role === 'doctor' && <>
-                            <Link to='mypatients' style={MyStyle}>
-                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
-                                    My patients
-                                </Button>
-                            </Link>
-                            <Link to='appointments' style={MyStyle}>
-                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
-                                    Appointments
-                                </Button>
-                            </Link>
                             <Link to='doctorprofile' style={MyStyle}>
                                 <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
                                     Profile Settings
                                 </Button>
                             </Link>
-                            <Link to='scheduleTime' style={MyStyle}>
-                                <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
-                                    Schedule Time
-                                </Button>
-                            </Link>
+                            {
+                                (doctor !== undefined) && <>
+                                    <Link to='mypatients' style={MyStyle}>
+                                        <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                            My patients
+                                        </Button>
+                                    </Link>
+                                    <Link to='appointments' style={MyStyle}>
+                                        <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                            Appointments
+                                        </Button>
+                                    </Link>
+                                    <Link to='scheduleTime' style={MyStyle}>
+                                        <Button sx={{ ml: 1, color: '#fff', display: 'block', textTransform: 'capitalize' }} >
+                                            Schedule Time
+                                        </Button>
+                                    </Link>
+                                </>
+                            }
+
+
                         </>
                     }
                     {

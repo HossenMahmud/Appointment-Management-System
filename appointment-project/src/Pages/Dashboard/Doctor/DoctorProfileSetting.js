@@ -97,6 +97,13 @@ const DoctorProfileSetting = () => {
                                         </UserInfo>
 
                                         <UserInfo>
+                                            <TextLevel variant='body' >Email</TextLevel>
+                                            <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
+                                                {doctorInfo ? doctorInfo.email : "Not Provided"}
+                                            </Typography>
+                                        </UserInfo>
+
+                                        <UserInfo>
                                             <TextLevel variant='body'>Gender</TextLevel>
                                             <Typography sx={{ color: '#757575', ml: 2, fontSize: '14px', }}>
                                                 {doctorInfo ? doctorInfo.gender : "Not Provided"}

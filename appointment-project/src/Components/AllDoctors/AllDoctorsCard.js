@@ -104,7 +104,7 @@ const AllDoctorsCard = ({ doctors }) => {
                                                 alignItems="center"
                                                 spacing={2}
                                             >
-                                                <DoctorName>{doctor?.firstName}{doctor?.lastName}</DoctorName>
+                                                <DoctorName>{doctor?.firstName} {doctor?.lastName}</DoctorName>
                                                 <CheckCircleIcon sx={{ fontSize: '18px', color: '#20C0F3' }} />
                                             </Stack>
 

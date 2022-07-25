@@ -6,6 +6,7 @@ import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
+import Swal from 'sweetalert2';
 
 
 
@@ -75,6 +76,14 @@ const DoctorUpdateForm = ({ doctorInfo, id }) => {
             .then((res) => {
                 if (res.status === 200) {
                     navigate('/Dashboard/doctorprofile')
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Ok',
+                        text: 'Successfully Profile Updated',
+                        timer: 1500,
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                    })
                 }
             });
         e.preventDefault();

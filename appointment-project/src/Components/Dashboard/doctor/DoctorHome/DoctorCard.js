@@ -51,20 +51,16 @@ const DoctorCard = ({ doctor }) => {
 
     return (
         <Grid container spacing={2}>
-            {/* Cart Item */}
             <Grid item xs={12} sm={4}>
                 <DorctorCardItem value={totalPatient}></DorctorCardItem>
             </Grid>
-
-            {/* Cart Item */}
             <Grid item xs={12} sm={4}>
                 <DorctorCardItem value={todayPatient}></DorctorCardItem>
             </Grid>
-
-            {/* Cart Item */}
             <Grid item xs={12} sm={4}>
                 <DorctorCardItem value={appointments}></DorctorCardItem>
             </Grid>
+
         </Grid>
     );
 };

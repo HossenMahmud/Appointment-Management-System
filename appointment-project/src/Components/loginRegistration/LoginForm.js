@@ -7,23 +7,26 @@ import { Link } from "react-router-dom";
 
 const LoginForm = ({ data, setData, login }) => {
     return (
-        <Grid container spacing={3} alignItems="center">
+        <Grid container spacing={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: { xs: 7, sm: 18 } }}>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
                 <div>
                     <img src={loginImg} alt="" style={{ width: "100%" }} />
                 </div>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
                 <Box component="form" onSubmit={login}>
                     <FormLayout>
-                        <Typography variant='h6'>Login</Typography>
+                        <Box sx={{ backgroundColor: 'blue', textAlign: 'center', py: 1, borderRadius: '5px' }}>
+                            <Typography sx={{ color: '#f0f0f0' }}>Login</Typography>
+                        </Box>
                         <Box>
                             <TextFieldMake
                                 type='email'
                                 name='email'
                                 label='Email'
+                                size='small'
                                 fullWidth
                                 onChange={(e) =>
                                     setData({
@@ -37,6 +40,7 @@ const LoginForm = ({ data, setData, login }) => {
                                 type='password'
                                 name='password'
                                 label='Password'
+                                size='small'
                                 fullWidth
                                 onChange={(e) =>
                                     setData({

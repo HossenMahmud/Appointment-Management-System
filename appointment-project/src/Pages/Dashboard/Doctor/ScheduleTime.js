@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import DoctorSchedulDisplay from '../../../Components/Dashboard/doctor/DoctorSchedule/DoctorSchedulDisplay';
@@ -13,14 +13,14 @@ import swal from 'sweetalert2';
 
 const ScheduleButton = styled(Button)(({ theme }) => ({
     margin: '10px 0',
-    backgroundColor: "#20C0F3",
-    borderColor: '#20C0F3',
+    backgroundColor: "blue",
+    borderColor: 'blue',
     textTransform: 'capitalize',
     color: '#fff',
     padding: '5px 8px',
     '&:hover': {
-        backgroundColor: 'blue',
-        borderColor: 'blue',
+        backgroundColor: '20C0F3',
+        borderColor: '20C0F3',
         boxShadow: 'none',
         color: '#fff',
     }
@@ -37,7 +37,7 @@ const ScheduleTime = () => {
             .then(data => setDoctor(data[0]));
     }, [userId]);
 
-    const [schedules, setSchedules] = useState(null);
+    const [schedules, setSchedules] = useState([]);
     useEffect(() => {
         fetch(`http://localhost:5000/schedule/${doctor?.id}`)
             .then(res => res.json())
@@ -78,8 +78,13 @@ const ScheduleTime = () => {
             </Box>
             <Box>
                 {
-                    (schedules !== null) && <DoctorSchedulDisplay schedules={schedules} handleDelete={handleDelete}></DoctorSchedulDisplay>
+                    (schedules.length !== 0) ? <DoctorSchedulDisplay schedules={schedules} handleDelete={handleDelete}></DoctorSchedulDisplay> :
+                        <Box sx={{ textAlign: 'center' }}>
+                            <Typography variant='h5' sx={{ color: 'red' }}>Schedule Time Not Available !!!!</Typography>
+                            <Typography variant='h5' sx={{ color: 'green' }}>Please Add Schedule</Typography>
+                        </Box>
                 }
+
             </Box>
         </LayoutContiner>
     );

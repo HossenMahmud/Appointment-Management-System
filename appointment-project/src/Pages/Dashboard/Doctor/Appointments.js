@@ -3,6 +3,8 @@ import DoctorAppointmentList from '../../../Components/Dashboard/doctor/DoctorAp
 import { LayoutContiner } from '../../../styles/MetarialStyles';
 import useAuth from '../../../Hooks/useAuth';
 import axios from 'axios';
+import { Typography } from '@mui/material';
+import { Box } from '@mui/system';
 
 const Appointments = () => {
     const { user } = useAuth();
@@ -17,7 +19,9 @@ const Appointments = () => {
     return (
         <LayoutContiner>
             {
-                (doctor.length !== 0) && <DoctorAppointmentList doctor={doctor}></DoctorAppointmentList>
+                (doctor.length !== 0) ? <DoctorAppointmentList doctor={doctor}></DoctorAppointmentList> : <Box sx={{ textAlign: 'center' }}>
+                    <Typography variant='h5' sx={{ color: 'red' }}>Appointment Not Available !!!!</Typography>
+                </Box>
             }
 
         </LayoutContiner>

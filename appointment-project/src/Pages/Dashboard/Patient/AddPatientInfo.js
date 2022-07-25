@@ -3,6 +3,7 @@ import PatientProfileForm from '../../../Components/Dashboard/patient/PatientPro
 import { LayoutContiner } from '../../../styles/MetarialStyles';
 import Axios from "axios";
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const AddPatientInfo = () => {
     const [data, setData] = useState(null);
@@ -27,13 +28,26 @@ const AddPatientInfo = () => {
         if (newData !== null && newData.image !== undefined) {
             Axios.post("http://localhost:5000/addPatientInfo", formData).then((res) => {
                 if (res.status === 200) {
-                    alert("Successfully Data Added");
-                    // e.target.reset();
                     navigate('/Dashboard/patientprofile');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Ok',
+                        text: 'Successfully Profile Created',
+                        timer: 1500,
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                    })
                 }
             });
         } else {
-            alert("Please Enter all data");
+            Swal.fire({
+                icon: 'error',
+                title: 'Data Missing',
+                text: 'Please Enter all data',
+                timer: 1500,
+                showCancelButton: false,
+                showConfirmButton: false,
+            })
         }
         e.preventDefault();
     };

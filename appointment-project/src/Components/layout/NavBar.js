@@ -39,9 +39,7 @@ export const NavBar = ({ sidebartoggle }) => {
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            {/* <IconButton sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src={profile} />
-                            </IconButton> */}
+
                             <Stack
                                 direction="row"
                                 justifyContent="center"

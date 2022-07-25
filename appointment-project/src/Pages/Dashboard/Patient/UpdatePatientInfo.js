@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PatientUpdateForm from '../../../Components/Dashboard/patient/PatientUpdateForm';
 import { LayoutContiner } from '../../../styles/MetarialStyles';
 import Axios from 'axios';
+import Swal from 'sweetalert2';
 
 const UpdatePatientInfo = () => {
     const { id } = useParams();
@@ -22,6 +23,14 @@ const UpdatePatientInfo = () => {
             .then((res) => {
                 if (res.status === 200) {
                     navigate('/Dashboard/patientprofile')
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Ok',
+                        text: 'Successfully Profile Updated',
+                        timer: 1500,
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                    })
                 }
             });
         e.preventDefault();

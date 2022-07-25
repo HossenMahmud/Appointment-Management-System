@@ -107,6 +107,7 @@ app.post("/addDoctorInfo", upload.single("image"), (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const phone = req.body.phone;
+    const email = req.body.email;
     const gender = req.body.gender;
     const blood = req.body.blood;
     const birth = req.body.birth;
@@ -119,8 +120,8 @@ app.post("/addDoctorInfo", upload.single("image"), (req, res) => {
     const image = `http://localhost:5000/images/${req.file.filename}`;
     const status = req.body.status;
     db.query(
-        "INSERT INTO doctors (userId, firstName, lastName, phone, gender, blood, birth, city, address, specialist, clinic, education, biography,image,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        [userId, firstName, lastName, phone, gender, blood, birth, city, address, specialist, clinic, education, biography, image, status],
+        "INSERT INTO doctors (userId, firstName, lastName, phone,email, gender, blood, birth, city, address, specialist, clinic, education, biography,image,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [userId, firstName, lastName, phone, email, gender, blood, birth, city, address, specialist, clinic, education, biography, image, status],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -246,6 +247,8 @@ app.put("/doctorUpdate/:id", (req, res) => {
     });
 });
 
+
+
 /*------------------------------------------------------------------------------------------------
      Login Registration All  API Start  (Patient and Doctor API)   END
 ------------------------------------------------------------------------------------------*/
@@ -257,7 +260,7 @@ app.put("/doctorUpdate/:id", (req, res) => {
 // Get All Doctor List
 app.get("/allDoctors", (req, res) => {
     db.query(
-        `SELECT * FROM doctors`,
+        `SELECT * FROM doctors WHERE status = "Active" `,
         (err, result) => {
             if (err) {
             } else {
@@ -514,6 +517,72 @@ app.get("/allApointment", (req, res) => {
 
 /*-----------------------------------------------------------------------------
                          All  Appointment Booking  API End
+-----------------------------------------------------------------------------*/
+
+
+/*-----------------------------------------------------------------------------
+                     Admin Dashboard Make Admi Routes Start
+-----------------------------------------------------------------------------*/
+
+app.get('/allAdmin', (req, res) => {
+    db.query(`SELECT * FROM users WHERE role = "admin"`, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+
+
+app.delete("/AdminDelete/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("DELETE FROM users WHERE id = ?", id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+app.get('/admin/:id', (req, res) => {
+    const id = req.params.id;
+    db.query(`SELECT * FROM users WHERE id = ?`, id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+
+app.put("/AdminUpdate/:id", (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const keys = Object.keys(data);
+    const sqlquery = `UPDATE users SET ${keys.map(
+        (key) => key + " = ?"
+    )} WHERE id = ${id}`;
+
+    const value = keys.map((key) => {
+        return data[key];
+    });
+
+    db.query(sqlquery, value, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+
+
+
+/*-----------------------------------------------------------------------------
+                     Admin Dashboard Make Admi Routes End
 -----------------------------------------------------------------------------*/
 
 

@@ -32,6 +32,7 @@ import ScrollToTop from "react-scroll-to-top";
 import UpdateSchedule from './Components/Dashboard/doctor/DoctorSchedule/UpdateSchedule';
 import BookNow from './Pages/BookNow/BookNow';
 import AppointmentDownloadPage from './Components/Dashboard/patient/PatientHome/AppointmentDownloadPage';
+import MakeAdmin from './Pages/Dashboard/Admin/MakeAdmin';
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
               <Route path="admin/doctors/doctorDetails/:id" element={<AdminRoute><AdminDoctorDetails /></AdminRoute>}></Route>
               <Route path="admin/patients" element={<AdminRoute><Patients /></AdminRoute>}></Route>
               <Route path="admin/patients/patientDetails/:id" element={<AdminRoute><AdminPatientDetails /></AdminRoute>}></Route>
+              <Route path="makeAdmin" element={<AdminRoute> <MakeAdmin></MakeAdmin> </AdminRoute>}></Route>
               {/* Doctor all Routes */}
               <Route path="mypatients" element={<MyPatients />}></Route>
               <Route path="appointments" element={<Appointments />}></Route>

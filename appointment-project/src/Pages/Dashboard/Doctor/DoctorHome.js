@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import DoctorCard from '../../../Components/Dashboard/doctor/DoctorHome/DoctorCard';
@@ -13,15 +14,11 @@ const DoctorHome = () => {
             setDoctor(res.data[0]);
         });
     }, [userId]);
+
     return (
         <LayoutContiner>
-            {
-                (doctor !== null) && <DoctorCard doctor={doctor}></DoctorCard>
-            }
-            {
-                (doctor !== null) && <TodayPatient doctor={doctor}></TodayPatient>
-            }
-
+            <DoctorCard doctor={doctor}></DoctorCard>
+            <TodayPatient doctor={doctor}></TodayPatient>
         </LayoutContiner >
     );
 };

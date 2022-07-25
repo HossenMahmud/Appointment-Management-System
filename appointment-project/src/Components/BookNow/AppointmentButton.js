@@ -10,6 +10,7 @@ import { TextFieldMake } from '../../styles/MetarialStyles';
 import useAuth from '../../Hooks/useAuth';
 import styled from '@emotion/styled';
 import Tooltip from '@mui/material/Tooltip';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -19,14 +20,12 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: {
-        xs: '300',
-        sm: '600'
+        xs: '300px',
+        sm: '400px',
     },
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 2,
-    borderRadius: '10px',
-    border: '5px solid #ADE7F7'
 };
 
 const AppointmentBtn = styled(Button)(({ theme }) => ({
@@ -60,47 +59,66 @@ const DesableBtn = styled(Button)(({ theme }) => ({
     }
 }));
 
-const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, location, MonthName, year, dayName, dayNumber }) => {
+const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, location, MonthName, year, dayName, dayNumber, patient }) => {
+    const navigate = useNavigate();
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+
+
+
     const d = new Date();
     let todayDateNumber = d.getDate();
 
 
     const handleSubmit = e => {
-        const newData = {
-            ...data,
-            doctorId: doctor?.id,
-            doctorName: `${doctor?.firstName} ${doctor?.lastName}`,
-            doctorImg: doctor?.image,
-            specialist: doctor?.specialist,
-            patientId: user?.id,
-            hospitalName: hospitalName,
-            location: location,
-            startTime: startTime,
-            endTime: endTime,
-            apptDate: `${day} ${MonthName} ${year}`,
-            bookingDate: ` ${dayNumber} ${MonthName} ${year}`,
-            status: 'pendding'
-        };
-        axios.post("http://localhost:5000/appointment", newData).then((res) => {
-            if (res.status === 200) {
-                setOpen(false);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Ok',
-                    text: 'SuccessFully Schedule Added',
-                    timer: 1500,
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                })
-            }
-        });
         e.preventDefault();
+        if (patient !== undefined) {
+            const newData = {
+                ...data,
+                doctorId: doctor?.id,
+                doctorName: `${doctor?.firstName} ${doctor?.lastName}`,
+                doctorImg: doctor?.image,
+                specialist: doctor?.specialist,
+                patientId: user?.id,
+                hospitalName: hospitalName,
+                location: location,
+                startTime: startTime,
+                endTime: endTime,
+                apptDate: `${day} ${MonthName} ${year}`,
+                bookingDate: ` ${dayNumber} ${MonthName} ${year}`,
+                status: 'pendding'
+            }
+            axios.post("http://localhost:5000/appointment", newData).then((res) => {
+                if (res.status === 200) {
+                    setOpen(false);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Ok',
+                        text: 'SuccessFully Schedule Added',
+                        timer: 1500,
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                    })
+                    navigate('/Dashboard')
+                }
+            })
+        } else {
+            setOpen(false);
+            Swal.fire({
+                icon: 'error',
+                title: 'Profile SetuP Firstly',
+                text: 'Plaese Set Your Profile all info fristly, Then you Apply',
+                timer: 3500,
+                showCancelButton: false,
+                showConfirmButton: false,
+            })
+            navigate('/Dashboard/patientprofile')
+
+        }
     };
 
     return (
@@ -121,16 +139,16 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Box sx={{ textAlign: 'center' }}>
-                        <Typography variant="body1" sx={{ color: '#14287E', fontWeight: 'bold' }}>Doctor Appointment Schedule</Typography>
-                        <Typography id="modal-modal-title" variant="body1" sx={{ color: '#14287E', fontWeight: 'bold' }}>
+                    <Box sx={{ textAlign: 'center', py: 1, backgroundColor: 'blue', borderRadius: '5px' }}>
+                        <Typography variant="body1" sx={{ color: '#f0f0f0', fontWeight: 'bold' }}>Doctor Appointment Schedule</Typography>
+                        <Typography id="modal-modal-title" variant="body1" sx={{ color: '#f0f0f0', fontWeight: 'bold' }}>
                             [{day} {MonthName} {year} --- {dayName}]
                         </Typography>
                     </Box>
 
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
                         <Grid container spacing={2} component='form' onSubmit={handleSubmit}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextFieldMake
                                     type='text'
                                     name='patientName'
@@ -148,7 +166,7 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
                                 ></TextFieldMake>
                             </Grid>
 
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextFieldMake
                                     type='text'
                                     name='patientAge'
@@ -165,7 +183,7 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
                                     }
                                 ></TextFieldMake>
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextFieldMake
                                     type='number'
                                     name='patientPhone'
@@ -182,7 +200,7 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
                                     }
                                 ></TextFieldMake>
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextFieldMake
                                     type='email'
                                     name='patientEmail'
