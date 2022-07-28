@@ -9,20 +9,20 @@ import Axios from 'axios';
 const AdminHome = ({ updateUser }) => {
     const [doctors, setDoctors] = useState([]);
     useEffect(() => {
-        Axios.get('http://localhost:5000/allDoctors').then((res) => {
+        Axios.get('https://doctor-appointment-server.rpi.gov.bd/allDoctors').then((res) => {
             setDoctors(res.data);
         });
     }, []);
     const [patients, setPatients] = useState([]);
     useEffect(() => {
-        Axios.get('http://localhost:5000/allPatients').then((res) => {
+        Axios.get('https://doctor-appointment-server.rpi.gov.bd/allPatients').then((res) => {
             setPatients(res.data);
         });
     }, []);
 
     const [allAppointment, setAllAppointment] = useState([]);
     useEffect(() => {
-        Axios.get('http://localhost:5000/allApointment').then((res) => {
+        Axios.get('https://doctor-appointment-server.rpi.gov.bd/allApointment').then((res) => {
             setAllAppointment(res.data);
         });
     }, []);

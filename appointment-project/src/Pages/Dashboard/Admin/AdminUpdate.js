@@ -44,13 +44,13 @@ const AdminUpdate = ({ id, condition, setCondition }) => {
 
     const [admin, setAdmin] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/admin/${id}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/admin/${id}`)
             .then(res => res.json())
             .then(data => setAdmin(data[0]))
     }, [id]);
 
     const AdminUpdate = e => {
-        axios.put(`http://localhost:5000/AdminUpdate/${id}`, data)
+        axios.put(`https://doctor-appointment-server.rpi.gov.bd/AdminUpdate/${id}`, data)
             .then((res) => {
                 if (res.status === 200) {
                     setCondition(!condition)

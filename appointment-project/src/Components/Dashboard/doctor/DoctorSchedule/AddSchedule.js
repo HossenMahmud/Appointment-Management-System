@@ -120,14 +120,14 @@ const AddSchedule = () => {
 
     const [doctor, setDoctor] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/doctor/${userId}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/doctor/${userId}`)
             .then(res => res.json())
             .then(data => setDoctor(data[0]));
     }, [userId]);
 
     const [data, setData] = useState(null);
     const [date, setDate] = useState([
-        { dayName: '', startTime: '', endTime: '' }
+        { dayName: '', startTime: '', endTime: '', slot: '' }
     ]);
     const handleDate = (e, index) => {
         let dateData = [...date];
@@ -139,6 +139,7 @@ const AddSchedule = () => {
             dayName: '',
             startTime: '',
             endTime: '',
+            slot: ''
         }
         setDate([...date, object])
     }
@@ -155,7 +156,7 @@ const AddSchedule = () => {
             dateTime: JSON.stringify(date),
         };
 
-        Axios.post("http://localhost:5000/addSchedule", newData).then((res) => {
+        Axios.post("https://doctor-appointment-server.rpi.gov.bd/addSchedule", newData).then((res) => {
             if (res.status === 200) {
                 Swal.fire({
                     icon: 'success',
@@ -219,7 +220,7 @@ const AddSchedule = () => {
                                 return (
                                     <Paper elevation={8} sx={{ p: 2, mb: 2 }}>
                                         <Grid key={index} container spacing={2}>
-                                            <Grid item xs={12} sm={4}>
+                                            <Grid item xs={12} sm={3}>
                                                 <TextFieldMake
                                                     fullWidth
                                                     label="Slect Day"
@@ -241,7 +242,7 @@ const AddSchedule = () => {
                                                     ))}
                                                 </TextFieldMake>
                                             </Grid>
-                                            <Grid item xs={12} sm={4}>
+                                            <Grid item xs={12} sm={3}>
                                                 <TextFieldMake
                                                     fullWidth
                                                     label="Start Time"
@@ -263,8 +264,30 @@ const AddSchedule = () => {
                                                     ))}
                                                 </TextFieldMake>
                                             </Grid>
+                                            <Grid item xs={12} sm={3}>
+                                                <TextFieldMake
+                                                    fullWidth
+                                                    label="End Time"
+                                                    variant="outlined"
+                                                    name="endTime"
+                                                    focused
+                                                    size="medium"
+                                                    InputProps={{ style: { fontSize: 14 } }}
+                                                    InputLabelProps={{ style: { fontSize: 14 } }}
+                                                    onChange={(e) => handleDate(e, index)}
+                                                    required
+                                                    select
+                                                    SelectProps={{ native: true }}
+                                                >
+                                                    {Time.map((option) => (
+                                                        <option key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </option>
+                                                    ))}
+                                                </TextFieldMake>
+                                            </Grid>
 
-                                            <Grid item xs={12} sm={4}>
+                                            <Grid item xs={12} sm={3}>
                                                 <Stack
                                                     direction="row"
                                                     alignItems="center"
@@ -273,23 +296,16 @@ const AddSchedule = () => {
                                                 >
                                                     <TextFieldMake
                                                         fullWidth
-                                                        label="End Time"
+                                                        label="Slot Nomber"
                                                         variant="outlined"
-                                                        name="endTime"
+                                                        name="slot"
                                                         focused
                                                         size="medium"
                                                         InputProps={{ style: { fontSize: 14 } }}
                                                         InputLabelProps={{ style: { fontSize: 14 } }}
                                                         onChange={(e) => handleDate(e, index)}
                                                         required
-                                                        select
-                                                        SelectProps={{ native: true }}
                                                     >
-                                                        {Time.map((option) => (
-                                                            <option key={option.value} value={option.value}>
-                                                                {option.label}
-                                                            </option>
-                                                        ))}
                                                     </TextFieldMake>
                                                     <CancelButton sx={{ mt: 2 }} onClick={() => removeDateFields(index)} size='small' startIcon={<CancelIcon fontSize='small' />}>
                                                         Cancel

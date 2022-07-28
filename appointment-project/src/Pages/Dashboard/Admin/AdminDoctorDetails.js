@@ -22,7 +22,7 @@ const AdminDoctorDetails = () => {
     const { id } = useParams()
     const [doctor, setDoctor] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/singleDoctor/${id}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/singleDoctor/${id}`)
             .then(res => res.json())
             .then(data => setDoctor(data[0]));
     }, [id]);

@@ -28,7 +28,8 @@ const UpdateScheduleForm = ({ schedule }) => {
         let object = {
             dayName: '',
             startTime: '',
-            endTime: ''
+            endTime: '',
+            slot: ''
         }
         setDateTime([...dateTime, object])
     }
@@ -43,7 +44,7 @@ const UpdateScheduleForm = ({ schedule }) => {
             ...data,
             dateTime: JSON.stringify(dateTime),
         }
-        Axios.put(`http://localhost:5000/updateSchedule/${schedule?.id}`, newData)
+        Axios.put(`https://doctor-appointment-server.rpi.gov.bd/updateSchedule/${schedule?.id}`, newData)
             .then((res) => {
                 if (res.status === 200) {
                     navigate('/Dashboard/scheduleTime')
@@ -108,7 +109,7 @@ const UpdateScheduleForm = ({ schedule }) => {
                                     return (
                                         <Paper elevation={8} sx={{ p: 2, mb: 2 }}>
                                             <Grid key={index} container spacing={2}>
-                                                <Grid item xs={12} sm={4}>
+                                                <Grid item xs={12} sm={3}>
                                                     <TextFieldMake
                                                         type='text'
                                                         name='dayName'
@@ -122,7 +123,7 @@ const UpdateScheduleForm = ({ schedule }) => {
                                                     ></TextFieldMake>
                                                 </Grid>
 
-                                                <Grid item xs={12} sm={4}>
+                                                <Grid item xs={12} sm={3}>
                                                     <TextFieldMake
                                                         type='text'
                                                         name='startTime'
@@ -136,7 +137,21 @@ const UpdateScheduleForm = ({ schedule }) => {
                                                         value={form.startTime}
                                                     ></TextFieldMake>
                                                 </Grid>
-                                                <Grid item xs={12} sm={4}>
+                                                <Grid item xs={12} sm={3}>
+                                                    <TextFieldMake
+                                                        type='text'
+                                                        name='endTime'
+                                                        label='End Time'
+                                                        fullWidth
+                                                        focused
+                                                        size='medium'
+                                                        InputProps={{ style: { fontSize: 14 } }}
+                                                        InputLabelProps={{ style: { fontSize: 14 } }}
+                                                        onChange={(e) => handleDateTime(e, index)}
+                                                        value={form.endTime}
+                                                    ></TextFieldMake>
+                                                </Grid>
+                                                <Grid item xs={12} sm={3}>
                                                     <Stack
                                                         direction="row"
                                                         alignItems="center"
@@ -145,15 +160,15 @@ const UpdateScheduleForm = ({ schedule }) => {
                                                     >
                                                         <TextFieldMake
                                                             type='text'
-                                                            name='endTime'
-                                                            label='End Time'
+                                                            name='slot'
+                                                            label='Slot Number'
                                                             fullWidth
                                                             focused
                                                             size='medium'
                                                             InputProps={{ style: { fontSize: 14 } }}
                                                             InputLabelProps={{ style: { fontSize: 14 } }}
                                                             onChange={(e) => handleDateTime(e, index)}
-                                                            value={form.endTime}
+                                                            value={form.slot}
                                                         ></TextFieldMake>
                                                         <CancelButton sx={{ mt: 2 }} onClick={() => removeDateTimeFields(index)} size='small' startIcon={<CancelIcon fontSize='small' />}>
                                                             Cancel

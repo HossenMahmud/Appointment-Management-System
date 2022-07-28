@@ -11,5 +11,4 @@ const BookNowCard = ({ schedules }) => {
         </Grid>
     );
 };
-
 export default BookNowCard;

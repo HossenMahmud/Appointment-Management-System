@@ -1,0 +1,6 @@
+database Name : rpigvnqc_appointment_db
+userName: rpigvnqc_db123
+password: =hKU_FxgIn@-
+User “rpigvnqc_db123” was added to the database “rpigvnqc_appointment_db”.
+
+server: https://doctor-appointment-server.rpi.gov.bd/

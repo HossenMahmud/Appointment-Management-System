@@ -28,7 +28,7 @@ const DoctorProfileSetting = () => {
     const userId = user?.id;
     const [doctorInfo, setDoctorInfo] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/doctor/${userId}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/doctor/${userId}`)
             .then(res => res.json())
             .then(data => setDoctorInfo(data[0]));
     }, [userId]);

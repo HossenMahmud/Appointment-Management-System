@@ -54,13 +54,7 @@ export const NavbarRoot = styled(AppBar)(({ theme }) => ({
     },
 }));
 
-export const SubNabBar = styled(Box)(({ theme }) => ({
-    color: "#A4A6B3",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "30px 0px",
-}));
+
 
 export const MenuItemMake = styled(MenuItem)(({ theme }) => ({
     color: "#A4A6B3",
@@ -243,5 +237,14 @@ export const StatusBtnCancel = styled(Button)(({ theme }) => ({
         color: '#fff',
     }
 }));
+
+export const SubNabBar = styled(Box)(({ theme }) => ({
+    color: "#A4A6B3",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "30px 0px",
+}));
+
 
 

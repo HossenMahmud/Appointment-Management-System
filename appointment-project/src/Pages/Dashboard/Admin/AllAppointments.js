@@ -6,7 +6,7 @@ import { LayoutContiner } from '../../../styles/MetarialStyles';
 const AllAppointments = () => {
     const [allAppointment, setAllAppointment] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:5000/allApointment').then((res) => {
+        axios.get('https://doctor-appointment-server.rpi.gov.bd/allApointment').then((res) => {
             setAllAppointment(res.data);
         });
     }, []);

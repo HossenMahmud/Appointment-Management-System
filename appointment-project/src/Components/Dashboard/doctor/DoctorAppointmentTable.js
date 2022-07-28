@@ -86,7 +86,7 @@ const DoctorAppointmentTable = ({ apptData, condition, setCondition }) => {
         const newData = {
             status: 'Accepted',
         }
-        axios.put(`http://localhost:5000/acceptAppointment/${id}`, newData)
+        axios.put(`https://doctor-appointment-server.rpi.gov.bd/acceptAppointment/${id}`, newData)
             .then((res) => {
                 if (res.status === 200) {
                     setCondition(!condition);
@@ -99,7 +99,7 @@ const DoctorAppointmentTable = ({ apptData, condition, setCondition }) => {
         const newData = {
             status: 'Cancel',
         }
-        axios.put(`http://localhost:5000/acceptAppointment/${id}`, newData)
+        axios.put(`https://doctor-appointment-server.rpi.gov.bd/acceptAppointment/${id}`, newData)
             .then((res) => {
                 if (res.status === 200) {
                     setCondition(!condition);

@@ -8,7 +8,7 @@ const DoctorUpdateInfo = () => {
     const { id } = useParams();
     const [doctorInfo, setDoctorInfo] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/singleDoctor/${id}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/singleDoctor/${id}`)
             .then(res => res.json())
             .then(data => setDoctorInfo(data[0]))
     }, [id]);

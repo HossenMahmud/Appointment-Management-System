@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import AppointmentButton from './AppointmentButton';
 import useAuth from '../../Hooks/useAuth'
 
-const Appointment = ({ doctorId, dayName, hospitalName, startTime, endTime, location }) => {
+const Appointment = ({ doctorId, dayName, hospitalName, startTime, endTime, location, slot }) => {
     const { user } = useAuth();
     const [doctor, setDoctor] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/singleDoctor/${doctorId}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/singleDoctor/${doctorId}`)
             .then(res => res.json())
             .then(data => setDoctor(data[0]))
     }, [doctorId]);
@@ -15,11 +15,10 @@ const Appointment = ({ doctorId, dayName, hospitalName, startTime, endTime, loca
     const patientId = user?.id;
     const [patient, setPatient] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/${patientId}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/patient/${patientId}`)
             .then(res => res.json())
             .then(data => setPatient(data[0]))
     }, [patientId]);
-
 
 
     let weekName = dayName
@@ -73,18 +72,15 @@ const Appointment = ({ doctorId, dayName, hospitalName, startTime, endTime, loca
     }
 
 
+
     return (
         <>
-
             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
 
                 {
-                    weekName?.map((day, i) => <AppointmentButton key={i} day={day} doctor={doctor} dayName={dayName} hospitalName={hospitalName} startTime={startTime} endTime={endTime} location={location} MonthName={MonthName} year={year} dayNumber={dayNumber} patient={patient}></AppointmentButton>)
+                    weekName?.map((day, i) => <AppointmentButton key={i} day={day} doctor={doctor} dayName={dayName} hospitalName={hospitalName} startTime={startTime} endTime={endTime} location={location} MonthName={MonthName} year={year} dayNumber={dayNumber} patient={patient} slot={slot}></AppointmentButton>)
                 }
             </Box>
-
-
-
         </>
     );
 };

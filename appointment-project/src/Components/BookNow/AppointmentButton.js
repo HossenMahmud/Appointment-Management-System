@@ -59,17 +59,13 @@ const DesableBtn = styled(Button)(({ theme }) => ({
     }
 }));
 
-const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, location, MonthName, year, dayName, dayNumber, patient }) => {
+const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, location, MonthName, year, dayName, dayNumber, patient, slot }) => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const [data, setData] = useState([]);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-
-
-
     const d = new Date();
     let todayDateNumber = d.getDate();
 
@@ -92,7 +88,7 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
                 bookingDate: ` ${dayNumber} ${MonthName} ${year}`,
                 status: 'pendding'
             }
-            axios.post("http://localhost:5000/appointment", newData).then((res) => {
+            axios.post("https://doctor-appointment-server.rpi.gov.bd/appointment", newData).then((res) => {
                 if (res.status === 200) {
                     setOpen(false);
                     Swal.fire({
@@ -127,7 +123,7 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
                 (todayDateNumber <= day) && <AppointmentBtn onClick={handleOpen} color='info'> {day} {MonthName} {year}</AppointmentBtn>
             }
             {
-                (todayDateNumber > day) && <Tooltip title="Appointment Time Out" arrow sx={{ color: 'yellow' }}>
+                (todayDateNumber > day) && <Tooltip title="Appointment Time Out" arrow>
                     <DesableBtn>{day} {MonthName} {year}</DesableBtn>
                 </Tooltip>
             }
@@ -144,6 +140,9 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
                         <Typography id="modal-modal-title" variant="body1" sx={{ color: '#f0f0f0', fontWeight: 'bold' }}>
                             [{day} {MonthName} {year} --- {dayName}]
                         </Typography>
+                    </Box>
+                    <Box sx={{ textAlign: 'center', py: 1, mt: 1, backgroundColor: '#e6708c', borderRadius: '5px' }}>
+                        <Typography sx={{ color: '#fff', fontWeight: 'bold' }}>Available Slot: {slot}</Typography>
                     </Box>
 
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
@@ -225,7 +224,7 @@ const AppointmentButton = ({ doctor, day, hospitalName, startTime, endTime, loca
                     </Box>
                 </Box>
             </Modal>
-        </div>
+        </div >
     );
 };
 

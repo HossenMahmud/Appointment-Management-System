@@ -49,7 +49,7 @@ const AppointmentDownloadPage = () => {
 
     const [apptData, setApptData] = useState([]);
     useEffect(() => {
-        axios.get(`http://localhost:5000/singleAppointment/${id}`).then((res) => {
+        axios.get(`https://doctor-appointment-server.rpi.gov.bd/singleAppointment/${id}`).then((res) => {
             setApptData(res.data[0]);
         });
     }, [id]);

@@ -31,7 +31,7 @@ const MakeAdmin = () => {
     const [admin, setAdmin] = useState([]);
     const [condition, setCondition] = useState(true);
     useEffect(() => {
-        axios.get('http://localhost:5000/allAdmin').then((res) => {
+        axios.get('https://doctor-appointment-server.rpi.gov.bd/allAdmin').then((res) => {
             setAdmin(res.data);
         });
     }, [condition]);
@@ -46,7 +46,7 @@ const MakeAdmin = () => {
             cancelButtonColor: 'LightSeaGreen'
         }).then((result) => {
             if (result.value) {
-                axios.delete(`http://localhost:5000/AdminDelete/${id}`).then((response) => {
+                axios.delete(`https://doctor-appointment-server.rpi.gov.bd/AdminDelete/${id}`).then((response) => {
                     setAdmin(
                         admin.filter((val) => {
                             return val.id !== id;
@@ -62,7 +62,7 @@ const MakeAdmin = () => {
     const Data = { ...data, role: 'admin' }
     const handleFormSubmit = e => {
         if (data.length !== 0) {
-            axios.post("http://localhost:5000/register", Data).then(res => {
+            axios.post("https://doctor-appointment-server.rpi.gov.bd/register", Data).then(res => {
                 if (res.status === 200) {
                     // navigate("/login");
                     setCondition(!condition)

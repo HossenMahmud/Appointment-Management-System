@@ -72,7 +72,7 @@ const DoctorUpdateForm = ({ doctorInfo, id }) => {
             education: JSON.stringify(education),
             clinic: JSON.stringify(clinic),
         }
-        Axios.put(`http://localhost:5000/doctorUpdate/${id}`, newData)
+        Axios.put(`https://doctor-appointment-server.rpi.gov.bd/doctorUpdate/${id}`, newData)
             .then((res) => {
                 if (res.status === 200) {
                     navigate('/Dashboard/doctorprofile')

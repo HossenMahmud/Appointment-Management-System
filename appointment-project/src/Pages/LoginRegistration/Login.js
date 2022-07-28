@@ -19,7 +19,7 @@ const Login = () => {
     const handleLogin = e => {
         const email = data.email;
         const password = data.password;
-        axios.get(`http://localhost:5000/login/${email}`).then((res) => {
+        axios.get(`https://doctor-appointment-server.rpi.gov.bd/login/${email}`).then((res) => {
             const user = res.data[0];
             if (user) {
                 if (user.password === password) {

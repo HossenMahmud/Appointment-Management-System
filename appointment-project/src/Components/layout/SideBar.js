@@ -22,7 +22,7 @@ export default function SideBar({ open, onClose }) {
 
     const doctorId = user?.id;
     useEffect(() => {
-        fetch(`http://localhost:5000/doctor/${doctorId}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/doctor/${doctorId}`)
             .then(res => res.json())
             .then(data => setDoctor(data[0]))
     }, [doctorId]);

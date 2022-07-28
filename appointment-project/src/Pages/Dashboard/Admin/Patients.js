@@ -5,7 +5,7 @@ import Axios from 'axios'
 const Patients = () => {
     const [patients, setPatients] = useState([]);
     useEffect(() => {
-        Axios.get('http://localhost:5000/allPatients').then((res) => {
+        Axios.get('https://doctor-appointment-server.rpi.gov.bd/allPatients').then((res) => {
             setPatients(res.data);
         });
     }, []);

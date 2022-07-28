@@ -9,12 +9,15 @@ const DoctorCard = ({ doctor }) => {
     const id = doctor?.id;
     const [todayPatientData, setTodayPatientData] = useState([]);
     const [apptRequest, setApptRequest] = useState([]);
+
     useEffect(() => {
-        axios.get(`http://localhost:5000/doctorTodayPatient/${id}`).then((res) => {
+        axios.get(`https://doctor-appointment-server.rpi.gov.bd/doctorTodayPatient/${id}`).then((res) => {
             setTodayPatientData(res.data);
         });
+    }, [id]);
 
-        axios.get(`http://localhost:5000/doctorApptRequest/${id}`).then((res) => {
+    useEffect(() => {
+        axios.get(`https://doctor-appointment-server.rpi.gov.bd/doctorApptRequest/${id}`).then((res) => {
             setApptRequest(res.data);
         });
 

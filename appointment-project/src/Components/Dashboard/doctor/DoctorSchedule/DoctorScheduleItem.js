@@ -44,6 +44,7 @@ const DeleteButton = styled(Button)(({ theme }) => ({
 }));
 
 const DoctorScheduleItem = ({ schedule, handleDelete }) => {
+
     let dateTime = [];
     if (schedule == null) {
         dateTime = [];
@@ -66,10 +67,12 @@ const DoctorScheduleItem = ({ schedule, handleDelete }) => {
                         dateTime?.map((time, index) => (
                             <ScheduleBox key={index}>
                                 <Typography>Chember Date</Typography>
-                                <Typography>
-                                    {time.dayName}  ({time.startTime} - {time.endTime})
-                                </Typography>
-
+                                <Box>
+                                    <Typography>
+                                        {time.dayName}  ({time.startTime} - {time.endTime})
+                                    </Typography>
+                                    <Typography sx={{ color: 'blue', fontWeight: 'bold' }}>Slot: {time.slot}</Typography>
+                                </Box>
                             </ScheduleBox>
                         ))
                     }

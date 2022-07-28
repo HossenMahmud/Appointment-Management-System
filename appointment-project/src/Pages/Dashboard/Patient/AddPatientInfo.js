@@ -4,6 +4,7 @@ import { LayoutContiner } from '../../../styles/MetarialStyles';
 import Axios from "axios";
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import SubNav2 from '../../../Components/layout/SubNav2';
 
 const AddPatientInfo = () => {
     const [data, setData] = useState(null);
@@ -26,7 +27,7 @@ const AddPatientInfo = () => {
             formData.append(key, newData[key]);
         }
         if (newData !== null && newData.image !== undefined) {
-            Axios.post("http://localhost:5000/addPatientInfo", formData).then((res) => {
+            Axios.post("https://doctor-appointment-server.rpi.gov.bd/addPatientInfo", formData).then((res) => {
                 if (res.status === 200) {
                     navigate('/Dashboard/patientprofile');
                     Swal.fire({
@@ -52,17 +53,20 @@ const AddPatientInfo = () => {
         e.preventDefault();
     };
     return (
-        <LayoutContiner>
-            <PatientProfileForm
-                handleSubmit={handleSubmit}
-                data={data}
-                setData={setData}
-                preview={preview}
-                handleImageSet={handleImageSet}
-            >
+        <>
+            <SubNav2 link='/Dashboard' linkName="Dashboard" linkTwo='/Dashboard/patientprofile' linkNameTwo="Profile" to='Add Profile'></SubNav2>
+            <LayoutContiner>
+                <PatientProfileForm
+                    handleSubmit={handleSubmit}
+                    data={data}
+                    setData={setData}
+                    preview={preview}
+                    handleImageSet={handleImageSet}
+                >
 
-            </PatientProfileForm>
-        </LayoutContiner>
+                </PatientProfileForm>
+            </LayoutContiner>
+        </>
     );
 };
 

@@ -9,7 +9,7 @@ import axios from 'axios';
 const AllDoctors = () => {
     const [doctors, setDoctors] = useState(null);
     useEffect(() => {
-        axios.get('http://localhost:5000/allDoctors').then((res) => {
+        axios.get('https://doctor-appointment-server.rpi.gov.bd/allDoctors').then((res) => {
             setDoctors(res.data);
         });
     }, []);

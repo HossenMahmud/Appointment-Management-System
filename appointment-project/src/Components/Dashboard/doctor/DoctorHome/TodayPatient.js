@@ -8,7 +8,7 @@ const TodayPatient = ({ doctor }) => {
     const doctorId = doctor?.id;
     const [apptData, setApptData] = useState([]);
     useEffect(() => {
-        axios.get(`http://localhost:5000/doctorTodayPatient/${doctorId}`).then((res) => {
+        axios.get(`https://doctor-appointment-server.rpi.gov.bd/doctorTodayPatient/${doctorId}`).then((res) => {
             setApptData(res.data);
         });
     }, [doctorId]);

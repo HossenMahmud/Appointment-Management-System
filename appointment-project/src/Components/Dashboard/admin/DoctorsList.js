@@ -124,7 +124,7 @@ export default function DoctorsList({ doctors, condition, setCondition }) {
         const newData = {
             status: 'Active',
         }
-        Axios.put(`http://localhost:5000/doctorUpdate/${id}`, newData)
+        Axios.put(`https://doctor-appointment-server.rpi.gov.bd/doctorUpdate/${id}`, newData)
             .then((res) => {
                 if (res.status === 200) {
                     setCondition(!condition);
@@ -136,7 +136,7 @@ export default function DoctorsList({ doctors, condition, setCondition }) {
         const newData = {
             status: 'Deactive',
         }
-        Axios.put(`http://localhost:5000/doctorUpdate/${id}`, newData)
+        Axios.put(`https://doctor-appointment-server.rpi.gov.bd/doctorUpdate/${id}`, newData)
             .then((res) => {
                 if (res.status === 200) {
                     setCondition(!condition);

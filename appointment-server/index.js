@@ -45,11 +45,17 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
          DataBase Connection With MYSQL    START
 --------------------------------------------------------------------------------*/
 // MySQL DataBase Connection
+// const db = mysql.createConnection({
+//     user: "root",
+//     host: "localhost",
+//     password: "",
+//     database: "doctors_appointment",
+// });
 const db = mysql.createConnection({
-    user: "root",
+    user: "rpigvnqc_db123",
     host: "localhost",
-    password: "",
-    database: "doctors_appointment",
+    password: "=hKU_FxgIn@-",
+    database: "rpigvnqc_appointment_db",
 });
 
 // Check DataBase Connection 
@@ -117,7 +123,7 @@ app.post("/addDoctorInfo", upload.single("image"), (req, res) => {
     const clinic = req.body.clinic;
     const education = req.body.education;
     const biography = req.body.biography;
-    const image = `http://localhost:5000/images/${req.file.filename}`;
+    const image = `https://doctor-appointment-server.rpi.gov.bd/images/${req.file.filename}`;
     const status = req.body.status;
     db.query(
         "INSERT INTO doctors (userId, firstName, lastName, phone,email, gender, blood, birth, city, address, specialist, clinic, education, biography,image,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
@@ -143,7 +149,7 @@ app.post("/addPatientInfo", upload.single("image"), (req, res) => {
     const birth = req.body.birth;
     const city = req.body.city;
     const address = req.body.address;
-    const image = `http://localhost:5000/images/${req.file.filename}`;
+    const image = `https://doctor-appointment-server.rpi.gov.bd/images/${req.file.filename}`;
     db.query(
         "INSERT INTO patients (userId, firstName, lastName, phone, gender, blood, birth, city, address, image) VALUES (?,?,?,?,?,?,?,?,?,?)",
         [userId, firstName, lastName, phone, gender, blood, birth, city, address, image],
@@ -480,7 +486,7 @@ app.get("/doctorTodayPatient/:id", (req, res) => {
     let dayNumber = d.getDate();
     let Today = `${dayNumber} ${MonthName} ${year}`
     const id = req.params.id;
-    const sql = `SELECT * FROM appointments WHERE doctorId = ${id} AND apptDate= "${Today}" AND status = "Accepted" `;
+    const sql = `SELECT * FROM appointments WHERE doctorId = ${id} AND apptDate= "${Today}" AND status = "Accepted"`;
     db.query(sql, (err, result) => {
         if (err) {
         } else {
@@ -491,7 +497,7 @@ app.get("/doctorTodayPatient/:id", (req, res) => {
 
 app.get("/doctorApptRequest/:id", (req, res) => {
     const id = req.params.id;
-    const sql = `SELECT * FROM appointments WHERE doctorId = ${id} AND status = "pendding" `;
+    const sql = `SELECT * FROM appointments WHERE doctorId = ${id} AND status = "pendding"`;
     db.query(sql, (err, result) => {
         if (err) {
             console.log(err);
@@ -500,6 +506,21 @@ app.get("/doctorApptRequest/:id", (req, res) => {
         }
     })
 })
+
+app.get("/doctorSlot", (req, res) => {
+    const date = req.query.date
+    const id = parseInt(req.query.id)
+
+    const sql = `SELECT * FROM appointments WHERE doctorId = ${id} AND apptDate = "${date}"`;
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
 
 app.get("/allApointment", (req, res) => {
     const id = req.params.id;
@@ -512,8 +533,6 @@ app.get("/allApointment", (req, res) => {
         }
     })
 })
-
-
 
 /*-----------------------------------------------------------------------------
                          All  Appointment Booking  API End
@@ -577,7 +596,6 @@ app.put("/AdminUpdate/:id", (req, res) => {
         }
     });
 });
-
 
 
 

@@ -13,7 +13,7 @@ const DoctorDetails = () => {
     const { id } = useParams();
     const [doctor, setDoctor] = useState([]);
     useEffect(() => {
-        Axios.get(`http://localhost:5000/singleDoctor/${id}`).then((res) => {
+        Axios.get(`https://doctor-appointment-server.rpi.gov.bd/singleDoctor/${id}`).then((res) => {
             setDoctor(res.data[0]);
         });
     }, [id]);

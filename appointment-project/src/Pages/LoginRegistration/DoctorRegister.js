@@ -11,7 +11,7 @@ const DoctorRegister = () => {
 
 
     const handleFormSubmit = e => {
-        axios.post("http://localhost:5000/register", Data).then(res => {
+        axios.post("https://doctor-appointment-server.rpi.gov.bd/register", Data).then(res => {
             if (res.status === 200) {
                 navigate("/login");
             }

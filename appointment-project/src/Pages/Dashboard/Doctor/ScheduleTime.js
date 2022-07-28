@@ -32,14 +32,14 @@ const ScheduleTime = () => {
 
     const [doctor, setDoctor] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/doctor/${userId}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/doctor/${userId}`)
             .then(res => res.json())
             .then(data => setDoctor(data[0]));
     }, [userId]);
 
     const [schedules, setSchedules] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/schedule/${doctor?.id}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/schedule/${doctor?.id}`)
             .then(res => res.json())
             .then(data => setSchedules(data))
     }, [doctor?.id]);
@@ -56,7 +56,7 @@ const ScheduleTime = () => {
             cancelButtonColor: 'LightSeaGreen'
         }).then((result) => {
             if (result.value) {
-                Axios.delete(`http://localhost:5000/deleteSchedule/${id}`).then((response) => {
+                Axios.delete(`https://doctor-appointment-server.rpi.gov.bd/deleteSchedule/${id}`).then((response) => {
                     setSchedules(
                         schedules.filter((val) => {
                             return val.id !== id;

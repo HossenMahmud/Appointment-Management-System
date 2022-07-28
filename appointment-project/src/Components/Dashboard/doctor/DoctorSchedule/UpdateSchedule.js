@@ -6,7 +6,7 @@ const UpdateSchedule = () => {
     const { id } = useParams();
     const [schedule, setSchedule] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/singleSchedule/${id}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/singleSchedule/${id}`)
             .then(res => res.json())
             .then(data => setSchedule(data[0]))
     }, [id]);

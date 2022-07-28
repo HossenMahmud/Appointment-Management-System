@@ -4,6 +4,7 @@ import PatientUpdateForm from '../../../Components/Dashboard/patient/PatientUpda
 import { LayoutContiner } from '../../../styles/MetarialStyles';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
+import SubNav2 from '../../../Components/layout/SubNav2';
 
 const UpdatePatientInfo = () => {
     const { id } = useParams();
@@ -12,14 +13,14 @@ const UpdatePatientInfo = () => {
 
     const [patientInfo, setPatientInfo] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/singlePatient/${id}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/singlePatient/${id}`)
             .then(res => res.json())
             .then(data => setPatientInfo(data[0]))
     }, [id]);
 
 
     const updatePatient = e => {
-        Axios.put(`http://localhost:5000/patientUpdate/${id}`, data)
+        Axios.put(`https://doctor-appointment-server.rpi.gov.bd/patientUpdate/${id}`, data)
             .then((res) => {
                 if (res.status === 200) {
                     navigate('/Dashboard/patientprofile')
@@ -38,17 +39,20 @@ const UpdatePatientInfo = () => {
 
 
     return (
-        <LayoutContiner>
-            {(patientInfo.length !== 0) &&
-                <PatientUpdateForm
-                    data={data}
-                    setData={setData}
-                    patient={patientInfo}
-                    updatePatient={updatePatient}
-                ></PatientUpdateForm>
-            }
+        <>
+            <SubNav2 link='Dashboard' linkName="Dashboard" linkTwo='/Dashboard/patientprofile' linkNameTwo="Profile" to='Update Profile'></SubNav2>
+            <LayoutContiner>
+                {(patientInfo.length !== 0) &&
+                    <PatientUpdateForm
+                        data={data}
+                        setData={setData}
+                        patient={patientInfo}
+                        updatePatient={updatePatient}
+                    ></PatientUpdateForm>
+                }
 
-        </LayoutContiner>
+            </LayoutContiner>
+        </>
     );
 };
 

@@ -9,6 +9,7 @@ import { Grid, Typography } from '@mui/material';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 
 
@@ -61,7 +62,9 @@ const HomeBanner = () => {
                             <Grid item xs={12} sm={6}>
                                 <Box sx={{ mt: { xs: 5, sm: 10 } }}>
                                     <Typography variant='h3' sx={{ color: '#f0f0f0', fontSize: { xs: "32px", sm: "40px" } }}>Good health is the root of all happiness</Typography>
-                                    <BannerButton sx={{ textAlign: 'center', width: "150px" }}>Make Appointment</BannerButton>
+                                    <Link to='AllDoctors' style={{ textDecoration: 'none' }}>
+                                        <BannerButton sx={{ textAlign: 'center', width: "150px" }}>Make Appointment</BannerButton>
+                                    </Link>
                                 </Box>
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -76,7 +79,9 @@ const HomeBanner = () => {
                             <Grid item xs={12} sm={6}>
                                 <Box sx={{ mt: { xs: 5, sm: 10 } }}>
                                     <Typography variant='h3' sx={{ color: '#f0f0f0', fontSize: { xs: "32px", sm: "44px" } }}>Good health is the root of all happiness</Typography>
-                                    <BannerButton sx={{ textAlign: 'center', width: "150px" }}>Make Appointment</BannerButton>
+                                    <Link to='AllDoctors' style={{ textDecoration: 'none' }}>
+                                        <BannerButton sx={{ textAlign: 'center', width: "150px" }}>Make Appointment</BannerButton>
+                                    </Link>
                                 </Box>
                             </Grid>
                             <Grid item xs={12} sm={6}>

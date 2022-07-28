@@ -90,7 +90,7 @@ const AddDoctorInfo = () => {
             formData.append(key, newData[key]);
         }
         if (newData !== null && newData.image !== undefined) {
-            Axios.post("http://localhost:5000/addDoctorInfo", formData).then((res) => {
+            Axios.post("https://doctor-appointment-server.rpi.gov.bd/addDoctorInfo", formData).then((res) => {
                 if (res.status === 200) {
                     navigate('/Dashboard/doctorprofile');
                     Swal.fire({

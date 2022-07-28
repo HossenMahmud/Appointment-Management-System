@@ -24,7 +24,7 @@ const DoctorAppointmentList = ({ doctor }) => {
     const [apptData, setApptData] = useState([]);
     const [condition, setCondition] = useState(true);
     useEffect(() => {
-        axios.get(`http://localhost:5000/doctorAppointment/${doctorId}`).then((res) => {
+        axios.get(`https://doctor-appointment-server.rpi.gov.bd/doctorAppointment/${doctorId}`).then((res) => {
             setApptData(res.data);
         });
     }, [doctorId, condition]);

@@ -8,7 +8,7 @@ const AdminPatientDetails = () => {
     const { id } = useParams();
     const [patients, setPatients] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/singlePatient/${id}`)
+        fetch(`https://doctor-appointment-server.rpi.gov.bd/singlePatient/${id}`)
             .then(res => res.json())
             .then(data => setPatients(data[0]))
     }, [id]);

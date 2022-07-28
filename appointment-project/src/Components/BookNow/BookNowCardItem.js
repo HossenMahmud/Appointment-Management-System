@@ -41,7 +41,7 @@ const BookNowCardItem = ({ schedule }) => {
                                         <Typography variant='body' sx={{ color: '#14287E', fontWeight: 'bold' }}>{time.dayName}  ({time.startTime} - {time.endTime})</Typography>
                                     </Box>
                                     <Box>
-                                        <Appointment doctorId={schedule.doctorId} dayName={time?.dayName} hospitalName={schedule.hospitalName} startTime={time.startTime} endTime={time.endTime} location={schedule.location}></Appointment>
+                                        <Appointment doctorId={schedule.doctorId} dayName={time?.dayName} hospitalName={schedule.hospitalName} startTime={time.startTime} endTime={time.endTime} location={schedule.location} slot={time.slot}></Appointment>
                                     </Box>
 
                                 </ScheduleBox>
